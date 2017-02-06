@@ -1,0 +1,44 @@
+{% extends "szabalyozok/layout.html" %}
+
+{% block content %}
+<div class="col-md-12">
+    <h3 class="text-left">{{ szabnev }} műszer archívum</h3>    <br>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Műszer fajtája</th>
+            <th>Gyártó</th>
+            <th>Típusa</th>
+            <th>Gyáriszám</th>
+            <th>Elhelyezkedés</th>
+            <th>Gyártás ideje</th>
+            <th>Méréshatár 1</th>
+            <th>Méréshatár 2</th>
+            <th>Osztálypontosság</th>
+            <th>Beszerelés dátuma</th>
+            <th>Kiszerelés dátuma</th>
+            <th>Megjegyzés</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for muszer in muszerek %}
+        <tr>
+            <td>{{ muszer.muszer.muszerfajta }}</td>
+            <td>{{ muszer.muszer.muszergyarto }}</td>
+            <td>{{ muszer.muszer.muszertipus }}</td>
+            <td>{{ muszer.muszer.gyariszam }}</td>
+            <td>{{ muszer.muszer.elhelyezkedes }}</td>
+            <td>{{ muszer.muszer.gyartas_ev }}</td>
+            <td>{{ muszer.muszer.mereshatar1 }}</td>
+            <td>{{ muszer.muszer.mereshatar2 }}</td>
+            <td>{{ muszer.muszer.osztalypontossag }}</td>
+            <td>{{ muszer.beszereles_datum }}</td>
+            <td>{{ muszer.kiszereles_datum }}</td>
+            <td>{% if muszer.megjegyzes %} {{ muszer.megjegyzes }} {% endif %}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8"/>
+    <title>{{ title }}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/style.css' %}"/>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{% static 'szabalyozok/content/dataTables.bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css" />
+    <script src="{% static 'szabalyozok/scripts/modernizr-2.6.2.js' %}"></script>
+    <link rel="icon" type="image/x-icon" href="{% static 'szabalyozok/image/favicon.ico' %}"/>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'szabalyozok' %}">Kezdőlap</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% include 'szabalyozok/loginpartial.html' %}
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Menü<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'szabalyozok' %}">Szabályozó keresés</a></li>
+                        <li><a href="{% url 'terkep' %} " target="_blank">Szabályozó térkép</a></li>
+                        <li><a href="/admin">Admin</a></li>
+                        <li role="separator" class="divider"></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Riportok<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'riport_szabalyozok' %}">Szabályozók</a></li>
+                        <li><a href="{% url 'riport_szabtartozekok' %}">Szab. tartozékok</a></li>
+                        <li><a href="{% url 'riport_muszerek' %}">Műszerek</a></li>
+                        <li><a href="{% url 'riport_diagnosztika' %}">Diagnosztikák</a></li>
+                        <li><a href="{% url 'riport_szabmunkak' %}">Szabályozó munkák</a></li>
+                        <li><a href="{% url 'riport_muszermunkak' %}">Műszer munkák</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% block content %}{% endblock %}
+<script src="{% static 'szabalyozok/scripts/jquery-1.12.1.min.js' %}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'szabalyozok/scripts/bootstrap.js' %}"></script>
+<script src="{% static 'szabalyozok/scripts/respond.js' %}"></script>
+<script src="{% static 'szabalyozok/scripts/lightbox.js' %}"></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var selected = [];
+
+            // Setup - add a text input to each footer cell
+            $('#riport tfoot  th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Szűrés ' + title + '" />');
+            });
+
+            // DataTable
+            var table = $('#riport').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                "pageLength": 25,
+                "language": {
+                    "lengthMenu": "Egyszerre _MENU_ bejegyzés egy oldalon.   ",
+                    "zeroRecords": "Nincs bejegyzés",
+                    "info": "Megjelenítve: _PAGE_ oldal a  _PAGES_ -ből",
+                    "infoEmpty": "Nincs bejegyzés",
+                    "infoFiltered": "(Szűrés eredménye: _MAX_ bejegyzés)",
+                    "Search:": "Keresés",
+                    "paginate": {
+                                first:      "Első",
+                                previous:   "Előző",
+                                next:       "Következő",
+                                last:       "Utolsó"
+                            },
+                    "buttons": {
+                                Print: "Nyomtat",
+                            },
+                },
+            });
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                                .search(this.value)
+                                .draw();
+                    }
+                });
+            });
+
+            new $.fn.dataTable.Buttons(table, {
+                buttons: [
+                    'excel',
+                    {extend: 'print', text: 'Nyomtat',},
+                ]
+            });
+            table.buttons().container()
+                    .appendTo($('.dataTables_filter:eq(0)', table.table().container()));
+
+            $('#riport tbody').on('click', 'tr', function () {
+                var id = this.id;
+                var index = $.inArray(id, selected);
+
+                if (index === -1) {
+                    selected.push(id);
+                } else {
+                    selected.splice(index, 1);
+                }
+                $(this).toggleClass('selected');
+            });
+        });
+
+    </script>
+
+
+{% block scripts %}{% endblock %}
+</body>
+</html>
+
+

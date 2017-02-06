@@ -1,0 +1,16 @@
+{% extends "szabalyozok/layout.html" %}
+
+
+{% block content %}
+
+<h3 style="margin-left:40px;">Szabályozó munka létrehozása</h3><br>
+
+<div style="margin-left:40px;" class="col-md-4">
+    {% load bootstrap3 %}
+    <form method="POST" class="form-horizontal" role="form">
+        {% csrf_token %}
+        {% bootstrap_form form layout="horizontal" %}
+        <button type="submit" class="save btn btn-primary">Létrehozás</button>
+    </form>
+</div>
+{% endblock %}

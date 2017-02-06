@@ -1,0 +1,86 @@
+{% extends "szabalyozok/riport_layout.html" %}
+
+{% block content %}
+<h1>Műszerek</h1>
+    <br>
+
+    <table id="riport" class="table table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Szab. állomás neve</th>
+                <th>Műszerfajta</th>
+                <th>Terület</th>
+                <th>Üzem</th>
+                <th>Település</th>
+                <th>Gyártó</th>
+                <th>Típus</th>
+                <th>Elhelyezkedés</th>
+                <th>Gyáriszám</th>
+                <th>Gyártás éve</th>
+                <th>Méréshatár 1</th>
+                <th>Méréshatár 2</th>
+                <th>Osztálypontosság</th>
+                <th>Metrológia</th>
+                <th>Kalib.ciklusidő</th>
+                <th>Kalib.dátum</th>
+                <th>Köv.kalib.dátum</th>
+                <th>Beszerelés.dátum</th>
+                <th>Megjegyzés</th>
+                <th>Azonosító</th>
+                <th>Selejt</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Szabalyozo</th>
+                <th>Műszerfajta</th>
+                <th>Terület</th>
+                <th>Üzem</th>
+                <th>Település</th>
+                <th>Gyártó</th>
+                <th>Típus</th>
+                <th>Elhelyezkedés</th>
+                <th>Gyáriszám</th>
+                <th>Gyártás éve</th>
+                <th>Méréshatár 1</th>
+                <th>Méréshatár 2</th>
+                <th>Osztálypontosság</th>
+                <th>Metrológia</th>
+                <th>Kalib.ciklusidő</th>
+                <th>Kalib.dátum</th>
+                <th>Köv.kalib.dátum</th>
+                <th>Beszerelés.dátum</th>
+                <th>Megjegyzés</th>
+                <th>Azonosító</th>
+                <th>Selejt</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for muszer in muszerek %}
+                <tr>
+                    <td>{% if muszer.szabalyozo %} <a href="{% url 'szabtart_show' pk=muszer.szabalyozo.id %}">{{muszer.szabalyozo}}</a> {% endif %}</td>
+                    <td>{{ muszer.muszerfajta }}</td>
+                    <td>{% if muszer.szabalyozo %}{{ muszer.szabalyozo.telepules.uzem.terulet }}{% endif %}</td>
+                    <td>{% if muszer.szabalyozo %}{{ muszer.szabalyozo.telepules.uzem }}{% endif %}</td>
+                    <td>{% if muszer.szabalyozo %}{{ muszer.szabalyozo.telepules }}{% endif %}</td>
+                    <td>{{ muszer.muszergyarto }}</td>
+                    <td>{{ muszer.muszertipus }}</td>
+                    <td>{{ muszer.elhelyezkedes }}</td>
+                    <td>{{ muszer.gyariszam }}</td>
+                    <td>{{ muszer.gyartas_ev }}</td>
+                    <td>{{ muszer.mereshatar1 }}</td>
+                    <td>{{ muszer.mereshatar2 }}</td>
+                    <td>{{ muszer.osztalypontossag }}</td>
+                    <td>{{ muszer.metrologia }}</td>
+                    <td>{{ muszer.kalib_ciklusido }}</td>
+                    <td>{{ muszer.kalib_datum }}</td>
+                    <td>{{ muszer.kov_kalib_datum }}</td>
+                    <td>{{ muszer.beszereles_datum }}</td>
+                    <td>{{ muszer.megjegyzes }}</td>
+                    <td>{{ muszer.id }}</td>
+                    <td> {% if muszer.selejt  %}Igen{% else %}Nem{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

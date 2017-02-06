@@ -1,0 +1,49 @@
+{% extends "szabalyozok/riport_layout.html" %}
+
+{% block content %}
+<h1>Műszer munkák</h1>
+
+<table id="riport" class="table table-bordered" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Mutat</th>
+        <th>Terület</th>
+        <th>Üzem</th>
+        <th>Település</th>
+        <th>Műszer fajta</th>
+        <th>Műszer azonosító</th>
+        <th>Munkatípus</th>
+        <th>Időpont</th>
+        <th>Megjegyzes</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Mutat</th>
+        <th>Terület</th>
+        <th>Üzem</th>
+        <th>Település</th>
+        <th>Műszer fajta</th>
+        <th>Műszer azon</th>
+        <th>Munkatípus</th>
+        <th>Időpont</th>
+        <th>Megjegyzes</th>
+    </tr>
+    <tfoot>
+    <tbody>
+    {% for munka in muszermunkak %}
+    <tr>
+        <td>{% if munka.muszer %} <a href="{% url 'szabtart_show' pk=munka.muszer.szabalyozo.id %}">Mutat</a> {% endif %}</td>
+        <td>{% if munka.muszer %}{{ munka.muszer.szabalyozo.telepules.uzem.terulet }}{% endif %}</td>
+        <td>{% if munka.muszer %}{{ munka.muszer.szabalyozo.telepules.uzem }}{% endif %}</td>
+        <td>{% if munka.muszer %}{{ munka.muszer.szabalyozo.telepules }}{% endif %}</td>
+        <td>{{ munka.muszer.muszerfajta }}</td>
+        <td>{{ munka.muszer.id }}</td>
+        <td>{{ munka.muszermunkatipus }}</td>
+        <td>{{ munka.muszmunka_datum }}</td>
+        <td>{{ munka.megjegyzes }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

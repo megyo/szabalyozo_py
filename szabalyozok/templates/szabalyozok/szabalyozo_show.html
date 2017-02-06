@@ -1,0 +1,357 @@
+{% extends "szabalyozok/layout.html" %}
+
+{% block content %}
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="#">Alapadatok</a></li>
+    <li role="presentation"><a href="{% url 'szabtart_show' pk=szabalyozo.id%}">Tartozékok</a></li>
+    <li role="presentation"><a href="{% url 'diagnosztika' pk=szabalyozo.id %}">Diagnosztika</a></li>
+    {% if user.is_authenticated %}
+        <li role="presentation"><a href="{% url 'szabmunka_show' pk=szabalyozo.id %}">Szab. munkavégzés</a></li>
+    {% endif %}
+</ul>
+<br>
+<div class="col-md-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">Azonosítók</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="allomas">
+                    Állomás teljes neve
+                </label>
+                <input class="form-control" id="allomas_nev" value="{% if szabalyozo.allomas_nev %}{{ szabalyozo.allomas_nev }}{% endif %}" readonly
+                       type="text">
+            </div>
+            <div class="form-group">
+                <label for="azonosito">
+                    Azonosító kód
+                </label>
+                <input class="form-control" id="azonosito" value="{{ szabalyozo.azonosito }}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label>
+                    GRASS azonosító
+                </label>
+                <input class="form-control" id="grass" value="{% if szabalyozo.grass_az %}{{ szabalyozo.grass_az }}{% endif %}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="eszkszam">
+                    Eszközszám
+                </label>
+                <input class="form-control" id="eszkszam" value="{{ szabalyozo.eszkozszam }}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="beruhszam">
+                    Beruházási jelzőszám
+                </label>
+                <input class="form-control" id="beruhszam" value="{{ szabalyozo.beruhazasi_szam }}" readonly
+                       type="text">
+            </div>
+            <div class="form-group">
+                <label for="sappm">
+                    SAP PM azonosító
+                </label>
+                <input class="form-control" id="sappm" value="{% if szabalyozo.sap_pm_az %}{{ szabalyozo.sap_pm_az }}{% endif %}" readonly type="text">
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Ellátottság</div>
+        <div class="panel-body">
+            <label>
+                Elláttott települések
+            </label>
+            {% for szabtelep in szabalyozo.ellatotttelepules.all %}
+            <input class="form-control" id="szabtelep" value="{{szabtelep.telepules}}" readonly type="text">
+            {% endfor %}
+
+            <br>
+            <label>
+                Összedolgozó szabályozók
+            </label>
+            <textarea class="form-control" rows="4" readonly>{% if szabalyozo.osszedolg_szab %}{{ szabalyozo.osszedolg_szab }}{% endif %}</textarea>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">Elhelyezkedés</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="teregys">
+                    Területi egység
+                </label>
+                <input class="form-control" id="teregys" value="{{ szabalyozo.telepules.uzem.terulet }}" readonly
+                       type="text">
+            </div>
+
+            <div class="form-group">
+
+                <label for="uzem">
+                    Üzem
+                </label>
+                <input class="form-control" id="uzem" value="{{ szabalyozo.telepules.uzem }}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="atado">Átadó</label>
+                <input class="form-control" id="atado" value="{{ szabalyozo.atado }}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+
+                <label for="telepules">
+                    Település
+                </label>
+                <input class="form-control" id="telepules" value="{{ szabalyozo.telepules }}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Település kód
+                </label>
+                <input class="form-control" id="telepuleskod" value="{{ szabalyozo.telepules.telepules_kod }}" readonly
+                       type="text">
+            </div>
+
+            <div class="form-group">
+
+                <label for="hrsz">
+                    HRSZ
+                </label>
+                <input class="form-control" id="hrsz" value="{% if szabalyozo.hrsz %}{{ szabalyozo.hrsz }}{% endif %}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+
+                <label for="gpslat">
+                    GPS lat
+                </label>
+                <input class="form-control" id="gpslat" value="{% if szabalyozo.gps_lat %}{{ szabalyozo.gps_lat }}{% endif %}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+
+                <label for="gpslong">
+                    GPS long
+                </label>
+                <input class="form-control" id="gpslong" value="{% if szabalyozo.gps_long %}{{ szabalyozo.gps_long }}{% endif %}" readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="ossz_terulet">
+                    Összes terület
+                </label>
+                <input class="form-control" id="ossz_terulet" value="{% if szabalyozo.ossz_terulet %} {{ szabalyozo.ossz_terulet }} {% endif %} " readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="fuves_terulet">
+                    Füves terület
+                </label>
+                <input class="form-control" id="fuves_terulet" value="{% if szabalyozo.fuves_terulet %} {{ szabalyozo.fuves_terulet }} {% endif %} " readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="burkolt_terulet">
+                    Burkolt terület
+                </label>
+                <input class="form-control" id="burkolt_terulet" value="{% if szabalyozo.burkolt_terulet %} {{ szabalyozo.burkolt_terulet }} {% endif %} " readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="megj">
+                    Megjegyzés
+                </label>
+                <textarea class="form-control" id="megj" readonly>{% if szabalyozo.megjegyzes %}{{ szabalyozo.megjegyzes }}{% endif %}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">Adatok</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="aktiv">Aktív ?</label>
+                <input class="form-control" id="aktiv"
+                       value="{% if szabalyozo.aktiv %} Igen{% endif %} {% if szabalyozo.aktiv == False %} Nem{% endif %}"
+                       readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="szabalyozogyarto">Szabályozó gyártó besorolás</label>
+                <input class="form-control" id="szabalyozogyarto" value="{{ szabalyozo.szabgyarto }}" readonly
+                       type="text">
+            </div>
+            <div class="form-group">
+                <label for="kivitel">Kivitel</label>
+                <input class="form-control" id="kivitel" value="{% if szabalyozo.kivitel == '1_ag' %}1 ágas{% elif szabalyozo.kivitel == '2_ag' %}2 ágas{% endif %}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="elhelyezes">Elhelyezés</label>
+                <input class="form-control" id="elhelyezes" value="{% if szabalyozo.elhelyezes == 'akna' %} Akna {% elif szabalyozo.elhelyezes == 'epulet' %}Épület{% elif szabalyozo.elhelyezes == 'szekreny'%}Szekrény{% endif %}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="funkcio">
+                    Funkció
+                </label>
+                <input class="form-control" id="funkcio" value="{% if szabalyozo.funkcio == 'fogado' %}Fogadó{% elif szabalyozo.funkcio == 'korzeti' %}Körzeti{% elif szabalyozo.funkcio == 'ipari'%}Ipari{% elif szabalyozo.funkcio == 'egyedi'%}Egyedi{% endif %}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="allomas">Tulajdonjog</label>
+                <input class="form-control" id="allomas" value="{% if szabalyozo.tulajdonjog == 'dso' %}Tigáz DSO{% elif szabalyozo.tulajdonjog == 'zrt' %}Tigáz Zrt.{% elif szabalyozo.tulajdonjog == 'idegen'%}Idegen{% endif %}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="tulajdonos">
+                    Tulajdonos
+                </label>
+                <input class="form-control" id="tulajdonos" value="{% if szabalyozo.tulajdonos %}{{ szabalyozo.tulajdonos }}{% endif %}" readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="nyomdin">Nyomásdin. bevont rendszer ?</label>
+                <input class="form-control" id="nyomdin"
+                       value="{% if szabalyozo.nyom_din_rendszer %} Igen{% endif %} {% if szabalyozo.nyom_din_rendszer == False %} Nem{% endif %}"
+                       readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="futott">Fűtött?</label>
+                <input class="form-control" id="futott"
+                       value="{% if szabalyozo.futott %} Igen{% endif %} {% if szabalyozo.futott == False %} Nem{% endif %}"
+                       readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="felugyeleti_rendszer">Felügyeleti rendszer ?</label>
+                <input class="form-control" id="felugyeleti_rendszer"
+                       value="{% if szabalyozo.felugyeleti_rendszer %} Igen {% endif %} {% if szabalyozo.felugyeleti_rendszer == False %} Nem {% endif %}"
+                       readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="ellenorzesiciklus">
+                    Ellenőrzési Ciklus
+                </label>
+                <input class="form-control" id="ellenorzesiciklus" value="{% if szabalyozo.ellenorzesiciklus %} {{ szabalyozo.ellenorzesiciklus }} {% endif %} " readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="rbzona">
+                    RB zóna besorolás
+                </label>
+                <input class="form-control" id="rbzona" value="{% if szabalyozo.rb_zona == 'zona_1' %}Zóna 1{% elif szabalyozo.rb_zona == 'zona_2' %}Zóna 2{% endif %}" readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="telepitesev">
+                    Telepítés éve
+                </label>
+                <input class="form-control" id="telepitesev" value="{{ szabalyozo.telepites_ev }}" readonly
+                       type="text">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">Nyomás, kapacitás adatok</div>
+        <div class="panel-body">
+
+            <div class="form-group">
+                <label for="nev_prim_nyom">
+                    Névl. prim. nyomás:
+                </label>
+                <input class="form-control" id="nevlegesprim" value="{{ szabalyozo.nev_prim_nyom }}" readonly
+                       type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="nev_sek_nyom">
+                    Névl. szek. nyomás
+                </label>
+                <input class="form-control" id="nevlegesszek" value="{{ szabalyozo.nev_sek_nyom }}" readonly
+                       type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="p1_nyomas">
+                    Üzemi prim. nyomás
+                </label>
+                <input class="form-control" id="uzemiprim" value="{% if diag_p1 %} {{ diag_p1 }} {% endif %}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="p2_nyomas">
+                    Üzemi szek. nyomás
+                </label>
+                <input class="form-control" id="uzemiszek" value="{% if diag_p2 %} {{ diag_p2 }} {% endif %}" readonly type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="nev_kapacitas">
+                    Névleges kapacitás
+                </label>
+                <input class="form-control" id="nevlegeskapacitas" value="{{ szabalyozo.nev_kapacitas }}" readonly
+                       type="text">
+            </div>
+
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Karbantartási adatok</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="villamvedelem">Villámvédelmi besorolás</label><br>
+                <input class="form-control" id="villamvedelem" value="{% if szabalyozo.villamvedelem == 'norma' %}Norma szerinti{% elif szabalyozo.villamvedelem == 'nem_norma' %}Nem norma szerinti{% endif %} " readonly
+                       type="text">
+            </div>
+            <div class="form-group">
+                <label for="villamvedelemkovev">Villámvédelmi felülvizsgálat</label><br>
+                <input class="form-control" id="villamvedelemkovev"
+                       value="{{ szabalyozo.villamvedelem_ev }} - {{ szabalyozo.villamvedelem_kov_ev }}" readonly
+                       type="text">
+            </div>
+            <div class="form-group">
+                <label for="szabkarb">
+                    Karbantartó
+                </label>
+                <input class="form-control" id="szabkarb" value="{% if szabalyozo.szabkarb %} {{ szabalyozo.szabkarb }} {% endif %} " readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="karb2">2 éves karb. következő időpontja</label>
+                <input class="form-control" id="karb2" value="{{ szabalyozo.karbantartas_2ev }}" readonly
+                       type="text">
+            </div>
+            <div class="form-group">
+                <label for="karb10">10 éves karb. következő időpontja</label>
+                <input class="form-control" id="karb10" value="{{ szabalyozo.karbantartas_10ev }}" readonly
+                       type="text">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-2">
+    <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'szabalyozok' %}'">Vissza a
+        szabályozó listához
+    </button>
+    <p></p>
+    {% if user.is_authenticated %}
+    <button type="button" class="btn btn-primary"
+            onclick="window.location.href='{% url 'szabalyozo_edit' pk=szabalyozo.id %}'">Szabályozó módosítása
+    </button>
+    {% endif %}
+    <p></p>
+    {% if user.is_authenticated %}
+    <button type="button" class="btn btn-warning" onclick="window.location.href='{% url 'doc_list' tip='szab' eszid=szabalyozo.id spk=szabalyozo.id %}'">Dokumentumok</button>
+    {% endif %}
+    <p></p>
+    <button type="button" class="btn btn-default" onclick="window.location.href='{% url 'kep_list' spk=szabalyozo.id %}'">Fényképek</button>
+    <p></p>
+    <button type="button" class="btn btn-default"
+            onclick="window.open('{% url 'szabterkep' pk=szabalyozo.id %}')">Térkép
+    </button>
+</div>
+{% endblock %}

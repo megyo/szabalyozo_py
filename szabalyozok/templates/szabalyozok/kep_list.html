@@ -1,0 +1,52 @@
+{% extends "szabalyozok/layout.html" %}
+
+{% block content %}
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="{% url 'szabalyozo_show' pk=szabid %}">Alapadatok</a></li>
+    <li role="presentation"><a href="{% url 'szabtart_show' pk=szabid %}">Tartozékok</a></li>
+    <li role="presentation"><a href="{% url 'diagnosztika' pk=szabid %}">Diagnosztika</a></li>
+    <li role="presentation"><a href="{% url 'szabmunka_show' pk=szabid %}">Szab. munkavégzés</a></li>
+</ul>
+<div class="col-md-6">
+    <h3> {{ szabnev }} képek</h3>
+    <br>
+    <p>
+            <button type="button" class="btn btn-success" onclick="window.location.href='{% url 'kep_new' spk=szabid %}'">Új kép feltöltése</button>
+    <br>
+    </p>
+        <table class="table table-condensed" style="margin-left:40px">
+
+            {% for kep in keplist %}
+                <tr height="100">
+                    <td><a id="{{ kep.id  }}" href="{{ kep.image.normal.url }}">
+                            <img src="{{ kep.image.thumbnail.url }}">
+                        </a>
+                    </td>
+                    <td>
+                      {{ kep.image_nev }}
+                    </td>
+                        <td>
+                            <a href="{% url 'kep_del' pk=kep.id spk=szabid %}">
+                                <button class="btn btn-danger delete">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    <span>Törlés</span>
+                                </button></a>
+
+                        </td>
+
+                </tr>
+            {% endfor %}
+        </table>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $( function()
+        {
+            $( 'a' ).imageLightbox();
+            this.addclas
+        });
+    </script>
+{% endblock %}

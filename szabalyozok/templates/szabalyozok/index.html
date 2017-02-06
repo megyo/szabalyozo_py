@@ -1,0 +1,60 @@
+{% extends "szabalyozok/riport_layout.html" %}
+
+{% block content %}
+
+<h3 style="margin-left:40px;">Szabályozó keresés</h3>
+
+<br>
+<div class="row" style="padding-top: 20px; padding-bottom: 10px">
+    <div style="margin-left:40px;" class="col-md-6">
+        <form action="/szabalyozok/" method="post">
+            {% csrf_token %}
+            {% load widget_tweaks %}
+            {{ form.search|add_class:"form-control"|attr:"autofocus"|attr:"placeholder:Település, Azonosító, Állomás neve" }}
+    </div>
+            <input type="submit" value="Keres" class="btn btn-default">
+        </form>
+</div>
+{% if data %}
+<table id="riport" class="table table-bordered" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Művelet</th>
+        <th>Azonosito</th>
+        <th>Állomás neve</th>
+        <th>Település</th>
+        <th>Terület</th>
+        <th>Üzem</th>
+        <th>Aktív</th>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Művelet</th>
+        <th>Azonosito</th>
+        <th>Állomás neve</th>
+        <th>Település</th>
+        <th>Terület</th>
+        <th>Üzem</th>
+        <th>Aktív</th>
+    </tfoot>
+    <tbody>
+
+    {% for szab in szabalyozok %}
+    <tr>
+        <td><a href="{% url 'szabalyozo_show' pk=szab.id%}">Mutat</a></td>
+        <td>{{ szab.azonosito }}</td>
+        <td>{{ szab.allomas_nev }}</td>
+        <td>{{ szab.telepules }}</td>
+        <td>{{ szab.telepules.uzem.terulet }}</td>
+        <td>{{ szab.telepules.uzem }}</td>
+        <td>{% if szab.aktiv %} Igen{% endif %} {% if szab.aktiv == False %} Nem{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+<b style="margin-left:40px">{{ hiba }} </b>
+
+{% endblock %}
+
+

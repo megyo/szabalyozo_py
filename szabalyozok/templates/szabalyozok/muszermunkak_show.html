@@ -1,0 +1,39 @@
+{% extends "szabalyozok/layout.html" %}
+
+{% block content %}
+
+    <div class="col-md-6">
+        <h3>{{ muszernev }} munkavégzései</h3>
+        <br>
+        <p>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'szabtart_show' pk=szabid %}'">Vissza a szabályozóhoz</button>
+        <button type="button" class="btn btn-success" onclick="window.location.href='{% url 'muszermunka_new' pk=muszerid spk=szabid %}'">Új munkavégzés</button>
+        </p>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Munkatípus</th>
+                    <th>Időpontja</th>
+                    <th>Megjegyzes</th>
+                    <th>Művelet</th>
+                    <th>Egyéb</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for munkak in muszermunkak %}
+                    <tr>
+                        <td>{{ munkak.muszermunkatipus }}</td>
+                        <td>{{ munkak.muszmunka_datum }} </td>
+                        <td>{% if munkak.megjegyzes %} {{ munkak.megjegyzes }} {% endif %}</td>
+                        <td>
+                            <a href="{% url 'muszermunka_edit' pk=munkak.id mpk=muszerid spk=szabid %}">Szerkeszt</a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-warning" onclick="window.location.href='{% url 'doc_list' tip='muszermunkak' eszid=munkak.id spk=szabid %}'">Dokumentumok</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

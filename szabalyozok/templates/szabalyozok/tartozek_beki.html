@@ -1,0 +1,82 @@
+{% extends "szabalyozok/layout.html" %}
+
+{% block content %}
+<h3 style="margin-left:40px;">{{ szabnev }} beépített tartozékai</h3><br>
+    <button style="margin-left:40px;" type="button" class="btn btn-primary" onclick="window.location.href='{% url 'szabtart_show' pk=szabid %}'">Vissza a szabályozóhoz</button>
+    <button style="margin-left:40px;" type="button" class="btn btn-success" onclick="window.location.href='{% url 'tartozek_new' pk=szabid %}'">Tartozék beépítése</button>
+<br>
+<table class="table table-striped" style="margin-left:40px">
+    <thead>
+    <tr>
+        <th>Tartozék fajtája</th>
+        <th>Gyártó</th>
+        <th>Típusa</th>
+        <th>Elhelyezkedés</th>
+        <th>Beüzemelés éve</th>
+        <th>Beszerelés dátuma</th>
+        <th>Megjegyzés</th>
+        <th>Kiszerelés</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for tartozek in tartozekok %}
+    <tr>
+        <td>{{ tartozek.tartozekfajta }}</td>
+        <td>{{ tartozek.tartozekgyarto }}</td>
+        <td>{{ tartozek.tartozektipus }}</td>
+        <td>{% if tartozek.elhelyezkedes %} {{ tartozek.elhelyezkedes }} {% endif %}</td>
+        <td>{% if tartozek.beuzemeles_ev %} {{ tartozek.beuzemeles_ev }} {% endif %}</td>
+        <td>{% if tartozek.beszereles_datum %} {{ tartozek.beszereles_datum }} {% endif %}</td>
+        <td>{% if tartozek.megjegyzes %} {{ tartozek.megjegyzes }} {% endif %}</td>
+        <td>
+            <button id="{{tartozek.id}}" type="button" class="btn btn-danger">Kiszerel</button>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<div id="rejtett_form" hidden>
+    {% load bootstrap3 %}
+    <form action="/tartozek/{{ szabid }}/tartozekki/" method="POST" class="form-horizontal" role="form">
+        {% load widget_tweaks %}
+        {% csrf_token %}
+        {{ formki.tartozek.label_tag }}
+        {{ formki.tartozek.errors }}
+        {{ formki.tartozek|attr:"value:0" }}
+</div>
+<div id="formmutat" style="display: none; margin-left:20%;">
+    <div class="row" style="margin-left: 40px; padding-top: 10px;">
+        <div class="col-md-2">
+            {{ formki.kiszereles_datum.label_tag }}
+        </div>
+        <div class="col-md-4">
+            {{ formki.kiszereles_datum.errors }}
+            {{ formki.kiszereles_datum }}
+        </div>
+    </div>
+    <div class="row" style="margin-left: 40px; padding-top: 10px;">
+        <div class="col-md-2">
+            {{ formki.megjegyzes.label_tag }}
+        </div>
+        <div class="col-md-4">
+            {{ formki.megjegyzes.errors }}
+            {{ formki.megjegyzes }}
+            <br><br>
+            <button type="submit" class="save btn btn-primary">Kiszerel</button>
+    </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+        $(".btn-danger").click(function () {
+            $("#formmutat").css({'display': 'block'});
+            var tartozekid = $(this).attr('id');
+            elem = document.getElementById("id_tartozek").value = tartozekid;
+            elem.selected
+        });
+</script>
+{% endblock %}

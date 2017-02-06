@@ -1,0 +1,221 @@
+{% extends "szabalyozok/layout.html" %}
+
+{% block content %}
+
+    <h3 style="margin-left:40px;">Szabályozó szerkesztés</h3><br>
+        <form method="POST" class="viewform">
+            {% csrf_token %}
+            {% load widget_tweaks %}
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">Ellátottság</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    {{ form.ellatotttelepules.label_tag }}
+                    {{ form.ellatotttelepules.errors }}
+                    {{ form.ellatotttelepules|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.osszedolg_szab.label_tag }}
+                    {{ form.osszedolg_szab.errors }}
+                    {{ form.osszedolg_szab|add_class:"form-control" }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">Elhelyezkedés</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    {{ form.atado.label_tag }}
+                    {{ form.atado.errors }}
+                    {{ form.atado|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.telepules.label_tag }}
+                    {{ form.telepules.errors }}
+                    {{ form.telepules|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.hrsz.label_tag }}
+                    {{ form.hrsz.errors }}
+                    {{ form.hrsz|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.gps_lat.label_tag }}
+                    {{ form.gps_lat.errors }}
+                    {{ form.gps_lat|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.gps_long.label_tag }}
+                    {{ form.gps_long.errors }}
+                    {{ form.gps_long|add_class:"form-control" }}
+                </div>
+               <div class="form-group">
+                    {{ form.ossz_terulet.label_tag }}
+                    {{ form.ossz_terulet.errors }}
+                    {{ form.ossz_terulet|add_class:"form-control" }}
+                </div>
+               <div class="form-group">
+                    {{ form.fuves_terulet.label_tag }}
+                    {{ form.fuves_terulet.errors }}
+                    {{ form.fuves_terulet|add_class:"form-control" }}
+                </div>
+               <div class="form-group">
+                    {{ form.burkolt_terulet.label_tag }}
+                    {{ form.burkolt_terulet.errors }}
+                    {{ form.burkolt_terulet|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.megjegyzes.label_tag }}
+                    {{ form.megjegyzes.errors }}
+                    {{ form.megjegyzes|add_class:"form-control" }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">Adatok</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    {{ form.aktiv.label_tag }}
+                    {{ form.aktiv.errors }}
+                    {{ form.aktiv }}
+                </div>
+                <div class="form-group">
+                    {{ form.szabgyarto.label_tag }}
+                    {{ form.szabgyarto.errors }}
+                    {{ form.szabgyarto|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.kivitel.label_tag }}
+                    {{ form.kivitel.errors }}
+                    {{ form.kivitel|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.elhelyezes.label_tag }}
+                    {{ form.elhelyezes.errors }}
+                    {{ form.elhelyezes|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.funkcio.label_tag }}
+                    {{ form.funkcio.errors }}
+                    {{ form.funkcio|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.tulajdonjog.label_tag }}
+                    {{ form.tulajdonjog.errors }}
+                    {{ form.tulajdonjog|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.tulajdonos.label_tag }}
+                    {{ form.tulajdonos.errors }}
+                    {{ form.tulajdonos|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.nyom_din_rendszer.label_tag }}
+                    {{ form.nyom_din_rendszer.errors }}
+                    {{ form.nyom_din_rendszer }}
+                </div>
+                <div class="form-group">
+                    {{ form.futott.label_tag }}
+                    {{ form.futott.errors }}
+                    {{ form.futott }}
+                </div>
+                <div class="form-group">
+                    {{ form.felugyeleti_rendszer.label_tag }}
+                    {{ form.felugyeleti_rendszer.errors }}
+                    {{ form.felugyeleti_rendszer }}
+                </div>
+                <div class="form-group">
+                    {{ form.ellenorzesiciklus.label_tag }}
+                    {{ form.ellenorzesiciklus.errors }}
+                    {{ form.ellenorzesiciklus|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.rb_zona.label_tag }}
+                    {{ form.rb_zona.errors }}
+                    {{ form.rb_zona|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.telepites_ev.label_tag }}
+                    {{ form.telepites_ev.errors }}
+                    {{ form.telepites_ev|add_class:"form-control" }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">Nyomás, kapacitás adatok</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    {{ form.nev_prim_nyom.label_tag }}
+                    {{ form.nev_prim_nyom.errors }}
+                    {{ form.nev_prim_nyom|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.nev_sek_nyom.label_tag }}
+                    {{ form.nev_sek_nyom.errors }}
+                    {{ form.nev_sek_nyom|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.uz_prim_nyom.label_tag }}
+                    {{ form.uz_prim_nyom.errors }}
+                    {{ form.uz_prim_nyom|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.uz_sek_nyom.label_tag }}
+                    {{ form.uz_sek_nyom.errors }}
+                    {{ form.uz_sek_nyom|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.nev_kapacitas.label_tag }}
+                    {{ form.nev_kapacitas.errors }}
+                    {{ form.nev_kapacitas|add_class:"form-control" }}
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Karbantartási adatok</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    {{ form.villamvedelem.label_tag }}
+                    {{ form.villamvedelem.errors }}
+                    {{ form.villamvedelem|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.villamvedelem_ev.label_tag }}
+                    {{ form.villamvedelem_ev.errors }}
+                    {{ form.villamvedelem_ev|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                     {{ form.villamvedelem_kov_ev.label_tag }}
+                    {{ form.villamvedelem_kov_ev.errors }}
+                    {{ form.villamvedelem_kov_ev|add_class:"form-control" }}
+                </div>
+               <div class="form-group">
+                    {{ form.szabkarb.label_tag }}
+                    {{ form.szabkarb.errors }}
+                    {{ form.szabkarb|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.karbantartas_2ev.label_tag }}
+                    {{ form.karbantartas_2ev.errors }}
+                    {{ form.karbantartas_2ev|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    {{ form.karbantartas_10ev.label_tag }}
+                    {{ form.karbantartas_10ev.errors }}
+                    {{ form.karbantartas_10ev|add_class:"form-control" }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <input type="submit" value="Módosít" class="btn btn-primary">
+        </form>
+    </div>
+{% endblock %}

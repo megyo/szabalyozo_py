@@ -1,0 +1,134 @@
+{% extends "szabalyozok/riport_layout.html" %}
+
+{% block content %}
+<h1>Szabályozók</h1>
+<br>
+<table id="riport" class="table table-bordered" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Mutat</th>
+        <th>Azonosító kód</th>
+        <th>GRASS azonosító</th>
+        <th>SAP PM azonosító</th>
+        <th>Eszközszám</th>
+        <th>Beruházási jelzőszám</th>
+        <th>Állomás teljes neve</th>
+        <th>Területi egység</th>
+        <th>Üzem</th>
+        <th>Átadó</th>
+        <th>Település</th>
+        <th>Település kód</th>
+        <th>Telepítés éve</th>
+        <th>Aktív</th>
+        <th>Szabályozó gyártó</th>
+        <th>Kivitel</th>
+        <th>Elhelyezés</th>
+        <th>Funkció</th>
+        <th>Tulajdonjog</th>
+        <th>Tulajdonos</th>
+        <th>Névleges primer nyomás</th>
+        <th>Névleges szekunder nyomás</th>
+        <th>Üzemi primer nyomás</th>
+        <th>Üzemi szekunder nyomás</th>
+        <th>Névleges kapacitás</th>
+        <th>Nyomásdinamizálásba bevont rendszer</th>
+        <th>Fűtött</th>
+        <th>RB zóna</th>
+        <th>Felügyeleti rendszer</th>
+        <th>Villámvédelmi besorolás</th>
+        <th>Villámvédelem től</th>
+        <th>Villámvédelem ig</th>
+        <th>2 éves karb</th>
+        <th>10 éves karb</th>
+        <th>Elláttott települések</th>
+        <th>Összedolgozó szabályzók</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Mutat</th>
+        <th>Azonosító kód</th>
+        <th>GRASS azonosító</th>
+        <th>SAP PM azonosító</th>
+        <th>Eszközszám</th>
+        <th>Beruházási jelzőszám</th>
+        <th>Állomás teljes neve</th>
+        <th>Területi egység</th>
+        <th>Üzem</th>
+        <th>Átadó</th>
+        <th>Település</th>
+        <th>Település kód</th>
+        <th>Telepítés éve</th>
+        <th>Aktív</th>
+        <th>Szabályozó gyártó</th>
+        <th>Kivitel</th>
+        <th>Elhelyezés</th>
+        <th>Funkció</th>
+        <th>Tulajdonjog</th>
+        <th>Tulajdonos</th>
+        <th>Névleges primer nyomás</th>
+        <th>Névleges szekunder nyomás</th>
+        <th>Üzemi primer nyomás</th>
+        <th>Üzemi szekunder nyomás</th>
+        <th>Névleges kapacitás</th>
+        <th>Nyomásdinamizálásba bevont rendszer</th>
+        <th>Fűtött</th>
+        <th>RB zóna</th>
+        <th>Felügyeleti rendszer</th>
+        <th>Villámvédelmi besorolás</th>
+        <th>Villámvédelem től</th>
+        <th>Villámvédelem ig</th>
+        <th>2 éves karb</th>
+        <th>10 éves karb</th>
+        <th>Elláttott települések</th>
+        <th>Összedolgozó szabályzók</th>
+    </tr>
+    </tfoot>
+    <tbody>
+    {% for szab in szabalyozok %}
+    <tr>
+        <td><a href="{% url 'szabalyozo_show' pk=szab.id %}">Mutat</a></td>
+        <td>{{ szab.azonosito }}</td>
+        <td>{{ szab.grass_az }}</td>
+        <td>{{ szab.sap_pm_az }}</td>
+        <td>{{ szab.eszkozszam }}</td>
+        <td>{{ szab.beruhazasi_szam }}</td>
+        <td>{{ szab.allomas_nev }}</td>
+        <td>{{ szab.telepules.uzem.terulet }}</td>
+        <td>{{ szab.telepules.uzem }}</td>
+        <td>{{ szab.atado }}</td>
+        <td>{{ szab.telepules }}</td>
+        <td>{{ szab.telepules.telepules_kod }}</td>
+        <td>{{ szab.telepites_ev }}</td>
+        <td>{% if szab.aktiv %}igen{% else %}nem{% endif %}</td>
+        <td>{{ szab.szabalyozogyarto }}</td>
+        <td>{{ szab.kivitel }}</td>
+        <td>{{ szab.elhelyezes }}</td>
+        <td>{{ szab.funkcio }}</td>
+        <td>{{ szab.tulajdonjog }}</td>
+        <td>{{ szab.tulajdonos }}</td>
+        <td>{{ szab.nev_prim_nyom }}</td>
+        <td>{{ szab.nev_sek_nyom }}</td>
+        <td>{{ szab.uz_prim_nyom }}</td>
+        <td>{{ szab.uz_sek_nyom }}</td>
+        <td>{{ szab.nev_kapacitas }}</td>
+        <td>{% if szab.nyom_din_rendszer %}igen{% else %}nem{% endif %}</td>
+        <td>{% if szab.futott %}igen{% else %}nem{% endif %}</td>
+        <td>{{ szab.rb_zona }}</td>
+        <td>{% if szab.nyom_din_rendszer %}igen{% else %}nem{% endif %}</td>
+        <td>{{ szab.villamvedelem }}</td>
+        <td>{{ szab.villamvedelem_ev }}</td>
+        <td>{{ szab.villamvedelem_kov_ev }}</td>
+        <td>{{ szab.karbantartas_2ev }}</td>
+        <td>{{ szab.karbantartas_10ev }}</td>
+        <td>{% for szabtelep in szab.ellatotttelepules.all %}
+            {{szabtelep.telepules}},
+            {% endfor %}
+        </td>
+        <td>{{ szab.osszedolg_szab }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

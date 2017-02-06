@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Térkép</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+</head>
+<body>
+{% if gpslat != "" and gpslong != "" %}
+<div id="map"></div>
+<script>
+            function initMap() {
+              var myLatLng = {lat: {{gpslat}}, lng: {{gpslong}}};
+
+              var map = new google.maps.Map(document.getElementById('map'), {
+                center: myLatLng,
+                scrollwheel: true,
+                zoom: 16
+              });
+
+              var marker = new google.maps.Marker({
+                map: map,
+                position: myLatLng,
+                title: '{{szabnev}}'
+              });
+            }
+
+</script>
+{% else %}
+<p> Nincs GSP koordináta megadva! </p>
+{% endif %}
+<script src="https://maps.googleapis.com/maps/api/js?AIzaSyCbJemp5eDWNNbZ_-Ce_ZR0yd6cNiSnLgA&callback=initMap" async
+        defer></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% extends "szabalyozok/riport_layout.html" %}
+
+{% block content %}
+<h1>Szabályozó munkák</h1>
+
+<table id="riport" class="table table-bordered" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Szab. állomás neve</th>
+        <th>Terület</th>
+        <th>Üzem</th>
+        <th>Település</th>
+        <th>Szab. azon</th>
+        <th>Munkatípus</th>
+        <th>Időpont</th>
+        <th>Megjegyzes</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Szabályozó</th>
+        <th>Terület</th>
+        <th>Üzem</th>
+        <th>Település</th>
+        <th>Szab. azon</th>
+        <th>Munkatípus</th>
+        <th>Időpont</th>
+        <th>Megjegyzes</th>
+    </tr>
+    </tfoot>
+    <tbody>
+    {% for munkak in szabmunkak %}
+    <tr>
+        <td>{% if munkak.szabalyozo %} <a href="{% url 'szabmunka_show' pk=munkak.szabalyozo.id %}">{{ munkak.szabalyozo }}</a> {% endif %}</td>
+        <td>{% if munkak.szabalyozo %}{{ munkak.szabalyozo.telepules.uzem.terulet }}{% endif %}</td>
+        <td>{% if munkak.szabalyozo %}{{ munkak.szabalyozo.telepules.uzem }}{% endif %}</td>
+        <td>{% if munkak.szabalyozo %}{{ munkak.szabalyozo.telepules }}{% endif %}</td>
+        <td>{{ munkak.szabalyozo.id }}</td>
+        <td>{{ munkak.szabalyozomunkatipus }}</td>
+        <td>{{ munkak.szabmunka_datum }}</td>
+        <td>{{ munkak.megjegyzes }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "szabalyozok/riport_layout.html" %}
+
+{% block content %}
+<h1>Szabályozó tertozékok</h1>
+<table id="riport" class="table table-bordered" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Szab. állomás neve</th>
+        <th>Tartozék fajtája</th>
+        <th>Gyártó</th>
+        <th>Típusa</th>
+        <th>Beszerelés dátuma</th>
+        <th>Megjegyzés</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Szabályozó</th>
+        <th>Tartozék fajtája</th>
+        <th>Gyártó</th>
+        <th>Típusa</th>
+        <th>Beszerelés dátuma</th>
+        <th>Megjegyzés</th>
+    </tr>
+    </tfoot>
+    <tbody>
+    {% for szabtartozek in szabtartozekok %}
+    <tr>
+        <td>{% if szabtartozek.szabalyozo %} <a href="{% url 'szabtart_show' pk=szabtartozek.szabalyozo.id %}">{{ szabtartozek.szabalyozo }}</a> {% endif %}</td>
+        <td>{{ szabtartozek.tartozekfajta }}</td>
+        <td>{{ szabtartozek.tartozekgyarto }}</td>
+        <td>{{ szabtartozek.tartozektipus }}</td>
+        <td>{{ szabtartozek.beszereles_datum }}</td>
+        <th>{{ szabtartozek.megjegyzes }}</th>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
