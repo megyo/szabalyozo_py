@@ -137,8 +137,10 @@ class Szabalyozok(models.Model):
     megjegyzes = models.CharField(max_length=255, blank=True, null=True)
     nev_prim_nyom = models.DecimalField(max_digits=5, decimal_places=3, blank=False, null=False)
     nev_sek_nyom = models.DecimalField(max_digits=5, decimal_places=3, blank=False, null=False)
-    #uz_prim_nyom = models.DecimalField(max_digits=5, decimal_places=3, blank=False, null=False)
-    #uz_sek_nyom = models.DecimalField(max_digits=5, decimal_places=3, blank=False, null=False)
+
+    uz_prim_nyom = models.DecimalField(max_digits=5, decimal_places=3, blank=True, null=True)
+    uz_sek_nyom = models.DecimalField(max_digits=5, decimal_places=3, blank=True, null=True)
+
     nev_kapacitas = models.PositiveIntegerField(blank=True, null=True)
     nyom_din_rendszer = models.BooleanField()
     futott = models.BooleanField()

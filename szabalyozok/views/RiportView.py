@@ -59,6 +59,7 @@ def riport_muszerek(request):
 @login_required(login_url='/login/')
 def riport_szabalyozok(request):
     szabalyozok = Szabalyozok.objects.all()
+
     return render(
         request,
         'szabalyozok/riport_szabalyozok.html',

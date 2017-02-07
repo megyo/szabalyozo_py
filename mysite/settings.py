@@ -63,7 +63,7 @@ if DEBUG:
         'debug_toolbar.panels.redirects.RedirectsPanel',
     ]
     SHOW_TOOLBAR_CALLBACK = True
-    INTERNAL_IPS = ('127.0.0.1',)
+    INTERNAL_IPS = ('127.0.0.2',)
 
 ROOT_URLCONF = 'mysite.urls'
 

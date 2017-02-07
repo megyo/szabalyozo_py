@@ -8,7 +8,6 @@ from datetime import datetime
 from django.utils import timezone
 from django.core.serializers.json import DjangoJSONEncoder
 import json
-
 from szabalyozok.forms.DiagnosztikaForm import DiagnosztikaForm
 from szabalyozok.forms.SzabalyozoForm import *
 from szabalyozok.forms.MuszerForm import *
@@ -81,7 +80,8 @@ def szabalyozo_show(request, pk):
         diag_p1 = 'Nincs megadva'
         diag_p2 = 'Nincs megadva'
 
-    return render(request, 'szabalyozok/szabalyozo_show.html', {'title': 'Szabályozó', 'szabalyozo': szabalyozo, 'diag_p1': diag_p1, 'diag_p2': diag_p2 })
+    return render(request, 'szabalyozok/szabalyozo_show.html',
+                  {'title': 'Szabályozó', 'szabalyozo': szabalyozo, 'diag_p1': diag_p1, 'diag_p2': diag_p2})
 
 
 @login_required(login_url='/login/')
@@ -424,7 +424,8 @@ def diagnosztika(request, pk):
     diagnosztika = Diagnosztika.objects.filter(szabalyozo_id=pk).order_by('diag_datum').reverse()[0:1]
     szabnev = szabalyozo.allomas_nev
 
-    return render(request, 'szabalyozok/diagnosztika.html', {'szabnev': szabnev, 'szabid': pk, 'diagnosztika': diagnosztika})
+    return render(request, 'szabalyozok/diagnosztika.html',
+                  {'szabnev': szabnev, 'szabid': pk, 'diagnosztika': diagnosztika})
 
 
 def diagnosztika_tortenet(request, pk):
@@ -432,7 +433,8 @@ def diagnosztika_tortenet(request, pk):
     diagnosztika = Diagnosztika.objects.filter(szabalyozo_id=pk).order_by('diag_datum').reverse()[1:10]
     szabnev = szabalyozo.allomas_nev
 
-    return render(request, 'szabalyozok/diagnosztika_tortenet.html', {'szabnev': szabnev, 'szabid': pk, 'diagnosztika': diagnosztika})
+    return render(request, 'szabalyozok/diagnosztika_tortenet.html',
+                  {'szabnev': szabnev, 'szabid': pk, 'diagnosztika': diagnosztika})
 
 
 @login_required(login_url='/login/')
@@ -443,6 +445,18 @@ def diagnosztika_new(request, pk):
             diag = form.save(commit=False)
             diag.szabalyozo_id = pk
             diag.save()
+
+            # utolsó diagnosztikai keresés
+            last_diag = Diagnosztika.objects.filter(szabalyozo_id=pk).order_by('diag_datum').reverse()[0:1].get()
+            p1_nyomas = last_diag.p1_nyomas
+            p2_nyomas = last_diag.p2_nyomas
+
+            # utolsó diagnosztikai p1, p2 nyomás visszaírása a szab. táblába
+            szabalyozo = Szabalyozok.objects.get(id=pk)
+            szabalyozo.uz_prim_nyom = p1_nyomas
+            szabalyozo.uz_sek_nyom = p2_nyomas
+            szabalyozo.save()
+
             return redirect('diagnosztika', pk=pk)
     else:
         form = DiagnosztikaForm()
@@ -452,7 +466,8 @@ def diagnosztika_new(request, pk):
 def terkep(request):
     fogadok = Szabalyozok.objects.filter(funkcio='fogado').values('id', 'allomas_nev', 'gps_lat', 'gps_long')
     korzeti = Szabalyozok.objects.filter(funkcio='korzeti').values('id', 'allomas_nev', 'gps_lat', 'gps_long')
-    egyeb = Szabalyozok.objects.filter(~Q(funkcio='fogado') & ~Q(funkcio='korzeti')).values('id', 'allomas_nev', 'gps_lat', 'gps_long')
+    egyeb = Szabalyozok.objects.filter(~Q(funkcio='fogado') & ~Q(funkcio='korzeti')).values('id', 'allomas_nev',
+                                                                                            'gps_lat', 'gps_long')
 
     fogado_seri = json.dumps(list(fogadok), ensure_ascii=False, cls=DjangoJSONEncoder)
     korzeti_seri = json.dumps(list(korzeti), ensure_ascii=False, cls=DjangoJSONEncoder)

@@ -11,10 +11,11 @@
         <th>Üzem</th>
         <th>Település</th>
         <th>Műszer fajta</th>
-        <th>Műszer azonosító</th>
+        <th>Műszer típus</th>
         <th>Munkatípus</th>
         <th>Időpont</th>
         <th>Megjegyzes</th>
+        <th>Műszer azonosító</th>
     </tr>
     </thead>
     <tfoot>
@@ -24,10 +25,11 @@
         <th>Üzem</th>
         <th>Település</th>
         <th>Műszer fajta</th>
-        <th>Műszer azon</th>
+        <th>Műszer típus</th>
         <th>Munkatípus</th>
         <th>Időpont</th>
         <th>Megjegyzes</th>
+        <th>Műszer azon</th>
     </tr>
     <tfoot>
     <tbody>
@@ -38,10 +40,11 @@
         <td>{% if munka.muszer %}{{ munka.muszer.szabalyozo.telepules.uzem }}{% endif %}</td>
         <td>{% if munka.muszer %}{{ munka.muszer.szabalyozo.telepules }}{% endif %}</td>
         <td>{{ munka.muszer.muszerfajta }}</td>
-        <td>{{ munka.muszer.id }}</td>
+        <td>{{ munka.muszer.muszertipus }}</td>
         <td>{{ munka.muszermunkatipus }}</td>
         <td>{{ munka.muszmunka_datum }}</td>
         <td>{{ munka.megjegyzes }}</td>
+        <td>{{ munka.muszer.id }}</td>
     </tr>
     {% endfor %}
     </tbody>

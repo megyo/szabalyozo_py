@@ -5,6 +5,7 @@ from .models import *
 #Szabályozók admin
 class SzabalyozokAdmin(admin.ModelAdmin):
     list_display = ('azonosito','telepules','allomas_nev')
+    exclude = ('uz_prim_nyom', 'uz_sek_nyom')
     # list_filter = [sz.name for sz in Szabalyozok._meta.fields]
     search_fields = ('allomas_nev',)
 

@@ -280,14 +280,14 @@
                 <label for="p1_nyomas">
                     Üzemi prim. nyomás
                 </label>
-                <input class="form-control" id="uzemiprim" value="{% if diag_p1 %} {{ diag_p1 }} {% endif %}" readonly type="text">
+                <input class="form-control" id="uzemiprim" value="{{ szabalyozo.uz_prim_nyom }}" readonly type="text">
             </div>
 
             <div class="form-group">
                 <label for="p2_nyomas">
                     Üzemi szek. nyomás
                 </label>
-                <input class="form-control" id="uzemiszek" value="{% if diag_p2 %} {{ diag_p2 }} {% endif %}" readonly type="text">
+                <input class="form-control" id="uzemiszek" value="{{ szabalyozo.uz_sek_nyom }}" readonly type="text">
             </div>
 
             <div class="form-group">
