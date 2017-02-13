@@ -15,8 +15,16 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css" />
     <script src="{% static 'szabalyozok/scripts/modernizr-2.6.2.js' %}"></script>
     <link rel="icon" type="image/x-icon" href="{% static 'szabalyozok/image/favicon.ico' %}"/>
+    <script>
+    $(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+	</script>
 </head>
 <body>
+<div class="se-pre-con"></div>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -31,8 +39,9 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'szabalyozok' %}">Szabályozó keresés</a></li>
                         <li><a href="{% url 'terkep' %} " target="_blank">Szabályozó térkép</a></li>
-                        <li><a href="/admin">Admin</a></li>
                         <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'manometernew' %}">Manométer létrehozás</a></li>
+                        <li><a href="/admin">Admin</a></li>
                     </ul>
                 </li>
                 {% if user.is_authenticated %}
@@ -44,6 +53,7 @@
                         <li><a href="{% url 'riport_szabtartozekok' %}">Szab. tartozékok</a></li>
                         <li><a href="{% url 'riport_muszerek' %}">Műszerek</a></li>
                         <li><a href="{% url 'riport_diagnosztika' %}">Diagnosztikák</a></li>
+                        <li role="separator" class="divider"></li>
                         <li><a href="{% url 'riport_szabmunkak' %}">Szabályozó munkák</a></li>
                         <li><a href="{% url 'riport_muszermunkak' %}">Műszer munkák</a></li>
                     </ul>
@@ -70,6 +80,8 @@
     <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
     <script>
         $(document).ready(function () {
+            $(".se-pre-con").css({'position': 'static'});
+
             var selected = [];
 
             // Setup - add a text input to each footer cell
@@ -139,8 +151,6 @@
         });
 
     </script>
-
-
 {% block scripts %}{% endblock %}
 </body>
 </html>

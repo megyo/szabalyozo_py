@@ -1,0 +1,23 @@
+{% extends "szabalyozok/layout.html" %}
+
+
+{% block content %}
+
+<h3 style="margin-left:40px;">Manométer létrehozása</h3><br>
+<h2 style="margin-left:80px; color: red">{% if hiba %} {{ hiba }} {% endif %}</h2>
+<h4 id="siker" style="margin-left:220px; color: green">{% if siker %} {{ siker }} {% endif %}</h4>
+<div style="margin-left:40px;" class="col-md-4">
+    {% load bootstrap3 %}
+    <form method="POST" class="form-horizontal" role="form">
+        {% csrf_token %}
+        {% bootstrap_form form layout="horizontal" %}
+        <button type="submit" class="save btn btn-primary">Létrehoz és új</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#siker").fadeOut(5000);
+</script>
+{% endblock %}

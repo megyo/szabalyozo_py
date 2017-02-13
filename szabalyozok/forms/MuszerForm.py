@@ -1,5 +1,5 @@
 from django import forms
-from szabalyozok.models import Muszerek, Muszerkiszerel
+from szabalyozok.models import Muszerek, Muszerkiszerel, Muszergyarto, Muszertipus
 
 
 class MuszerkiszerelForm(forms.ModelForm):
@@ -15,7 +15,7 @@ class MuszerkiszerelForm(forms.ModelForm):
 
 class MuszerbeszerelForm(forms.ModelForm):
     elhelyezkedes = forms.ChoiceField(
-        required=False,
+        required=True,
         label="Elhelyezkedés",
         widget=forms.Select,
         choices=Muszerek.ELHELYEZKEDES_CHOICES,
@@ -29,6 +29,40 @@ class MuszerbeszerelForm(forms.ModelForm):
     class Meta(forms.ModelForm):
         model = Muszerek
         fields = ('elhelyezkedes', 'kalib_datum', 'kov_kalib_datum', 'beszereles_datum', 'megjegyzes')
+
+
+class ManometernewForm(forms.ModelForm):
+    muszergyarto = forms.ModelChoiceField(queryset=Muszergyarto.objects.all(), empty_label="Kérem válasszon", required=True,
+                                   label="Műszergyártó")
+    muszertipus = forms.ModelChoiceField(queryset=Muszertipus.objects.all(), empty_label="Kérem válasszon", required=True,
+                                   label="Műszer típus")
+    gyariszam = forms.CharField(required=True, label="Gyáriszám")
+    gyartas_ev = forms.IntegerField(required=False, label='Gyártás éve', min_value=1950, max_value=2100)
+    elhelyezkedes = forms.ChoiceField(
+        required=False,
+        label="Elhelyezkedés",
+        widget=forms.Select,
+        choices=Muszerek.ELHELYEZKEDES_CHOICES,
+    )
+    metrologia = forms.ChoiceField(
+        required=True,
+        label="Metrológiai jellemző",
+        widget=forms.Select,
+        choices=Muszerek.METROLOGIA_CHOICES,
+    )
+    kalib_datum = forms.DateField(required=True, label="Kalibrálás dátuma", widget=forms.TextInput(attrs={'class':'datum'}))
+    kov_kalib_datum = forms.DateField(required=True, label="Következő kalib. dátuma", widget=forms.TextInput(attrs={'class':'datum'}))
+    kalib_ciklusido = forms.IntegerField(required=True, label='Kalibrálási ciklusidő')
+    mereshatar1 = forms.CharField(required=False, label="Méréshatár 1")
+    mereshatar2 = forms.CharField(required=False, label="Méréshatár 2")
+    osztalypontossag = forms.CharField(required=False, label="Osztálypontosság")
+    megjegyzes = forms.CharField(required=False, label="Megjegyzés", widget=forms.Textarea)
+
+
+    class Meta(forms.ModelForm):
+        model = Muszerek
+        fields = ('muszergyarto', 'muszertipus', 'gyariszam', 'gyartas_ev', 'elhelyezkedes', 'metrologia', 'kalib_datum', 'kov_kalib_datum',
+                  'kalib_ciklusido', 'mereshatar1', 'mereshatar2', 'osztalypontossag', 'megjegyzes')
 
 
 class MuszerSearchForm(forms.Form):

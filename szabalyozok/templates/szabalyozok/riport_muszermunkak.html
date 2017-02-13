@@ -11,11 +11,14 @@
         <th>Üzem</th>
         <th>Település</th>
         <th>Műszer fajta</th>
+        <th>Műszer gyártó</th>
         <th>Műszer típus</th>
+        <th>Gyáriszám</th>
         <th>Munkatípus</th>
         <th>Időpont</th>
         <th>Megjegyzes</th>
         <th>Műszer azonosító</th>
+        <th>Dokumentumok</th>
     </tr>
     </thead>
     <tfoot>
@@ -25,26 +28,32 @@
         <th>Üzem</th>
         <th>Település</th>
         <th>Műszer fajta</th>
+        <th>Műszer gyártó</th>
         <th>Műszer típus</th>
+        <th>Gyáriszám</th>
         <th>Munkatípus</th>
         <th>Időpont</th>
         <th>Megjegyzes</th>
         <th>Műszer azon</th>
+        <th>Dokumentumok</th>
     </tr>
     <tfoot>
     <tbody>
     {% for munka in muszermunkak %}
     <tr>
-        <td>{% if munka.muszer %} <a href="{% url 'szabtart_show' pk=munka.muszer.szabalyozo.id %}">Mutat</a> {% endif %}</td>
-        <td>{% if munka.muszer %}{{ munka.muszer.szabalyozo.telepules.uzem.terulet }}{% endif %}</td>
-        <td>{% if munka.muszer %}{{ munka.muszer.szabalyozo.telepules.uzem }}{% endif %}</td>
-        <td>{% if munka.muszer %}{{ munka.muszer.szabalyozo.telepules }}{% endif %}</td>
+        <td>{% if munka.muszer.szabalyozo %} <a href="{% url 'szabtart_show' pk=munka.muszer.szabalyozo.id %}">Mutat</a> {% endif %}</td>
+        <td>{% if munka.muszer.szabalyozo %}{{ munka.muszer.szabalyozo.telepules.uzem.terulet }}{% endif %}</td>
+        <td>{% if munka.muszer.szabalyozo %}{{ munka.muszer.szabalyozo.telepules.uzem }}{% endif %}</td>
+        <td>{% if munka.muszer.szabalyozo %}{{ munka.muszer.szabalyozo.telepules }}{% endif %}</td>
         <td>{{ munka.muszer.muszerfajta }}</td>
+        <td>{{ munka.muszer.muszergyarto }}</td>
         <td>{{ munka.muszer.muszertipus }}</td>
+        <td>{{ munka.muszer.gyariszam }}</td>
         <td>{{ munka.muszermunkatipus }}</td>
         <td>{{ munka.muszmunka_datum }}</td>
         <td>{{ munka.megjegyzes }}</td>
         <td>{{ munka.muszer.id }}</td>
+        <td><a href="{% url 'simple_doc_list' tip='muszermunkak' eszid=munka.id %}">Dokumentumok</a></td>
     </tr>
     {% endfor %}
     </tbody>

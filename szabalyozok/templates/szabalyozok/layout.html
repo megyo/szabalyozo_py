@@ -27,8 +27,9 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'szabalyozok' %}">Szabályozó keresés</a></li>
                         <li><a href="{% url 'terkep' %}" target="_blank">Szabályozó térkép</a></li>
-                        <li><a href="/admin">Admin</a></li>
                         <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'manometernew' %}">Manométer létrehozás</a></li>
+                        <li><a href="/admin">Admin</a></li>
                     </ul>
                 </li>
                 {% if user.is_authenticated %}
@@ -40,6 +41,7 @@
                         <li><a href="{% url 'riport_szabtartozekok' %}">Szab. tartozékok</a></li>
                         <li><a href="{% url 'riport_muszerek' %}">Műszerek</a></li>
                         <li><a href="{% url 'riport_diagnosztika' %}">Diagnosztikák</a></li>
+                        <li role="separator" class="divider"></li>
                         <li><a href="{% url 'riport_szabmunkak' %}">Szabályozó munkák</a></li>
                         <li><a href="{% url 'riport_muszermunkak' %}">Műszer munkák</a></li>
                     </ul>
@@ -50,7 +52,7 @@
     </div>
 </nav>
 {% block content %}{% endblock %}
-<script src="{% static 'szabalyozok/scripts/jquery-1.10.2.js' %}"></script>
+<script src="{% static 'szabalyozok/scripts/jquery-1.12.1.min.js' %}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{% static 'szabalyozok/scripts/bootstrap.js' %}"></script>
 <script src="{% static 'szabalyozok/scripts/respond.js' %}"></script>

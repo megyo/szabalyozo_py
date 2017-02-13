@@ -5,7 +5,7 @@ from szabalyozok.models import SzabalyozoModel
 
 
 class DiagnosztikaOk(models.Model):
-    diagnosztikaok = models.CharField(max_length=100, blank=False, null=False)
+    diagnosztikaok = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Diagnosztika oka"

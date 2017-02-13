@@ -13,6 +13,9 @@
         <p>
             <button type="button" class="btn btn-success" onclick="window.location.href='{% url 'szabmunka_new' pk=szabid %}'">Új munkavégzés</button>
             <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'szabalyozo_edit' pk=szabid %}'">Szabályozó módosítása</button></a>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'tartozek_beki' pk=szabid %}'">Tartozék módosítása</button></a>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'muszer_beki' pk=szabid %}'">Műszer módosítása</button></a>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'diagnosztika_new' pk=szabid %}'">Új diagnosztika</button></a>
         </p>
         <table class="table table-striped table-bordered">
             <thead>

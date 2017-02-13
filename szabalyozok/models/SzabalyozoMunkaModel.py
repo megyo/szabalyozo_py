@@ -4,7 +4,7 @@ from szabalyozok.models import MuszerModel
 
 
 class SzabalyozoMunkatipus(models.Model):
-    szabalyozomunkatipus = models.CharField(max_length=100, blank=False, null=False)
+    szabalyozomunkatipus = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Szabályozó munkatípusok"
@@ -14,7 +14,7 @@ class SzabalyozoMunkatipus(models.Model):
 
 
 class MuszerMunkatipus(models.Model):
-    muszermunkatipus = models.CharField(max_length=100, blank=False, null=False)
+    muszermunkatipus = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Műszer munkatípusok"

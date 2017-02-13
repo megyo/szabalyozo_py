@@ -5,7 +5,7 @@ from szabalyozok.models import SzabalyozoModel
 
 
 class Muszerfajta(models.Model):
-    muszerfajta = models.CharField(max_length=100, blank=False, null=False)
+    muszerfajta = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Műszerfajták"
@@ -15,7 +15,7 @@ class Muszerfajta(models.Model):
 
 
 class Muszergyarto(models.Model):
-    muszergyarto = models.CharField(max_length=100, blank=False, null=False)
+    muszergyarto = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Műszergyártók"
@@ -25,7 +25,7 @@ class Muszergyarto(models.Model):
 
 
 class Muszertipus(models.Model):
-    muszertipus = models.CharField(max_length=100, blank=False, null=False)
+    muszertipus = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Műszertípusok"
@@ -54,7 +54,7 @@ class Muszerek(models.Model):
     muszergyarto = models.ForeignKey(Muszergyarto, blank=False, null=True)
     muszertipus = models.ForeignKey(Muszertipus, blank=False, null=False)
     szabalyozo = models.ForeignKey(SzabalyozoModel.Szabalyozok, blank=True, null=True)
-    elhelyezkedes = models.CharField(max_length=20, choices=ELHELYEZKEDES_CHOICES, )
+    elhelyezkedes = models.CharField(max_length=20, choices=ELHELYEZKEDES_CHOICES, blank=True, null=True)
     beszereles_datum = models.DateField(blank=True, null=True)
     gyariszam = models.CharField(max_length=50, blank=False, null=False)
     gyartas_ev = models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2100)], blank=True,

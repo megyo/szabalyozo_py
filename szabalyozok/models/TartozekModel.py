@@ -5,7 +5,7 @@ from szabalyozok.models import SzabalyozoModel
 
 
 class Tartozekfajta(models.Model):
-    tartozekfajta = models.CharField(max_length=100, blank=False, null=False)
+    tartozekfajta = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Tartozékfajták"
@@ -15,7 +15,7 @@ class Tartozekfajta(models.Model):
 
 
 class Tartozektipus(models.Model):
-    tartozektipus = models.CharField(max_length=100, blank=False, null=False)
+    tartozektipus = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Tartozéktípusok"
@@ -25,7 +25,7 @@ class Tartozektipus(models.Model):
 
 
 class SzabVezerlesModel(models.Model):
-    szabvezerles = models.CharField(max_length=100, blank=False, null=False)
+    szabvezerles = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Szab. vezérlés módja"

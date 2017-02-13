@@ -17,6 +17,7 @@ from szabalyozok.forms.DocForm import *
 from szabalyozok.models import *
 import os
 from django.conf import settings
+from django.http import HttpResponse
 
 
 def home(request):
@@ -37,11 +38,15 @@ def szabalyozok(request):
         form = SearchForm(request.POST)
         hiba = ''
         if form.is_valid():
+            group = request.user.groups.values_list('name', flat=True).first()
+            if group==None:
+                group = 'admin'
             param = form.cleaned_data['search']
             szab = Szabalyozok.objects.filter((Q(allomas_nev__contains=param) | Q(
-                telepules__telepules__contains=param) | Q(azonosito__contains=param)))
+                telepules__telepules__contains=param) | Q(azonosito__contains=param)) & Q(telepules__uzem__jog__contains=group))
             if len(szab) == 0:
                 hiba = 'Nincs találat!'
+
             return render(request, 'szabalyozok/index.html',
                           {'title': 'Szabályozók', 'szabalyozok': szab, 'form': form, 'hiba': hiba, 'data': True})
     else:
@@ -213,6 +218,7 @@ def muszer_ki(request, pk):
             muszer.kalib_datum = None
             muszer.kov_kalib_datum = None
             muszer.beszereles_datum = None
+            muszer.elhelyezkedes = None
             if selejt:
                 muszer.selejt = True
 
@@ -250,6 +256,45 @@ def muszer_tortenet(request, pk):
     return render(request, 'szabalyozok/muszer_tortenet.html',
                   {'title': 'Szabályozó műszer történek', 'szabnev': szab_nev, 'szabid': szab_id,
                    'muszerek': muszer_tortenet, 'hiba': hiba})
+
+
+@login_required(login_url='/login/')
+def manometernew(request):
+    if request.method == "POST":
+        form = ManometernewForm(request.POST)
+        if form.is_valid():
+            manometer = form.save(commit=False)
+            manometer.muszerfajta_id = 1
+            manometer.selejt = False
+
+            fajta = manometer.muszerfajta
+            gyarto = manometer.muszergyarto
+            tipus = manometer.muszertipus
+            gyariszam = manometer.gyariszam
+
+            muszer = Muszerek.objects.filter(muszerfajta=fajta, muszergyarto=gyarto, muszertipus=tipus, gyariszam=gyariszam)
+            if len(muszer) > 0:
+                return render(request, 'szabalyozok/manometer_new.html', {'form': form, 'hiba': 'A manométer már létezik!!!'})
+                # return HttpResponse(muszer, content_type="text/plain")
+
+            manometer.save()
+            return render(request, 'szabalyozok/manometer_new.html', {'form': form, 'siker': 'Manométer feltöltve! '})
+    else:
+        form = ManometernewForm()
+    return render(request, 'szabalyozok/manometer_new.html', {'form': form})
+
+
+@login_required(login_url='/login/')
+def manometer_edit(request, pk):
+    manometer = get_object_or_404(Muszerek, pk=pk)
+    if request.method == "POST":
+        form = ManometernewForm(request.POST, instance=manometer)
+        if form.is_valid():
+            form.save()
+            return redirect('riport_muszerek')
+    else:
+        form = ManometernewForm(instance=manometer)
+    return render(request, 'szabalyozok/manometer_new.html', {'form': form})
 
 
 @login_required(login_url='/login/')
@@ -464,11 +509,13 @@ def diagnosztika_new(request, pk):
 
 
 def terkep(request):
-    fogadok = Szabalyozok.objects.filter(funkcio='fogado').values('id', 'allomas_nev', 'gps_lat', 'gps_long')
-    korzeti = Szabalyozok.objects.filter(funkcio='korzeti').values('id', 'allomas_nev', 'gps_lat', 'gps_long')
-    egyeb = Szabalyozok.objects.filter(~Q(funkcio='fogado') & ~Q(funkcio='korzeti')).values('id', 'allomas_nev',
+    group = request.user.groups.values_list('name', flat=True).first()
+    if group == None:
+        group = 'admin'
+    fogadok = Szabalyozok.objects.filter(funkcio='fogado', telepules__uzem__jog__contains=group).values('id', 'allomas_nev', 'gps_lat', 'gps_long')
+    korzeti = Szabalyozok.objects.filter(funkcio='korzeti', telepules__uzem__jog__contains=group).values('id', 'allomas_nev', 'gps_lat', 'gps_long')
+    egyeb = Szabalyozok.objects.filter(Q(telepules__uzem__jog__contains=group) & ~Q(funkcio='fogado') & ~Q(funkcio='korzeti')).values('id', 'allomas_nev',
                                                                                             'gps_lat', 'gps_long')
-
     fogado_seri = json.dumps(list(fogadok), ensure_ascii=False, cls=DjangoJSONEncoder)
     korzeti_seri = json.dumps(list(korzeti), ensure_ascii=False, cls=DjangoJSONEncoder)
     egyeb_seri = json.dumps(list(egyeb), ensure_ascii=False, cls=DjangoJSONEncoder)

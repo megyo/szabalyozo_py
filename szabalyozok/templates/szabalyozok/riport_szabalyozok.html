@@ -7,6 +7,7 @@
     <thead>
     <tr>
         <th>Mutat</th>
+        <th>Aktív</th>
         <th>Azonosító kód</th>
         <th>GRASS azonosító</th>
         <th>SAP PM azonosító</th>
@@ -20,7 +21,6 @@
         <th>HRSZ</th>
         <th>Település kód</th>
         <th>Telepítés éve</th>
-        <th>Aktív</th>
         <th>Szabályozó gyártó</th>
         <th>Szabályozó karbantartó</th>
         <th>Kivitel</th>
@@ -56,6 +56,7 @@
     <tfoot>
     <tr>
         <th>Mutat</th>
+        <th>Aktív</th>
         <th>Azonosító kód</th>
         <th>GRASS azonosító</th>
         <th>SAP PM azonosító</th>
@@ -69,7 +70,6 @@
         <th>HRSZ</th>
         <th>Település kód</th>
         <th>Telepítés éve</th>
-        <th>Aktív</th>
         <th>Szabályozó gyártó</th>
         <th>Szabályozó karbantartó</th>
         <th>Kivitel</th>
@@ -106,6 +106,7 @@
     {% for szab in szabalyozok %}
     <tr>
         <td><a href="{% url 'szabalyozo_show' pk=szab.id %}">Mutat</a></td>
+        <td>{% if szab.aktiv %}igen{% else %}nem{% endif %}</td>
         <td>{{ szab.azonosito }}</td>
         <td>{{ szab.grass_az }}</td>
         <td>{{ szab.sap_pm_az }}</td>
@@ -119,7 +120,6 @@
         <td>{{ szab.hrsz }}</td>
         <td>{{ szab.telepules.telepules_kod }}</td>
         <td>{{ szab.telepites_ev }}</td>
-        <td>{% if szab.aktiv %}igen{% else %}nem{% endif %}</td>
         <td>{{ szab.szabgyarto }}</td>
         <td>{{ szab.szabkarb }}</td>
         <td>{{ szab.kivitel }}</td>
@@ -159,5 +159,4 @@
     {% endfor %}
     </tbody>
 </table>
-
 {% endblock %}

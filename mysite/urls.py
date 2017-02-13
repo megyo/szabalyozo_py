@@ -59,6 +59,8 @@ urlpatterns = [
     url(r'^muszerek/(?P<pk>[0-9]+)/muszerki/$', szabalyozok.views.muszer_ki, name='muszer_ki'),
     url(r'^muszerek/(?P<pk>[0-9]+)/muszertortenet/$', szabalyozok.views.muszer_tortenet, name='muszer_tortenet'),
     url(r'^muszerek/(?P<pk>[0-9]+)/(?P<spk>[0-9]+)/muszerbe/$', szabalyozok.views.muszer_be, name='muszer_be'),
+    url(r'^muszerek/manometernew/$', szabalyozok.views.manometernew, name='manometernew'),
+    url(r'^manometer/(?P<pk>[0-9]+)/edit/$', szabalyozok.views.manometer_edit, name='manometer_edit'),
 
     # szabályozó munka URL
     url(r'^szabmunkak/(?P<pk>[0-9]+)/new/$', szabalyozok.views.szabmunka_new, name='szabmunka_new'),
@@ -86,6 +88,7 @@ urlpatterns = [
     url(r'^riportok/muszerek/$', szabalyozok.views.riport_muszerek, name='riport_muszerek'),
     url(r'^riportok/szabalyozok/$', szabalyozok.views.riport_szabalyozok, name='riport_szabalyozok'),
     url(r'^riportok/diagnosztikak/$', szabalyozok.views.riport_diagnosztika, name='riport_diagnosztika'),
+    url(r'^riport/(?P<tip>[a-z]+)/(?P<eszid>[0-9]+)/simple_doc_list/$', szabalyozok.views.simple_doc_list, name='simple_doc_list'),
 
 ]
 
