@@ -15,14 +15,17 @@ class Tartozekfajta(models.Model):
 
 
 class Tartozektipus(models.Model):
-    tartozektipus = models.CharField(max_length=100, blank=False, null=False, unique=True)
+    tartozekfajta = models.ForeignKey(Tartozekfajta, related_name='tart_fajta', blank=False, null=False)
+    tartozekgyarto = models.ForeignKey(SzabalyozoModel.Tartozekgyartok, blank=False, null=True)
+    tartozektipus = models.CharField(max_length=100, blank=False, null=False)
 
     class Meta:
         verbose_name_plural = "Tartozéktípusok"
+        unique_together = ('tartozekfajta', 'tartozekgyarto', 'tartozektipus')
 
     def __str__(self):
         return self.tartozektipus
-
+        # return '%s - %s' % (self.tartozektipus, self.tartozekfajta)
 
 class SzabVezerlesModel(models.Model):
     szabvezerles = models.CharField(max_length=100, blank=False, null=False, unique=True)
@@ -41,8 +44,6 @@ class Tartozekok(models.Model):
         ('p2_ag', 'P2 ág'),
         ('kozos', 'Közös'),
     )
-    tartozekfajta = models.ForeignKey(Tartozekfajta, related_name='tart_fajta', blank=False, null=False)
-    tartozekgyarto = models.ForeignKey(SzabalyozoModel.Tartozekgyartok, blank=False, null=True)
     tartozektipus = models.ForeignKey(Tartozektipus, blank=False, null=False)
     elhelyezkedes = models.CharField(max_length=20, choices=ELHELYEZKEDES_CHOICES, )
     beuzemeles_ev = models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2100)], blank=True,
@@ -57,7 +58,7 @@ class Tartozekok(models.Model):
         verbose_name_plural = "Tartozékok"
 
     def __str__(self):
-        return str(self.tartozekfajta)
+        return str(self.tartozektipus)
 
 
 class Tartozekkiszerel(models.Model):

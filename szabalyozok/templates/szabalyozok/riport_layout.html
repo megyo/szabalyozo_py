@@ -8,13 +8,12 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/bootstrap.min.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/style.css' %}"/>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{% static 'szabalyozok/content/jquery.dataTables.min.css' %}" />
     <link rel="stylesheet" href="{% static 'szabalyozok/content/dataTables.bootstrap.min.css' %}" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="{% static 'szabalyozok/content/buttons.dataTables.min.css' %}" />
     <script src="{% static 'szabalyozok/scripts/modernizr-2.6.2.js' %}"></script>
-    <link rel="icon" type="image/x-icon" href="{% static 'szabalyozok/image/favicon.ico' %}"/>
+    <script src="{% static 'szabalyozok/scripts/jquery-1.12.1.min.js' %}"></script>
+    <link rel="icon" type="image/x-icon" href="{% static 'szabalyozok/images/favicon.ico' %}"/>
     <script>
     $(window).load(function() {
 		// Animate loader off screen
@@ -39,8 +38,11 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'szabalyozok' %}">Szabályozó keresés</a></li>
                         <li><a href="{% url 'terkep' %} " target="_blank">Szabályozó térkép</a></li>
+                        <li><a href="{% static 'szabalyozok/kezelesi_utmutato/szab_kezelesi.pdf' %}" target="_blank">Kezelési útmutató</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url 'manometernew' %}">Manométer létrehozás</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'manometernew' %}">Manométer létrehozás</a></li>
+                        {% endif %}
                         <li><a href="/admin">Admin</a></li>
                     </ul>
                 </li>
@@ -64,20 +66,19 @@
     </div>
 </nav>
 {% block content %}{% endblock %}
-<script src="{% static 'szabalyozok/scripts/jquery-1.12.1.min.js' %}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'szabalyozok/scripts/jquery-ui.js' %}"></script>
 <script src="{% static 'szabalyozok/scripts/bootstrap.js' %}"></script>
 <script src="{% static 'szabalyozok/scripts/respond.js' %}"></script>
 <script src="{% static 'szabalyozok/scripts/lightbox.js' %}"></script>
-    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
-    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
-    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
+    <script src="{% static 'szabalyozok/scripts/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/jszip.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/pdfmake.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/vfs_fonts.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/buttons.print.min.js' %}"></script>
     <script>
         $(document).ready(function () {
             $(".se-pre-con").css({'position': 'static'});

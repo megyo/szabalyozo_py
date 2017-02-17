@@ -4,7 +4,7 @@
 <ul class="nav nav-tabs">
     <li role="presentation"><a href="{% url 'szabalyozo_show' pk=szabid %}">Alapadatok</a></li>
     <li role="presentation" class="active"><a href="#">Tartozékok</a></li>
-    <li role="presentation"><a href="{% url 'diagnosztika' pk=szabid %}">Diagnosztika</a></li>
+    <li role="presentation"><a href="{% url 'diagnosztika' pk=szabid %}">Beszabályozás</a></li>
     {% if user.is_authenticated %}
         <li role="presentation"><a href="{% url 'szabmunka_show' pk=szabid %}">Szab. munkavégzés</a></li>
     {% endif %}
@@ -32,8 +32,8 @@
         <tbody>
         {% for tartozek in tartozekok %}
         <tr>
-            <td>{{ tartozek.tartozekfajta }}</td>
-            <td>{{ tartozek.tartozekgyarto }}</td>
+            <td>{{ tartozek.tartozektipus.tartozekfajta }}</td>
+            <td>{{ tartozek.tartozektipus.tartozekgyarto }}</td>
             <td>{{ tartozek.tartozektipus }}</td>
             <td>{{ tartozek.beszereles_datum }}</td>
             <td>{% if tartozek.megjegyzes %} {{ tartozek.megjegyzes }} {% endif %}</td>

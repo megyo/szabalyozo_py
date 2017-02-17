@@ -15,19 +15,21 @@
         <th>Beüzemelés éve</th>
         <th>Beszerelés dátuma</th>
         <th>Megjegyzés</th>
+        <th>Művelet</th>
         <th>Kiszerelés</th>
     </tr>
     </thead>
     <tbody>
     {% for tartozek in tartozekok %}
     <tr>
-        <td>{{ tartozek.tartozekfajta }}</td>
-        <td>{{ tartozek.tartozekgyarto }}</td>
+        <td>{{ tartozek.tartozektipus.tartozekfajta }}</td>
+        <td>{{ tartozek.tartozektipus.tartozekgyarto }}</td>
         <td>{{ tartozek.tartozektipus }}</td>
         <td>{% if tartozek.elhelyezkedes %} {{ tartozek.elhelyezkedes }} {% endif %}</td>
         <td>{% if tartozek.beuzemeles_ev %} {{ tartozek.beuzemeles_ev }} {% endif %}</td>
         <td>{% if tartozek.beszereles_datum %} {{ tartozek.beszereles_datum }} {% endif %}</td>
         <td>{% if tartozek.megjegyzes %} {{ tartozek.megjegyzes }} {% endif %}</td>
+        <td><a href="{% url 'tartozek_edit' pk=tartozek.id spk=szabid %}">Szerkeszt</a></td>
         <td>
             <button id="{{tartozek.id}}" type="button" class="btn btn-danger">Kiszerel</button>
         </td>

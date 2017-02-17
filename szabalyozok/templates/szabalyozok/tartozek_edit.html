@@ -3,14 +3,14 @@
 
 {% block content %}
 
-<h3 style="margin-left:40px;">Tartozék létrehozása</h3><br>
+<h3 style="margin-left:40px;">Tartozék módosítása</h3><br>
 
 <div style="margin-left:40px;" class="col-md-6">
     {% load bootstrap3 %}
     <form method="POST" class="form-horizontal" role="form">
         {% csrf_token %}
         {% bootstrap_form form layout="horizontal" %}
-        <button type="submit" class="save btn btn-primary">Létrehozás</button>
+        <button type="submit" class="save btn btn-primary">Módosítás</button>
     </form>
 </div>
 {% endblock %}
@@ -18,7 +18,7 @@
 {% block scripts %}
 <script>
 $(document).ready(function(){
-    $("#id_tartozektipus").empty();
+    // $("#id_tartozektipus").empty();
 
     $('#id_tartozekfajta').change(function(){
         api();

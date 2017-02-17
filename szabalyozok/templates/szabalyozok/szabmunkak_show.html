@@ -4,7 +4,7 @@
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="{% url 'szabalyozo_show' pk=szabid %}">Alapadatok</a></li>
         <li role="presentation"><a href="{% url 'szabtart_show' pk=szabid %}">Tartozékok</a></li>
-        <li role="presentation"><a href="{% url 'diagnosztika' pk=szabid %}">Diagnosztika</a></li>
+        <li role="presentation"><a href="{% url 'diagnosztika' pk=szabid %}">Beszabályozás</a></li>
         <li role="presentation" class="active"><a href="#">Szab. munkavégzés</a></li>
     </ul>
     <div class="col-md-6">
@@ -15,7 +15,7 @@
             <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'szabalyozo_edit' pk=szabid %}'">Szabályozó módosítása</button></a>
             <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'tartozek_beki' pk=szabid %}'">Tartozék módosítása</button></a>
             <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'muszer_beki' pk=szabid %}'">Műszer módosítása</button></a>
-            <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'diagnosztika_new' pk=szabid %}'">Új diagnosztika</button></a>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'diagnosztika_new' pk=szabid %}'">Új beszabályozás</button></a>
         </p>
         <table class="table table-striped table-bordered">
             <thead>

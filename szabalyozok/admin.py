@@ -9,10 +9,18 @@ class SzabalyozokAdmin(admin.ModelAdmin):
     # list_filter = [sz.name for sz in Szabalyozok._meta.fields]
     search_fields = ('allomas_nev',)
 
+
+class TartozektipusokAdmin(admin.ModelAdmin):
+    list_display = ('tartozektipus', 'tartozekfajta','tartozekgyarto')
+    list_filter = ('tartozekfajta','tartozekgyarto')
+    search_fields = ('tartozektipus',)
+
+
 class MuszerekAdmin(admin.ModelAdmin):
     list_display = ('muszertipus','gyariszam','szabalyozo')
     list_filter = ('muszertipus','muszerfajta')
     search_fields = ('gyariszam',)
+
 
 class DiagnosztikaAdmin(admin.ModelAdmin):
     def szabalyozo__telepules(self, obj):
@@ -22,6 +30,7 @@ class DiagnosztikaAdmin(admin.ModelAdmin):
     list_display = ('diagnosztikaok','szabalyozo','szabalyozo__telepules','diag_datum')
     list_filter = ('diagnosztikaok',)
     search_fields = ('szabalyozo__allomas_nev',)
+
 
 admin.site.register(Szabalyozok, SzabalyozokAdmin)
 admin.site.register(SzabVezerlesModel)
@@ -37,8 +46,8 @@ admin.site.register(Tartozekgyartok)
 
 #Tartozékok admin
 admin.site.register(Tartozekfajta)
-admin.site.register(Tartozektipus)
-#admin.site.register(Tartozekok)
+admin.site.register(Tartozektipus, TartozektipusokAdmin)
+admin.site.register(Tartozekok)
 
 #Műszerek admin
 admin.site.register(Muszerfajta)

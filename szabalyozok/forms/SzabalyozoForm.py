@@ -22,7 +22,7 @@ class SzabalyozoForm(forms.ModelForm):
     atado = forms.ModelChoiceField(queryset=Atadok.objects.all(), empty_label="Kérem válasszon", required=True, label="Átadó")
     telepules = forms.ModelChoiceField(queryset=Telepulesek.objects.all(), empty_label="Kérem válasszon", required=True, label="Település")
     szabgyarto = forms.ModelChoiceField(queryset=Tartozekgyartok.objects.all(), empty_label="Kérem válasszon",
-                                        required=True, label="Szabályozó gyártó besorolás")
+                                        required=True, label="Állomás gyártó besorolás")
     szabkarb = forms.ModelChoiceField(queryset=SzabKarb.objects.all(), empty_label="Kérem válasszon",
                                         required=False, label="Szabályozó karbantartó")
     hrsz = forms.CharField(required=False, label="HRSZ")
@@ -44,7 +44,7 @@ class SzabalyozoForm(forms.ModelForm):
     )
     tulajdonjog = forms.ChoiceField(
         required=True,
-        label="Tulajdonjog",
+        label="Berendezés tulajdonjoga",
         widget=forms.Select,
         choices=Szabalyozok.TULAJDON_CHOICES,
     )
@@ -54,18 +54,18 @@ class SzabalyozoForm(forms.ModelForm):
         widget=forms.Select,
         choices=Szabalyozok.FUNKCIO_CHOICES,
     )
-    tulajdonos = forms.CharField(required=False, label="Tulajdonos")
+    tulajdonos = forms.CharField(required=False, label="Berendezés tulajdonosa")
     #eszkozszam = forms.CharField(required=True, label="Eszközszám")
     #beruhazasi_szam = forms.CharField(required=True, label="Beruházási szám")
     megjegyzes = forms.CharField(required=False, label="Megjegyzés", widget=forms.Textarea)
-    nev_prim_nyom = forms.DecimalField(required=True, label="Névl. prim. nyomás")
-    nev_sek_nyom = forms.DecimalField(required=True, label="Névl. szek. nyomás")
+    nev_prim_nyom = forms.DecimalField(required=True, label="Névl. prim. nyomás (bar)")
+    nev_sek_nyom = forms.DecimalField(required=True, label="Névl. szek. nyomás (bar)")
     #uz_prim_nyom = forms.DecimalField(required=True, label="Üzemi prim. nyomás")
     #uz_sek_nyom = forms.DecimalField(required=True, label="Üzemi szek. nyomás")
-    nev_kapacitas = forms.IntegerField(required=True, label="Névleges kapacitás")
+    nev_kapacitas = forms.IntegerField(required=True, label="Névleges kapacitás (m3/h)")
     nyom_din_rendszer = forms.BooleanField(required=False, label="Nyomásdinamizálási rendszer")
     futott = forms.BooleanField(required=False, label="Fűtött")
-    felugyeleti_rendszer = forms.BooleanField(required=False, label="felügyeleti rendszer")
+    # felugyeleti_rendszer = forms.BooleanField(required=False, label="felügyeleti rendszer")
     rb_zona = forms.ChoiceField(
         required=False,
         label="Rb zóna",
@@ -89,10 +89,10 @@ class SzabalyozoForm(forms.ModelForm):
     karbantartas_10ev = forms.IntegerField(required=False, label='10 éves karb. köv. időpontja', min_value=1950,
                                            max_value=2100)
     osszedolg_szab = forms.CharField(required=False, label="Összedolgozó szabályozók", widget=forms.Textarea)
-    ellatotttelepules = forms.ModelMultipleChoiceField(queryset=Telepulesek.objects.all(), required=True, label="Ellátott települések")
-    ossz_terulet = forms.DecimalField(required=False, label="Össz. terület")
-    fuves_terulet = forms.DecimalField(required=False, label="Füves terület")
-    burkolt_terulet = forms.DecimalField(required=False, label="Burkolt terület")
+    # ellatotttelepules = forms.ModelMultipleChoiceField(queryset=Telepulesek.objects.all(), required=True, label="Ellátott települések")
+    ossz_terulet = forms.DecimalField(required=False, label="Össz. terület (m2)")
+    fuves_terulet = forms.DecimalField(required=False, label="Füves terület (m2)")
+    burkolt_terulet = forms.DecimalField(required=False, label="Burkolt terület (m2)")
     ellenorzesiciklus = forms.ModelChoiceField(queryset=EllenorzesiCiklus.objects.all(), empty_label="Kérem válasszon",
                                         required=False, label="Ellenőrzési ciklus")
 
@@ -100,9 +100,9 @@ class SzabalyozoForm(forms.ModelForm):
         model = Szabalyozok
         fields = ('atado', 'telepules', 'szabgyarto', 'hrsz', 'gps_lat', 'gps_long', 'aktiv', 'kivitel',
                   'elhelyezes', 'tulajdonjog', 'funkcio', 'tulajdonos', 'megjegyzes', 'nev_prim_nyom', 'nev_sek_nyom',
-                  'nev_kapacitas', 'nyom_din_rendszer', 'futott', 'felugyeleti_rendszer',
-                  'rb_zona', 'telepites_ev', 'villamvedelem', 'villamvedelem_ev', 'villamvedelem_kov_ev', 'karbantartas_2ev',
-                  'karbantartas_10ev', 'osszedolg_szab', 'ellatotttelepules', 'szabkarb', 'ossz_terulet', 'fuves_terulet',
+                  'nev_kapacitas', 'nyom_din_rendszer', 'futott', 'rb_zona', 'telepites_ev', 'villamvedelem',
+                  'villamvedelem_ev', 'villamvedelem_kov_ev', 'karbantartas_2ev',
+                  'karbantartas_10ev', 'osszedolg_szab', 'szabkarb', 'ossz_terulet', 'fuves_terulet',
                   'burkolt_terulet', 'ellenorzesiciklus')
 
 

@@ -73,6 +73,7 @@ class Muszerek(models.Model):
 
     class Meta:
         verbose_name_plural = "Műszerek"
+        unique_together = ('muszerfajta', 'muszergyarto', 'muszertipus', 'gyariszam')
 
     def __str__(self):
         return str(self.muszerfajta)

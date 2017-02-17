@@ -21,18 +21,18 @@
         <th>HRSZ</th>
         <th>Település kód</th>
         <th>Telepítés éve</th>
-        <th>Szabályozó gyártó</th>
+        <th>Állomás gyártó</th>
         <th>Szabályozó karbantartó</th>
         <th>Kivitel</th>
         <th>Elhelyezés</th>
         <th>Funkció</th>
-        <th>Tulajdonjog</th>
-        <th>Tulajdonos</th>
-        <th>Névleges primer nyomás</th>
-        <th>Névleges szekunder nyomás</th>
-        <th>Üzemi primer nyomás</th>
-        <th>Üzemi szekunder nyomás</th>
-        <th>Névleges kapacitás</th>
+        <th>Berendezés tulajdonjoga</th>
+        <th>Berendezés tulajdonosa</th>
+        <th>Névleges primer nyomás (bar)</th>
+        <th>Névleges szekunder nyomás (bar)</th>
+        <th>Üzemi primer nyomás (bar)</th>
+        <th>Üzemi szekunder nyomás (bar)</th>
+        <th>Névleges kapacitás (m3/h)</th>
         <th>Nyomásdinamizálásba bevont rendszer</th>
         <th>Fűtött</th>
         <th>RB zóna</th>
@@ -44,13 +44,14 @@
         <th>10 éves karb</th>
         <th>Elláttott települések</th>
         <th>Összedolgozó szabályzók</th>
-        <th>Összes terület</th>
-        <th>Füves terület</th>
-        <th>Burkolt terület</th>
+        <th>Összes terület (m2)</th>
+        <th>Füves terület (m2)</th>
+        <th>Burkolt terület (m2)</th>
         <th>Ellenőrzési ciklus</th>
         <th>GPS lat</th>
         <th>GPS long</th>
         <th>Megjegyzés</th>
+        <th>Dokumentumok</th>
     </tr>
     </thead>
     <tfoot>
@@ -70,7 +71,7 @@
         <th>HRSZ</th>
         <th>Település kód</th>
         <th>Telepítés éve</th>
-        <th>Szabályozó gyártó</th>
+        <th>Állomás gyártó</th>
         <th>Szabályozó karbantartó</th>
         <th>Kivitel</th>
         <th>Elhelyezés</th>
@@ -100,6 +101,7 @@
         <th>GPS lat</th>
         <th>GPS long</th>
         <th>Megjegyzés</th>
+        <th>Dokumentumok</th>
     </tr>
     </tfoot>
     <tbody>
@@ -155,6 +157,7 @@
         <td>{{ szab.gps_lat }}</td>
         <td>{{ szab.gps_long }}</td>
         <td>{{ szab.megjegyzes }}</td>
+        <td><a href="{% url 'simple_doc_list' tip='szab' eszid=szab.id %}">Dokumentumok</a></td>
     </tr>
     {% endfor %}
     </tbody>

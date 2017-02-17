@@ -6,15 +6,10 @@
         <form method="POST" class="viewform">
             {% csrf_token %}
             {% load widget_tweaks %}
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="panel panel-default">
             <div class="panel-heading">Ellátottság</div>
             <div class="panel-body">
-                <div class="form-group">
-                    {{ form.ellatotttelepules.label_tag }}
-                    {{ form.ellatotttelepules.errors }}
-                    {{ form.ellatotttelepules|add_class:"form-control" }}
-                </div>
                 <div class="form-group">
                     {{ form.osszedolg_szab.label_tag }}
                     {{ form.osszedolg_szab.errors }}
@@ -22,8 +17,11 @@
                 </div>
             </div>
         </div>
+        <div align="center">
+            <input type="submit" value="Módosít" class="btn btn-primary">
+        </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="panel panel-default">
             <div class="panel-heading">Elhelyezkedés</div>
             <div class="panel-body">
@@ -75,7 +73,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="panel panel-default">
             <div class="panel-heading">Adatok</div>
             <div class="panel-body">
@@ -125,11 +123,6 @@
                     {{ form.futott }}
                 </div>
                 <div class="form-group">
-                    {{ form.felugyeleti_rendszer.label_tag }}
-                    {{ form.felugyeleti_rendszer.errors }}
-                    {{ form.felugyeleti_rendszer }}
-                </div>
-                <div class="form-group">
                     {{ form.ellenorzesiciklus.label_tag }}
                     {{ form.ellenorzesiciklus.errors }}
                     {{ form.ellenorzesiciklus|add_class:"form-control" }}
@@ -147,7 +140,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="panel panel-default">
             <div class="panel-heading">Nyomás, kapacitás adatok</div>
             <div class="panel-body">
@@ -214,8 +207,5 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2">
-        <input type="submit" value="Módosít" class="btn btn-primary">
         </form>
-    </div>
 {% endblock %}

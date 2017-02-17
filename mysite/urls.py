@@ -54,6 +54,7 @@ urlpatterns = [
     url(r'^tartozek/(?P<pk>[0-9]+)/new/$', szabalyozok.views.tartozek_new, name='tartozek_new'),
     url(r'^tartozek/(?P<pk>[0-9]+)/tartozekki/$', szabalyozok.views.tartozek_ki, name='tartozek_ki'),
     url(r'^tartozek/(?P<pk>[0-9]+)/tartozektortenet/$', szabalyozok.views.tartozek_tortenet, name='tartozek_tortenet'),
+    url(r'^tartozek/(?P<pk>[0-9]+)/(?P<spk>[0-9]+)/edit/$', szabalyozok.views.tartozek_edit, name='tartozek_edit'),
 
     # muszer URL
     url(r'^muszerek/(?P<pk>[0-9]+)/muszerki/$', szabalyozok.views.muszer_ki, name='muszer_ki'),
@@ -89,6 +90,10 @@ urlpatterns = [
     url(r'^riportok/szabalyozok/$', szabalyozok.views.riport_szabalyozok, name='riport_szabalyozok'),
     url(r'^riportok/diagnosztikak/$', szabalyozok.views.riport_diagnosztika, name='riport_diagnosztika'),
     url(r'^riport/(?P<tip>[a-z]+)/(?P<eszid>[0-9]+)/simple_doc_list/$', szabalyozok.views.simple_doc_list, name='simple_doc_list'),
+
+    # api
+    # url(r'^api/(?P<pk>[0-9]+)/get_tartozekgyarto/$', szabalyozok.views.get_tartozekgyarto, name='get_tartozekgyarto'),
+    url(r'^api/(?P<fpk>[0-9]+)/(?P<gpk>[0-9]+)/get_tartozektipus/$', szabalyozok.views.get_tartozektipus, name='get_tartozektipus'),
 
 ]
 

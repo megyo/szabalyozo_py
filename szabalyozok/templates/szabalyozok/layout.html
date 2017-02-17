@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/bootstrap.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/style.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/datepicker.css' %}"/>
     <script src="{% static 'szabalyozok/scripts/modernizr-2.6.2.js' %}"></script>
-    <link rel="icon" type="image/x-icon" href="{% static 'szabalyozok/image/favicon.ico' %}"/>
+    <script src="{% static 'szabalyozok/scripts/jquery-1.12.1.min.js' %}"></script>
+    <link rel="icon" type="image/x-icon" href="{% static 'szabalyozok/images/favicon.ico' %}"/>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -27,8 +28,11 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'szabalyozok' %}">Szabályozó keresés</a></li>
                         <li><a href="{% url 'terkep' %}" target="_blank">Szabályozó térkép</a></li>
+                        <li><a href="{% static 'szabalyozok/kezelesi_utmutato/szab_kezelesi.pdf' %}" target="_blank">Kezelési útmutató</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url 'manometernew' %}">Manométer létrehozás</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'manometernew' %}">Manométer létrehozás</a></li>
+                        {% endif %}
                         <li><a href="/admin">Admin</a></li>
                     </ul>
                 </li>
@@ -52,8 +56,7 @@
     </div>
 </nav>
 {% block content %}{% endblock %}
-<script src="{% static 'szabalyozok/scripts/jquery-1.12.1.min.js' %}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'szabalyozok/scripts/jquery-ui.js' %}"></script>
 <script src="{% static 'szabalyozok/scripts/bootstrap.js' %}"></script>
 <script src="{% static 'szabalyozok/scripts/respond.js' %}"></script>
 <script src="{% static 'szabalyozok/scripts/lightbox.js' %}"></script>
@@ -73,7 +76,8 @@
     $.datepicker.regional['hu'] = {
         monthNamesShort: ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'],
         dayNamesShort: ['H', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-        dayNamesMin: ['H', 'K', 'Sz', 'Cs', 'P', 'Szo', 'V']
+        dayNamesMin: ['V', 'H', 'K', 'Sz', 'Cs', 'P', 'Szo'],
+        firstDay: 1
     }
 
     $.datepicker.setDefaults($.datepicker.regional['hu']);

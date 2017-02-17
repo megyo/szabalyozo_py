@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="col-md-8">
-        <h3 class="text-left">{{ szabnev }} tartozék archívum</h3>    <br>
+        <h3 class="text-left">{{ szabnev }} tartozék archívum (utolsó 15 bejegyzés)</h3>    <br>
 
         <table class="table table-striped table-bordered">
             <thead>
@@ -19,8 +19,8 @@
             <tbody>
                 {% for tartozek in tartozekok %}
                     <tr>
-                            <td>{{ tartozek.tartozek.tartozekfajta }}</td>
-                            <td>{{ tartozek.tartozek.tartozekgyarto }}</td>
+                            <td>{{ tartozek.tartozek.tartozektipus.tartozekfajta }}</td>
+                            <td>{{ tartozek.tartozek.tartozektipus.tartozekgyarto }}</td>
                             <td>{{ tartozek.tartozek.tartozektipus }}</td>
                             <td>{{ tartozek.tartozek.elhelyezkedes }}</td>
                             <td>{{ tartozek.beszereles_datum }}</td>

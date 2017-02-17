@@ -10,8 +10,8 @@ class TartozekForm(forms.ModelForm):
         widget=forms.Select,
         choices=Tartozekok.ELHELYEZKEDES_CHOICES,
     )
-    tartozekfajta = forms.ModelChoiceField(queryset=Tartozekfajta.objects.all(), empty_label="Kérem válasszon", required=True, label="Tartozék fajta")
-    tartozekgyarto = forms.ModelChoiceField(queryset=Tartozekgyartok.objects.all(), empty_label="Kérem válasszon", required=True, label="Tartozék gyártó")
+    tartozekfajta = forms.ModelChoiceField(queryset=Tartozekfajta.objects.all(), empty_label="Kérem válasszon", required=False, label="Tartozék fajta")
+    tartozekgyarto = forms.ModelChoiceField(queryset=Tartozekgyartok.objects.all(), empty_label="Kérem válasszon", required=False, label="Tartozék gyártó")
     tartozektipus = forms.ModelChoiceField(queryset=Tartozektipus.objects.all(), empty_label="Kérem válasszon", required=True, label="Tartozék típus")
     gyariszam = forms.CharField(required=False, label="Gyáriszám")
     szabvezerles = forms.ModelChoiceField(queryset=SzabVezerlesModel.objects.all(), empty_label="Kérem válasszon", required=False, label="Szab. vezérlés módja")

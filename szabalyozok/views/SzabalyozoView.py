@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from szabalyozok.forms import DocForm
 from django.shortcuts import get_object_or_404
-from datetime import datetime
+# from datetime import datetime
 from django.utils import timezone
 from django.core.serializers.json import DjangoJSONEncoder
 import json
@@ -161,11 +160,27 @@ def tartozek_new(request, pk):
     return render(request, 'szabalyozok/tartozek_new.html', {'form': form})
 
 
+@login_required(login_url='/login/')
+def tartozek_edit(request, pk, spk):
+    tartozek = get_object_or_404(Tartozekok, pk=pk)
+    fajta = tartozek.tartozektipus.tartozekfajta
+    gyarto = tartozek.tartozektipus.tartozekgyarto
+
+    if request.method == "POST":
+        form = TartozekForm(request.POST, instance=tartozek, initial={'tartozekfajta': fajta, 'tartozekgyarto': gyarto})
+        if form.is_valid():
+            form.save()
+            return redirect('tartozek_beki', pk=spk)
+    else:
+        form = TartozekForm(instance=tartozek, initial={'tartozekfajta': fajta, 'tartozekgyarto': gyarto})
+    return render(request, 'szabalyozok/tartozek_edit.html', {'form': form})
+
+
 def tartozek_tortenet(request, pk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
     szab_nev = szabalyozo.allomas_nev
     szab_id = szabalyozo.id
-    tartozek_tortenet = Tartozekkiszerel.objects.filter(szabalyozo_id=pk).order_by('kiszereles_datum').reverse()
+    tartozek_tortenet = Tartozekkiszerel.objects.filter(szabalyozo_id=pk).order_by('kiszereles_datum').reverse()[0:15]
     hiba = ''
     if len(tartozek_tortenet) == 0:
         hiba = 'Nincs találat!'
@@ -249,7 +264,7 @@ def muszer_tortenet(request, pk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
     szab_nev = szabalyozo.allomas_nev
     szab_id = szabalyozo.id
-    muszer_tortenet = Muszerkiszerel.objects.filter(szabalyozo_id=pk).order_by('kiszereles_datum').reverse()
+    muszer_tortenet = Muszerkiszerel.objects.filter(szabalyozo_id=pk).order_by('kiszereles_datum').reverse()[0:15]
     hiba = ''
     if len(muszer_tortenet) == 0:
         hiba = 'Nincs találat!'
@@ -294,7 +309,7 @@ def manometer_edit(request, pk):
             return redirect('riport_muszerek')
     else:
         form = ManometernewForm(instance=manometer)
-    return render(request, 'szabalyozok/manometer_new.html', {'form': form})
+    return render(request, 'szabalyozok/manometer_edit.html', {'form': form})
 
 
 @login_required(login_url='/login/')
@@ -475,7 +490,7 @@ def diagnosztika(request, pk):
 
 def diagnosztika_tortenet(request, pk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
-    diagnosztika = Diagnosztika.objects.filter(szabalyozo_id=pk).order_by('diag_datum').reverse()[1:10]
+    diagnosztika = Diagnosztika.objects.filter(szabalyozo_id=pk).order_by('diag_datum').reverse()[1:15]
     szabnev = szabalyozo.allomas_nev
 
     return render(request, 'szabalyozok/diagnosztika_tortenet.html',
@@ -530,3 +545,21 @@ def terkep(request):
         outfile.write(egyeb_seri)
 
     return render(request, 'szabalyozok/terkep.html')
+
+
+# def get_tartozekgyarto(request, pk):
+#     fajta = get_object_or_404(Tartozekfajta, pk=pk)
+#     gyarto = Tartozekgyartok.objects.all().values('id', 'tartozekgyarto').order_by('tartozekgyarto')
+#     gyartok = json.dumps(list(gyarto), ensure_ascii=False, cls=DjangoJSONEncoder)
+#     # return HttpResponse(gyartok, content_type="text/plain")
+#     return HttpResponse(gyartok, content_type="application/json")
+
+
+def get_tartozektipus(request, fpk, gpk):
+    fajta = get_object_or_404(Tartozekfajta, pk=fpk)
+    gyarto = get_object_or_404(Tartozekgyartok, pk=gpk)
+
+    tipus = Tartozektipus.objects.filter(tartozekfajta_id=fajta.id, tartozekgyarto_id=gyarto.id).values('id', 'tartozektipus').order_by('tartozektipus')
+    tipusok = json.dumps(list(tipus), ensure_ascii=False, cls=DjangoJSONEncoder)
+    return HttpResponse(tipusok, content_type="application/json")
+    # return HttpResponse(tipusok, content_type="text/plain")

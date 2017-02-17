@@ -35,5 +35,5 @@ tfoot {
 	width: 100%;
 	height: 100%;
 	z-index: 9999;
-	background: url(/static/szabalyozok/image/spinner.gif) center no-repeat #fff;
+	background: url(/static/szabalyozok/images/spinner.gif) center no-repeat #fff;
 }
