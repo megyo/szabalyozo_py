@@ -1,7 +1,7 @@
 {% extends "szabalyozok/riport_layout.html" %}
 
 {% block content %}
-<h1>Szabályozók</h1>
+<h1>Szabályozók riport</h1>
 <br>
 <table id="riport" class="table table-bordered" cellspacing="0" width="100%">
     <thead>
@@ -42,14 +42,14 @@
         <th>Villámvédelem ig</th>
         <th>2 éves karb</th>
         <th>10 éves karb</th>
-        <th>Elláttott települések</th>
+        <th>Ellátott települések</th>
         <th>Összedolgozó szabályzók</th>
         <th>Összes terület (m2)</th>
         <th>Füves terület (m2)</th>
         <th>Burkolt terület (m2)</th>
-        <th>Ellenőrzési ciklus</th>
         <th>GPS lat</th>
         <th>GPS long</th>
+        <th>Ellenőrzési ciklus</th>
         <th>Megjegyzés</th>
         <th>Dokumentumok</th>
     </tr>
@@ -92,14 +92,14 @@
         <th>Villámvédelem ig</th>
         <th>2 éves karb</th>
         <th>10 éves karb</th>
-        <th>Elláttott települések</th>
+        <th>Ellátott</th>
         <th>Összedolgozó szabályzók</th>
         <th>Összes terület</th>
         <th>Füves terület</th>
         <th>Burkolt terület</th>
-        <th>Ellenőrzési ciklus</th>
         <th>GPS lat</th>
         <th>GPS long</th>
+        <th>Ellenőrzési ciklus</th>
         <th>Megjegyzés</th>
         <th>Dokumentumok</th>
     </tr>
@@ -115,14 +115,14 @@
         <td>{{ szab.eszkozszam }}</td>
         <td>{{ szab.beruhazasi_szam }}</td>
         <td>{{ szab.allomas_nev }}</td>
-        <td>{{ szab.telepules.uzem.terulet }}</td>
-        <td>{{ szab.telepules.uzem }}</td>
+        <td>{{ szab.terulet }}</td>
+        <td>{{ szab.uzem }}</td>
         <td>{{ szab.atado }}</td>
         <td>{{ szab.telepules }}</td>
         <td>{{ szab.hrsz }}</td>
-        <td>{{ szab.telepules.telepules_kod }}</td>
+        <td>{{ szab.telepules_kod }}</td>
         <td>{{ szab.telepites_ev }}</td>
-        <td>{{ szab.szabgyarto }}</td>
+        <td>{{ szab.tartozekgyarto }}</td>
         <td>{{ szab.szabkarb }}</td>
         <td>{{ szab.kivitel }}</td>
         <td>{{ szab.elhelyezes }}</td>
@@ -145,17 +145,14 @@
         <td>{{ szab.villamvedelem_kov_ev }}</td>
         <td>{{ szab.karbantartas_2ev }}</td>
         <td>{{ szab.karbantartas_10ev }}</td>
-        <td>{% for szabtelep in szab.ellatotttelepules.all %}
-            {{szabtelep.telepules}},
-            {% endfor %}
-        </td>
+        <td>{{ szab.ellatott }}</td>
         <td>{{ szab.osszedolg_szab }}</td>
         <td>{{ szab.ossz_terulet }}</td>
         <td>{{ szab.fuves_terulet }}</td>
         <td>{{ szab.burkolt_terulet }}</td>
-        <td>{{ szab.ellenorzesiciklus }}</td>
         <td>{{ szab.gps_lat }}</td>
         <td>{{ szab.gps_long }}</td>
+        <td>{{ szab.ellenorzesiciklus }}</td>
         <td>{{ szab.megjegyzes }}</td>
         <td><a href="{% url 'simple_doc_list' tip='szab' eszid=szab.id %}">Dokumentumok</a></td>
     </tr>

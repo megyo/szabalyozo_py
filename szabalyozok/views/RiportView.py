@@ -13,7 +13,7 @@ def riport_szabalyozok(request):
     group = request.user.groups.values_list('name', flat=True).first()
     if group == None:
         group = 'admin'
-    szabalyozok = Szabalyozok.objects.filter(telepules__uzem__jog__contains=group)
+    szabalyozok = SzabalyozokRiport.objects.filter(jog__contains=group)
 
     # return HttpResponse(group, content_type="text/plain")
     return render(
@@ -27,28 +27,11 @@ def riport_szabalyozok(request):
 
 
 @login_required(login_url='/login/')
-def riport_szabmunkak(request):
-    group = request.user.groups.values_list('name', flat=True).first()
-    if group == None:
-        group = 'admin'
-    szabmunkak = Szabalyozomunkak.objects.filter(szabalyozo__telepules__uzem__jog__contains=group)
-
-    return render(
-        request,
-        'szabalyozok/riport_szabmunkak.html',
-        {
-            'title': 'Szabályozó munkák',
-            'szabmunkak': szabmunkak,
-        }
-    )
-
-
-@login_required(login_url='/login/')
 def riport_szabtartozekok(request):
     group = request.user.groups.values_list('name', flat=True).first()
     if group == None:
         group = 'admin'
-    szabtartozekok = Tartozekok.objects.filter(szabalyozo__telepules__uzem__jog__contains=group)
+    szabtartozekok = TartozekRiport.objects.filter(jog__contains=group)
 
     return render(
         request,
@@ -65,7 +48,7 @@ def riport_diagnosztika(request):
     group = request.user.groups.values_list('name', flat=True).first()
     if group == None:
         group = 'admin'
-    diagnosztikak = Diagnosztika.objects.filter(szabalyozo__telepules__uzem__jog__contains=group)
+    diagnosztikak = DiagnosztikaRiport.objects.filter(jog__contains=group)
 
     return render(
         request,
@@ -111,6 +94,23 @@ def riport_muszermunkak(request):
         {
             'title': 'Szabályozó munkák',
             'muszermunkak': muszermunkak,
+        }
+    )
+
+
+@login_required(login_url='/login/')
+def riport_szabmunkak(request):
+    group = request.user.groups.values_list('name', flat=True).first()
+    if group == None:
+        group = 'admin'
+    szabmunkak = SzabmunkakRiport.objects.filter(jog__contains=group)
+
+    return render(
+        request,
+        'szabalyozok/riport_szabmunkak.html',
+        {
+            'title': 'Szabályozó munkák',
+            'szabmunkak': szabmunkak,
         }
     )
 

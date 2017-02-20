@@ -4,3 +4,4 @@ from .MuszerModel import *
 from .SzabalyozoMunkaModel import *
 from .DocModel import *
 from .DiagnosztikaModel import *
+from .RiportModel import *

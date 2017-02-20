@@ -17,7 +17,7 @@
         <th>P2 ág alsó</th>
         <th>P2 ág felső</th>
         <th>Bizt.lef.nyom.</th>
-        <th>dátuma</th>
+        <th>Dátum</th>
         <th>Oka</th>
         <th>Megjegyzés</th>
     </tr>
@@ -43,10 +43,10 @@
     <tbody>
     {% for diag in diagnosztikak %}
     <tr>
-        <td>{% if diag.szabalyozo %} <a href="{% url 'diagnosztika' pk=diag.szabalyozo_id %}">{{diag.szabalyozo}}</a> {% endif %}</td>
-            <td>{{ diag.szabalyozo.telepules.uzem.terulet }}</td>
-            <td>{{ diag.szabalyozo.telepules.uzem }}</td>
-            <td>{{ diag.szabalyozo.telepules }}</td>
+        <td>{% if diag.allomas_nev %} <a href="{% url 'diagnosztika' pk=diag.id %}">{{diag.allomas_nev}}</a> {% endif %}</td>
+            <td>{{ diag.terulet }}</td>
+            <td>{{ diag.uzem }}</td>
+            <td>{{ diag.telepules }}</td>
             <td>{% if diag.p1_nyomas %} {{ diag.p1_nyomas }} {% endif %}</td>
             <td>{% if diag.p2_nyomas %} {{ diag.p2_nyomas }} {% endif %}</td>
             <td>{% if diag.p1_also_nyomas %} {{ diag.p1_also_nyomas }} {% endif %}</td>

@@ -31,14 +31,14 @@
     <tbody>
     {% for munkak in szabmunkak %}
     <tr>
-        <td>{% if munkak.szabalyozo %} <a href="{% url 'szabmunka_show' pk=munkak.szabalyozo.id %}">{{ munkak.szabalyozo }}</a> {% endif %}</td>
-        <td>{% if munkak.szabalyozo %}{{ munkak.szabalyozo.telepules.uzem.terulet }}{% endif %}</td>
-        <td>{% if munkak.szabalyozo %}{{ munkak.szabalyozo.telepules.uzem }}{% endif %}</td>
-        <td>{% if munkak.szabalyozo %}{{ munkak.szabalyozo.telepules }}{% endif %}</td>
+        <td>{% if munkak.allomas_nev %} <a href="{% url 'szabmunka_show' pk=munkak.id %}">{{ munkak.allomas_nev }}</a> {% endif %}</td>
+        <td>{% if munkak.allomas_nev %}{{ munkak.terulet }}{% endif %}</td>
+        <td>{% if munkak.allomas_nev %}{{ munkak.uzem }}{% endif %}</td>
+        <td>{% if munkak.allomas_nev %}{{ munkak.telepules }}{% endif %}</td>
         <td>{{ munkak.szabalyozomunkatipus }}</td>
         <td>{{ munkak.szabmunka_datum }}</td>
         <td>{{ munkak.megjegyzes }}</td>
-        <td>{{ munkak.szabalyozo.id }}</td>
+        <td>{{ munkak.id }}</td>
     </tr>
     {% endfor %}
     </tbody>

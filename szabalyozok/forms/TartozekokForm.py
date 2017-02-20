@@ -1,6 +1,6 @@
 from django import forms
 from szabalyozok.models import Tartozekgyartok
-from szabalyozok.models import Tartozekok, Tartozekfajta, Tartozektipus, Tartozekkiszerel, SzabVezerlesModel
+from szabalyozok.models import Tartozekok, Tartozekfajta, Tartozektipus, Tartozekkiszerel, SzabVezerlesMod
 
 
 class TartozekForm(forms.ModelForm):
@@ -14,7 +14,7 @@ class TartozekForm(forms.ModelForm):
     tartozekgyarto = forms.ModelChoiceField(queryset=Tartozekgyartok.objects.all(), empty_label="Kérem válasszon", required=False, label="Tartozék gyártó")
     tartozektipus = forms.ModelChoiceField(queryset=Tartozektipus.objects.all(), empty_label="Kérem válasszon", required=True, label="Tartozék típus")
     gyariszam = forms.CharField(required=False, label="Gyáriszám")
-    szabvezerles = forms.ModelChoiceField(queryset=SzabVezerlesModel.objects.all(), empty_label="Kérem válasszon", required=False, label="Szab. vezérlés módja")
+    szab_vezerles_mod = forms.ModelChoiceField(queryset=SzabVezerlesMod.objects.all(), empty_label="Kérem válasszon", required=False, label="Szab. vezérlés módja")
     beuzemeles_ev = forms.IntegerField(required=False, label='Beüzemelés éve', min_value=1950, max_value=2100)
     beszereles_datum = forms.DateField(required=True, label="Beszerelés dátuma", widget=forms.TextInput(attrs={'class':'datum'}))
     megjegyzes = forms.CharField(required=False, label="Megjegyzés", widget=forms.Textarea)
@@ -22,7 +22,7 @@ class TartozekForm(forms.ModelForm):
 
     class Meta(forms.ModelForm):
         model = Tartozekok
-        fields = ('tartozekfajta', 'tartozekgyarto', 'tartozektipus', 'gyariszam', 'szabvezerles', 'elhelyezkedes', 'beuzemeles_ev', 'beszereles_datum', 'megjegyzes')
+        fields = ('tartozekfajta', 'tartozekgyarto', 'tartozektipus', 'gyariszam', 'szab_vezerles_mod', 'elhelyezkedes', 'beuzemeles_ev', 'beszereles_datum', 'megjegyzes')
 
 
 class TartozekkiszerelForm(forms.ModelForm):

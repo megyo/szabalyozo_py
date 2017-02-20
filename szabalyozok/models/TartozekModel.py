@@ -27,7 +27,7 @@ class Tartozektipus(models.Model):
         return self.tartozektipus
         # return '%s - %s' % (self.tartozektipus, self.tartozekfajta)
 
-class SzabVezerlesModel(models.Model):
+class SzabVezerlesMod(models.Model):
     szabvezerles = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
@@ -52,7 +52,7 @@ class Tartozekok(models.Model):
     megjegyzes = models.CharField(max_length=100, blank=True, null=True)
     szabalyozo = models.ForeignKey(SzabalyozoModel.Szabalyozok, blank=True, null=True)
     gyariszam = models.CharField(max_length=50, blank=True, null=True)
-    szab_vezerles_mod = models.ForeignKey(SzabVezerlesModel, blank=True, null=True)
+    szab_vezerles_mod = models.ForeignKey(SzabVezerlesMod, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Tartozékok"

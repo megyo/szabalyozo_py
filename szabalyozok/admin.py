@@ -16,6 +16,18 @@ class TartozektipusokAdmin(admin.ModelAdmin):
     search_fields = ('tartozektipus',)
 
 
+class TartozekokAdmin(admin.ModelAdmin):
+    def tartozekfajta(self, instance):
+        return instance.tartozektipus.tartozekfajta
+
+    def tartozekgyarto(self, instance):
+        return instance.tartozektipus.tartozekgyarto
+
+    list_display = ('tartozektipus', 'tartozekfajta', 'tartozekgyarto', 'szabalyozo')
+    # list_filter = ('tartozekgyarto','tartozektipus')
+    search_fields = ('szabalyozo',)
+
+
 class MuszerekAdmin(admin.ModelAdmin):
     list_display = ('muszertipus','gyariszam','szabalyozo')
     list_filter = ('muszertipus','muszerfajta')
@@ -33,7 +45,7 @@ class DiagnosztikaAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Szabalyozok, SzabalyozokAdmin)
-admin.site.register(SzabVezerlesModel)
+admin.site.register(SzabVezerlesMod)
 admin.site.register(SzabKarb)
 admin.site.register(EllenorzesiCiklus)
 admin.site.register(DiagnosztikaOk)
@@ -47,7 +59,7 @@ admin.site.register(Tartozekgyartok)
 #Tartozékok admin
 admin.site.register(Tartozekfajta)
 admin.site.register(Tartozektipus, TartozektipusokAdmin)
-admin.site.register(Tartozekok)
+admin.site.register(Tartozekok, TartozekokAdmin)
 
 #Műszerek admin
 admin.site.register(Muszerfajta)

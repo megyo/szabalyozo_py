@@ -6,19 +6,31 @@
     <thead>
     <tr>
         <th>Szab. állomás neve</th>
+        <th>Terulet</th>
+        <th>Üzem</th>
+        <th>Település</th>
         <th>Tartozék fajtája</th>
         <th>Gyártó</th>
         <th>Típusa</th>
+        <th>Gyáriszám</th>
+        <th>Szab.vez.mód</th>
+        <th>Beüzemelés éve</th>
         <th>Beszerelés dátuma</th>
         <th>Megjegyzés</th>
     </tr>
     </thead>
     <tfoot>
     <tr>
-        <th>Szabályozó</th>
+        <th>Szab. állomás neve</th>
+        <th>Terulet</th>
+        <th>Üzem</th>
+        <th>Település</th>
         <th>Tartozék fajtája</th>
         <th>Gyártó</th>
         <th>Típusa</th>
+        <th>Gyáriszám</th>
+        <th>Szab.vez.mód</th>
+        <th>Beüzemelés éve</th>
         <th>Beszerelés dátuma</th>
         <th>Megjegyzés</th>
     </tr>
@@ -26,11 +38,17 @@
     <tbody>
     {% for szabtartozek in szabtartozekok %}
     <tr>
-        <td>{% if szabtartozek.szabalyozo %} <a href="{% url 'szabtart_show' pk=szabtartozek.szabalyozo.id %}">{{ szabtartozek.szabalyozo }}</a> {% endif %}</td>
-        <td>{{ szabtartozek.tartozektipus.tartozekfajta }}</td>
-        <td>{{ szabtartozek.tartozektipus.tartozekgyarto }}</td>
+        <td>{% if szabtartozek.allomas_nev %} <a href="{% url 'szabtart_show' pk=szabtartozek.id %}">{{ szabtartozek.allomas_nev }}</a> {% endif %}</td>
+        <td>{{ szabtartozek.terulet }}</td>
+        <td>{{ szabtartozek.uzem }}</td>
+        <td>{{ szabtartozek.telepules }}</td>
+        <td>{{ szabtartozek.tartozekfajta }}</td>
+        <td>{{ szabtartozek.tartozekgyarto }}</td>
         <td>{{ szabtartozek.tartozektipus }}</td>
-        <td>{{ szabtartozek.beszereles_datum }}</td>
+        <td>{{ szabtartozek.gyariszam }}</td>
+        <td>{{ szabtartozek.szabvezerles }}</td>
+        <th>{{ szabtartozek.beuzemeles_ev }}</th>
+        <th>{{ szabtartozek.beszereles_datum }}</th>
         <th>{{ szabtartozek.megjegyzes }}</th>
     </tr>
     {% endfor %}

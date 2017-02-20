@@ -527,10 +527,10 @@ def terkep(request):
     group = request.user.groups.values_list('name', flat=True).first()
     if group == None:
         group = 'admin'
-    fogadok = Szabalyozok.objects.filter(funkcio='fogado', telepules__uzem__jog__contains=group).values('id', 'allomas_nev', 'gps_lat', 'gps_long')
-    korzeti = Szabalyozok.objects.filter(funkcio='korzeti', telepules__uzem__jog__contains=group).values('id', 'allomas_nev', 'gps_lat', 'gps_long')
+    fogadok = Szabalyozok.objects.filter(funkcio='fogado', telepules__uzem__jog__contains=group).values('id', 'allomas_nev', 'gps_lat', 'gps_long', 'uz_prim_nyom', 'uz_sek_nyom')
+    korzeti = Szabalyozok.objects.filter(funkcio='korzeti', telepules__uzem__jog__contains=group).values('id', 'allomas_nev', 'gps_lat', 'gps_long', 'uz_prim_nyom', 'uz_sek_nyom')
     egyeb = Szabalyozok.objects.filter(Q(telepules__uzem__jog__contains=group) & ~Q(funkcio='fogado') & ~Q(funkcio='korzeti')).values('id', 'allomas_nev',
-                                                                                            'gps_lat', 'gps_long')
+                                                                                            'gps_lat', 'gps_long', 'uz_prim_nyom', 'uz_sek_nyom')
     fogado_seri = json.dumps(list(fogadok), ensure_ascii=False, cls=DjangoJSONEncoder)
     korzeti_seri = json.dumps(list(korzeti), ensure_ascii=False, cls=DjangoJSONEncoder)
     egyeb_seri = json.dumps(list(egyeb), ensure_ascii=False, cls=DjangoJSONEncoder)
