@@ -65,8 +65,8 @@ def riport_muszerek(request):
     group = request.user.groups.values_list('name', flat=True).first()
     if group == None:
         group = 'admin'
-    muszerek_be = Muszerek.objects.filter(szabalyozo__telepules__uzem__jog__contains=group)
-    muszerek_ki = Muszerek.objects.filter(szabalyozo__id=None)
+    muszerek_be = MuszerRiport.objects.filter(jog__contains=group)
+    muszerek_ki = MuszerRiport.objects.filter(szab_id=None)
     muszerek = itertools.chain(muszerek_be, muszerek_ki)
 
     return render(
@@ -81,12 +81,10 @@ def riport_muszerek(request):
 
 @login_required(login_url='/login/')
 def riport_muszermunkak(request):
-    group = request.user.groups.values_list('name', flat=True).first()
-    if group == None:
-        group = 'admin'
-    muszermunka_be = Muszermunkak.objects.filter(muszer__szabalyozo__telepules__uzem__jog__contains=group)
-    muszermunka_ki = Muszermunkak.objects.filter(muszer__szabalyozo__id=None)
-    muszermunkak = itertools.chain(muszermunka_be, muszermunka_ki)
+    # group = request.user.groups.values_list('name', flat=True).first()
+    # if group == None:
+    #     group = 'admin'
+    muszermunkak = MuszermunkaRiport.objects.all()
 
     return render(
         request,
@@ -125,7 +123,7 @@ def simple_doc_list(request, tip, eszid):
         eszkoz_nev = eszkoz.allomas_nev
     elif tip == 'muszer':
         eszkoz = Muszerek.objects.get(id=eszid)
-        eszkoz_nev = eszkoz.muszerfajta
+        eszkoz_nev = eszkoz.muszertipus
     elif tip == 'szabmunkak':
         eszkoz = Szabalyozomunkak.objects.get(id=eszid)
         eszkoz_nev = eszkoz.szabalyozomunkatipus

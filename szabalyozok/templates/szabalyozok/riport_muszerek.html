@@ -11,10 +11,10 @@
                 <th>Szab. állomás neve</th>
                 <th>Szerkeszt</th>
                 <th>Selejt</th>
-                <th>Műszerfajta</th>
                 <th>Terület</th>
                 <th>Üzem</th>
                 <th>Település</th>
+                <th>Műszerfajta</th>
                 <th>Gyártó</th>
                 <th>Típus</th>
                 <th>Elhelyezkedés</th>
@@ -38,10 +38,10 @@
                 <th>Szabalyozo</th>
                 <th>Szerkeszt</th>
                 <th>Selejt</th>
-                <th>Műszerfajta</th>
                 <th>Terület</th>
                 <th>Üzem</th>
                 <th>Település</th>
+                <th>Műszerfajta</th>
                 <th>Gyártó</th>
                 <th>Típus</th>
                 <th>Elhelyezkedés</th>
@@ -63,13 +63,13 @@
         <tbody>
             {% for muszer in muszerek %}
                 <tr>
-                    <td>{% if muszer.szabalyozo %} <a href="{% url 'szabtart_show' pk=muszer.szabalyozo.id %}">{{muszer.szabalyozo}}</a> {% endif %}</td>
-                    <td> {% if muszer.muszerfajta.id == 1 %} <a href="{% url 'manometer_edit' pk=muszer.id %}">Szerkeszt</a> {% endif %} </td>
+                    <td>{% if muszer.allomas_nev %} <a href="{% url 'szabtart_show' pk=muszer.szab_id %}">{{muszer.allomas_nev}}</a> {% endif %}</td>
+                    <td> {% if muszer.mf_id == 1 %} <a href="{% url 'manometer_edit' pk=muszer.m_id %}">Szerkeszt</a> {% endif %} </td>
                     <td> {% if muszer.selejt  %}Igen{% else %}Nem{% endif %}</td>
+                    <td>{% if muszer.allomas_nev %}{{ muszer.terulet }}{% endif %}</td>
+                    <td>{% if muszer.allomas_nev %}{{ muszer.uzem }}{% endif %}</td>
+                    <td>{% if muszer.allomas_nev %}{{ muszer.telepules }}{% endif %}</td>
                     <td>{{ muszer.muszerfajta }}</td>
-                    <td>{% if muszer.szabalyozo %}{{ muszer.szabalyozo.telepules.uzem.terulet }}{% endif %}</td>
-                    <td>{% if muszer.szabalyozo %}{{ muszer.szabalyozo.telepules.uzem }}{% endif %}</td>
-                    <td>{% if muszer.szabalyozo %}{{ muszer.szabalyozo.telepules }}{% endif %}</td>
                     <td>{{ muszer.muszergyarto }}</td>
                     <td>{{ muszer.muszertipus }}</td>
                     <td>{{ muszer.elhelyezkedes }}</td>

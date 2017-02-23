@@ -28,9 +28,21 @@ class TartozekokAdmin(admin.ModelAdmin):
     search_fields = ('szabalyozo',)
 
 
+class MuszertipusAdmin(admin.ModelAdmin):
+    def muszerfajta(self, instance):
+        return instance.muszertipus.muszerfajta
+
+    def muszergyarto(self, instance):
+        return instance.muszertipus.muszergyarto
+
+    list_display = ('muszertipus', 'muszerfajta', 'muszergyarto')
+    # list_filter = ('tartozekgyarto','tartozektipus')
+    search_fields = ('muszertipus',)
+
+
 class MuszerekAdmin(admin.ModelAdmin):
     list_display = ('muszertipus','gyariszam','szabalyozo')
-    list_filter = ('muszertipus','muszerfajta')
+    # list_filter = ('muszertipus','muszerfajta')
     search_fields = ('gyariszam',)
 
 
@@ -63,7 +75,7 @@ admin.site.register(Tartozekok, TartozekokAdmin)
 
 #Műszerek admin
 admin.site.register(Muszerfajta)
-admin.site.register(Muszertipus)
+admin.site.register(Muszertipus, MuszertipusAdmin)
 admin.site.register(Muszergyarto)
 admin.site.register(Muszerek, MuszerekAdmin)
 #admin.site.register(Muszerkiszerel)

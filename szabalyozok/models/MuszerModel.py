@@ -25,6 +25,8 @@ class Muszergyarto(models.Model):
 
 
 class Muszertipus(models.Model):
+    muszerfajta = models.ForeignKey(Muszerfajta, related_name='muszer_fajta', blank=False, null=False)
+    muszergyarto = models.ForeignKey(Muszergyarto, blank=False, null=False)
     muszertipus = models.CharField(max_length=100, blank=False, null=False, unique=True)
 
     class Meta:
@@ -50,8 +52,6 @@ class Muszerek(models.Model):
         ('T', 'Tájékoztató jellegű'),
         ('Cs', 'Cserélendő'),
     )
-    muszerfajta = models.ForeignKey(Muszerfajta, related_name='muszer_fajta', blank=False, null=False)
-    muszergyarto = models.ForeignKey(Muszergyarto, blank=False, null=True)
     muszertipus = models.ForeignKey(Muszertipus, blank=False, null=False)
     szabalyozo = models.ForeignKey(SzabalyozoModel.Szabalyozok, blank=True, null=True)
     elhelyezkedes = models.CharField(max_length=20, choices=ELHELYEZKEDES_CHOICES, blank=True, null=True)
@@ -73,10 +73,10 @@ class Muszerek(models.Model):
 
     class Meta:
         verbose_name_plural = "Műszerek"
-        unique_together = ('muszerfajta', 'muszergyarto', 'muszertipus', 'gyariszam')
+        unique_together = ('muszertipus', 'gyariszam')
 
     def __str__(self):
-        return str(self.muszerfajta)
+        return str(self.muszertipus)
 
 
 class Muszerkiszerel(models.Model):

@@ -1,5 +1,5 @@
 from django import forms
-from szabalyozok.models import Muszerek, Muszerkiszerel, Muszergyarto, Muszertipus
+from szabalyozok.models import Muszerek, Muszerkiszerel, Muszertipus
 
 
 class MuszerkiszerelForm(forms.ModelForm):
@@ -32,9 +32,9 @@ class MuszerbeszerelForm(forms.ModelForm):
 
 
 class ManometernewForm(forms.ModelForm):
-    muszergyarto = forms.ModelChoiceField(queryset=Muszergyarto.objects.all(), empty_label="Kérem válasszon", required=True,
-                                   label="Műszergyártó")
-    muszertipus = forms.ModelChoiceField(queryset=Muszertipus.objects.all(), empty_label="Kérem válasszon", required=True,
+    # muszergyarto = forms.ModelChoiceField(queryset=Muszergyarto.objects.all(), empty_label="Kérem válasszon", required=True,
+    #                                label="Műszergyártó")
+    muszertipus = forms.ModelChoiceField(queryset=Muszertipus.objects.filter(muszerfajta_id=1), empty_label="Kérem válasszon", required=True,
                                    label="Műszer típus")
     gyariszam = forms.CharField(required=True, label="Gyáriszám")
     gyartas_ev = forms.IntegerField(required=False, label='Gyártás éve', min_value=1950, max_value=2100)
@@ -61,7 +61,7 @@ class ManometernewForm(forms.ModelForm):
 
     class Meta(forms.ModelForm):
         model = Muszerek
-        fields = ('muszergyarto', 'muszertipus', 'gyariszam', 'gyartas_ev', 'elhelyezkedes', 'metrologia', 'kalib_datum', 'kov_kalib_datum',
+        fields = ('muszertipus', 'gyariszam', 'gyartas_ev', 'elhelyezkedes', 'metrologia', 'kalib_datum', 'kov_kalib_datum',
                   'kalib_ciklusido', 'mereshatar1', 'mereshatar2', 'osztalypontossag', 'megjegyzes')
 
 

@@ -27,8 +27,8 @@
     <tbody>
     {% for muszer in muszerek %}
     <tr>
-        <td>{% if muszer.muszerfajta %} {{ muszer.muszerfajta }} {% endif %}</td>
-        <td>{% if muszer.muszergyarto %} {{ muszer.muszergyarto }} {% endif %}</td>
+        <td>{% if muszer.muszertipus.muszerfajta %} {{ muszer.muszertipus.muszerfajta }} {% endif %}</td>
+        <td>{% if muszer.muszertipus.muszergyarto %} {{ muszer.muszertipus.muszergyarto }} {% endif %}</td>
         <td>{% if muszer.muszertipus %} {{ muszer.muszertipus }} {% endif %}</td>
         <td>{% if muszer.gyariszam %} {{ muszer.gyariszam }} {% endif %} </td>
         <td>{% if muszer.elhelyezkedes %} {{ muszer.elhelyezkedes }} {% endif %}</td>
@@ -127,8 +127,8 @@
     <tbody>
     {% for muszer in muszersearch %}
     <tr>
-        <td>{% if muszer.muszerfajta %} {{ muszer.muszerfajta }} {% endif %}</td>
-        <td>{% if muszer.muszergyarto %} {{ muszer.muszergyarto }} {% endif %}</td>
+        <td>{% if muszer.muszertipus.muszerfajta %} {{ muszer.muszertipus.muszerfajta }} {% endif %}</td>
+        <td>{% if muszer.muszertipus.muszergyarto %} {{ muszer.muszertipus.muszergyarto }} {% endif %}</td>
         <td>{% if muszer.muszertipus %} {{ muszer.muszertipus }} {% endif %}</td>
         <td>{% if muszer.elhelyezkedes %} {{ muszer.elhelyezkedes }} {% endif %}</td>
         <td>{% if muszer.gyariszam %} {{ muszer.gyariszam }} {% endif %}</td>

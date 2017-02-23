@@ -279,19 +279,7 @@ def manometernew(request):
         form = ManometernewForm(request.POST)
         if form.is_valid():
             manometer = form.save(commit=False)
-            manometer.muszerfajta_id = 1
             manometer.selejt = False
-
-            fajta = manometer.muszerfajta
-            gyarto = manometer.muszergyarto
-            tipus = manometer.muszertipus
-            gyariszam = manometer.gyariszam
-
-            muszer = Muszerek.objects.filter(muszerfajta=fajta, muszergyarto=gyarto, muszertipus=tipus, gyariszam=gyariszam)
-            if len(muszer) > 0:
-                return render(request, 'szabalyozok/manometer_new.html', {'form': form, 'hiba': 'A manométer már létezik!!!'})
-                # return HttpResponse(muszer, content_type="text/plain")
-
             manometer.save()
             return render(request, 'szabalyozok/manometer_new.html', {'form': form, 'siker': 'Manométer feltöltve! '})
     else:
@@ -359,7 +347,7 @@ def muszermunka_show(request, pk, spk):
     muszer = get_object_or_404(Muszerek, pk=pk)
     szab_id = szabalyozo.id
     muszer_id = muszer.id
-    muszer_nev = muszer.muszerfajta
+    muszer_nev = muszer.muszertipus
     muszermunkak = Muszermunkak.objects.filter(muszer_id=muszer_id).order_by('muszmunka_datum').reverse()
     return render(request, 'szabalyozok/muszermunkak_show.html',
                   {'title': 'Műszer munkák', 'szabid': szab_id, 'muszerid': muszer_id, 'muszernev': muszer_nev,
@@ -408,7 +396,7 @@ def doc_list(request, tip, eszid, spk):
         eszkoz_nev = eszkoz.allomas_nev
     elif tip == 'muszer':
         eszkoz = Muszerek.objects.get(id=eszid)
-        eszkoz_nev = eszkoz.muszerfajta
+        eszkoz_nev = eszkoz.muszertipus
     elif tip == 'szabmunkak':
         eszkoz = Szabalyozomunkak.objects.get(id=eszid)
         eszkoz_nev = eszkoz.szabalyozomunkatipus

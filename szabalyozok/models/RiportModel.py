@@ -111,3 +111,50 @@ class SzabmunkakRiport(models.Model):
     class Meta:
         managed = False
         db_table = 'szabalyozok_szabmunkak_riport'
+
+
+class MuszerRiport(models.Model):
+    m_id = models.IntegerField()
+    muszertipus = models.CharField(max_length=255)
+    allomas_nev = models.CharField(max_length=255)
+    elhelyezkedes = models.CharField(max_length=255)
+    beszereles_datum = models.CharField(max_length=255)
+    gyariszam = models.CharField(max_length=255)
+    gyartas_ev = models.CharField(max_length=255)
+    mereshatar1 = models.CharField(max_length=255)
+    mereshatar2 = models.CharField(max_length=255)
+    osztalypontossag = models.CharField(max_length=255)
+    metrologia = models.CharField(max_length=255)
+    kalib_ciklusido = models.CharField(max_length=255)
+    kalib_datum = models.CharField(max_length=255)
+    kov_kalib_datum = models.CharField(max_length=255)
+    telefon = models.CharField(max_length=255)
+    megjegyzes = models.CharField(max_length=255)
+    selejt = models.CharField(max_length=255)
+    terulet = models.CharField(max_length=255)
+    uzem = models.CharField(max_length=255)
+    telepules = models.CharField(max_length=255)
+    mf_id = models.IntegerField()
+    muszerfajta = models.CharField(max_length=255)
+    muszergyarto = models.CharField(max_length=255)
+    jog = models.CharField(max_length=255)
+    szab_id = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'szabalyozok_muszerek_riport'
+
+
+class MuszermunkaRiport(models.Model):
+    muszer_id = models.IntegerField()
+    gyariszam = models.CharField(max_length=255)
+    megjegyzes = models.CharField(max_length=255)
+    muszerfajta = models.CharField(max_length=255)
+    muszergyarto = models.CharField(max_length=255)
+    muszertipus = models.CharField(max_length=255)
+    muszermunkatipus = models.CharField(max_length=255)
+    muszmunka_datum = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'szabalyozok_muszermunkak_riport'
