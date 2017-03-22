@@ -25,8 +25,9 @@ class TartozekForm(forms.ModelForm):
         fields = ('tartozekfajta', 'tartozekgyarto', 'tartozektipus', 'gyariszam', 'szab_vezerles_mod', 'elhelyezkedes', 'beuzemeles_ev', 'beszereles_datum', 'megjegyzes')
 
 
-class TartozekkiszerelForm(forms.ModelForm):
-    tartozek = forms.ModelChoiceField(queryset=Tartozekok.objects.all(), empty_label="Kérem válasszon", required=False, label="Tartozék")
+class TartozekkiszerelForm(forms.Form):
+    # tartozek = forms.ModelChoiceField(queryset=Tartozekok.objects.all(), empty_label="Kérem válasszon", required=False, label="Tartozék")
+    tartozek = forms.CharField(required=False, label="Tartozék")
     kiszereles_datum = forms.DateField(required=True, label="Kiszerelés dátuma", widget=forms.TextInput(attrs={'class':'datum'}))
     megjegyzes = forms.CharField(required=False, label="Megjegyzés", widget=forms.Textarea)
 

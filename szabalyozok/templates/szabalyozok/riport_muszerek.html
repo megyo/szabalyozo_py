@@ -28,6 +28,7 @@
                 <th>Kalib.dátum</th>
                 <th>Köv.kalib.dátum</th>
                 <th>Beszerelés.dátum</th>
+                <th>Jegyzőkönyv száma</th>
                 <th>Megjegyzés</th>
                 <th>Azonosító</th>
                 <th>Dokumentumok</th>
@@ -55,6 +56,7 @@
                 <th>Kalib.dátum</th>
                 <th>Köv.kalib.dátum</th>
                 <th>Beszerelés.dátum</th>
+                <th>Jegyzőkönyv szám</th>
                 <th>Megjegyzés</th>
                 <th>Azonosító</th>
                 <th>Dokumentumok</th>
@@ -83,6 +85,7 @@
                     <td>{{ muszer.kalib_datum }}</td>
                     <td>{{ muszer.kov_kalib_datum }}</td>
                     <td>{{ muszer.beszereles_datum }}</td>
+                    <td>{{ muszer.jegyzokonyv_szam }}</td>
                     <td>{{ muszer.megjegyzes }}</td>
                     <td>{{ muszer.id }}</td>
                     <td><a href="{% url 'simple_doc_list' tip='muszer' eszid=muszer.id %}">Dokumentumok</a></td>

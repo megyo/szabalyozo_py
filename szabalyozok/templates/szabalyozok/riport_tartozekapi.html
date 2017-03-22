@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% load staticfiles %}
+    <title>Szab. riport demo</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <script src="{% static 'szabalyozok/scripts/jquery-3.1.1.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/dx.spa.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/dx.common.css' %}"/>
+    <link rel="dx-theme" data-theme="generic.light" href="{% static 'szabalyozok/content/dx.light.css' %}"/>
+    <script src="{% static 'szabalyozok/scripts/jszip.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/dx.all.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/styles1.css' %}"/>
+</head>
+<body class="dx-viewport">
+<div class="demo-container">
+    <div class="apply-filter-option">
+        <span>Tartozek riport demo</span>
+        <div id="useFilterApplyButton"></div>
+    </div>
+    <div id="gridContainer"></div>
+    <div class="options">
+        <div>
+            <div id="filterRow"></div>
+        </div>
+        <div>
+            <div id="headerFilter"></div>
+        </div>
+    </div>
+</div>
+<script>
+var orders = {{tartozekok|safe}};
+
+
+$(function(){
+    var dataGrid = $("#gridContainer").dxDataGrid({
+        dataSource: orders,
+        key: 'id',
+        selection: {
+            mode: "single"
+        },
+        "export": {
+            enabled: true,
+            fileName: "Szabályozók",
+            allowExportSelectedData: true
+        },
+        filterRow: {
+            visible: true,
+            applyFilter: "auto"
+        },
+        searchPanel: {
+            visible: true,
+            width: 240,
+            placeholder: "Search..."
+        },
+        headerFilter: {
+            visible: true
+        },
+        columns: [
+		{
+            dataField: "id",
+            width: 100,
+            caption: "id",
+        },
+        {
+            caption: "allomas_nev",
+			width: 200,
+            dataField: "allomas_nev",
+        },
+		 {
+		    caption: "Művelet",
+			width: 100,
+            alignment: 'center',
+            cellTemplate: function (container, options) {
+                $('<a/>').addClass('dx-link')
+                    .text('mutat')
+                    .on('dxclick', function () {
+                        var currentRow=$(this).closest("tr");
+                        var customerId = currentRow.find("td:eq(0)").text();
+                        window.open('/szabalyozok/'+ customerId +'/szabtartshow/','_blank');
+                    })
+                    .appendTo(container);
+                }
+        },
+        {
+            dataField: "tartozekfajta",
+            width: 200,
+            caption: "tartozekfajta",
+        },
+        {
+            dataField: "tartozekgyarto",
+            width: 200,
+            caption: "tartozekgyarto",
+        },
+        {
+            dataField: "tartozektipus",
+            width: 200,
+            caption: "tartozektipus",
+        },
+        {
+            dataField: "gyariszam",
+            width: 100,
+            caption: "gyariszam",
+        },
+        {
+            dataField: "elhelyezkedes",
+            width: 50,
+            caption: "elhelyezkedes neve",
+        },
+        {
+            dataField: "terulet",
+            width: 100,
+            caption: "Terület",
+        },
+        {
+            dataField: "uzem",
+            width: 100,
+            caption: "Üzem",
+        },
+        {
+            dataField: "telepules",
+            width: 100,
+            caption: "Teleülés",
+        },
+        {
+            dataField: "szabvezerles",
+            width: 100,
+            caption: "szabvezerles",
+        },
+        {
+            dataField: "beuzemeles_ev",
+            width: 100,
+            caption: "beuzemeles_ev",
+            format: "number",
+        },
+        {
+            dataField: "beszereles_datum",
+            width: 200,
+            caption: "beszereles_datum",
+        },
+        {
+            dataField: "megjegyzes",
+            width: 100,
+            caption: "megjegyzes",
+        },
+        ],
+        onSelectionChanged: function (selectedItems) {
+            var data = selectedItems.selectedRowsData[0];
+        }
+    }).dxDataGrid('instance');
+
+});
+
+
+
+</script>
+</body>
+</html>

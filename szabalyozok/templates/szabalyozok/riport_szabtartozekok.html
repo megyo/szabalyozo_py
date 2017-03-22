@@ -1,7 +1,7 @@
 {% extends "szabalyozok/riport_layout.html" %}
 
 {% block content %}
-<h1>Szabályozó tertozékok</h1>
+<h1>Szabályozó tartozékok</h1>
 <table id="riport" class="table table-bordered" cellspacing="0" width="100%">
     <thead>
     <tr>
@@ -13,6 +13,7 @@
         <th>Gyártó</th>
         <th>Típusa</th>
         <th>Gyáriszám</th>
+        <th>Elhelyezkedés</th>
         <th>Szab.vez.mód</th>
         <th>Beüzemelés éve</th>
         <th>Beszerelés dátuma</th>
@@ -29,6 +30,7 @@
         <th>Gyártó</th>
         <th>Típusa</th>
         <th>Gyáriszám</th>
+        <th>Elhelyezkedés</th>
         <th>Szab.vez.mód</th>
         <th>Beüzemelés éve</th>
         <th>Beszerelés dátuma</th>
@@ -46,6 +48,11 @@
         <td>{{ szabtartozek.tartozekgyarto }}</td>
         <td>{{ szabtartozek.tartozektipus }}</td>
         <td>{{ szabtartozek.gyariszam }}</td>
+        <th>
+            {% if szabtartozek.elhelyezkedes == 'p1_ag' %}P1 ág {% endif %}
+            {% if szabtartozek.elhelyezkedes == 'p2_ag' %}P2 ág {% endif %}
+            {% if szabtartozek.elhelyezkedes == 'kozos' %}Közös{% endif %}
+        </th>
         <td>{{ szabtartozek.szabvezerles }}</td>
         <th>{{ szabtartozek.beuzemeles_ev }}</th>
         <th>{{ szabtartozek.beszereles_datum }}</th>

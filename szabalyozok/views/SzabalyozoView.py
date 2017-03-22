@@ -121,6 +121,8 @@ def tartozek_beki(request, pk):
     szab_id = szabalyozo.id
     tartozekok = Tartozekok.objects.filter(szabalyozo_id=pk).order_by('beszereles_datum').reverse()
     formki = TartozekkiszerelForm()
+
+    # return HttpResponse(tartozekok, content_type="text/plain")
     return render(request, 'szabalyozok/tartozek_beki.html',
                   {'title': 'Szabályozó tartozékok', 'szabnev': szab_nev, 'szabid': szab_id, 'tartozekok': tartozekok,
                    'formki': formki})
@@ -132,18 +134,42 @@ def tartozek_ki(request, pk):
     if request.method == "POST":
         form = TartozekkiszerelForm(request.POST)
         if form.is_valid():
-            tartozekki = form.save(commit=False)
-            szabalyozo = Szabalyozok.objects.get(id=szabid)
-            tartozekki.szabalyozo = szabalyozo
-            tartozekki.beszereles_datum = tartozekki.tartozek.beszereles_datum
-            tartozekid = tartozekki.tartozek.id
-            tartozek = Tartozekok.objects.get(id=tartozekid)
-            tartozek.szabalyozo_id = ""
+            kidatum = form.cleaned_data['kiszereles_datum']
+            megjegyzes = form.cleaned_data['megjegyzes']
+            tartozek_id = form.cleaned_data['tartozek']
 
-            tartozekki.save()
+            szabalyozo = get_object_or_404(Szabalyozok, pk=szabid)
+            szab_id = szabalyozo.id
+            tartozek = get_object_or_404(Tartozekok, pk=tartozek_id)
+            bedatum = tartozek.beszereles_datum
+            tartozek.szabalyozo_id = None
             tartozek.save()
-            return redirect('tartozek_beki', pk=pk)
+
+            tartozekki = Tartozekkiszerel(beszereles_datum=bedatum, kiszereles_datum=kidatum, szabalyozo_id=szab_id, tartozek_id=tartozek_id, megjegyzes=megjegyzes)
+            tartozekki.save()
+
+            # return redirect('tartozek_beki', pk=pk)
     return redirect('tartozek_beki', pk=pk)
+
+# @login_required(login_url='/login/')
+# def tartozek_ki(request, pk):
+#     szabid = pk
+#     if request.method == "POST":
+#         form = TartozekkiszerelForm(request.POST)
+#         if form.is_valid():
+#             tartozekki = form.save(commit=False)
+#             szabalyozo = Szabalyozok.objects.get(id=szabid)
+#             tartozekki.szabalyozo = szabalyozo
+#             tartozekki.beszereles_datum = tartozekki.tartozek.beszereles_datum
+#             tartozekid = tartozekki.tartozek.id
+#             tartozek = Tartozekok.objects.get(id=tartozekid)
+#             tartozek.szabalyozo_id = ""
+#
+#             tartozekki.save()
+#             tartozek.save()
+#             return redirect('tartozek_beki', pk=pk)
+#     return redirect('tartozek_beki', pk=pk)
+
 
 
 @login_required(login_url='/login/')
@@ -222,24 +248,28 @@ def muszer_ki(request, pk):
     if request.method == "POST":
         form = MuszerkiszerelForm(request.POST)
         if form.is_valid():
-            muszerki = form.save(commit=False)
-            szabalyozo = Szabalyozok.objects.get(id=szabid)
-            muszerki.szabalyozo = szabalyozo
-            muszerki.beszereles_datum = muszerki.muszer.beszereles_datum
-            selejt = muszerki.selejt
-            muszerid = muszerki.muszer.id
-            muszer = Muszerek.objects.get(id=muszerid)
+            kidatum = form.cleaned_data['kiszereles_datum']
+            megjegyzes = form.cleaned_data['megjegyzes']
+            muszer_id = form.cleaned_data['muszer']
+            selejt = form.cleaned_data['selejt']
+
+            szabalyozo = get_object_or_404(Szabalyozok, pk=szabid)
+            szab_id = szabalyozo.id
+
+            muszer = get_object_or_404(Muszerek, pk=muszer_id)
+            bedatum = muszer.beszereles_datum
             muszer.szabalyozo_id = None
+            muszer.jegyzokonyv_szam = None
             muszer.kalib_datum = None
             muszer.kov_kalib_datum = None
             muszer.beszereles_datum = None
             muszer.elhelyezkedes = None
             if selejt:
                 muszer.selejt = True
-
-            muszerki.save()
             muszer.save()
-            return redirect('muszer_beki', pk=pk)
+
+            muszerki = Muszerkiszerel(beszereles_datum=bedatum, kiszereles_datum=kidatum, szabalyozo_id=szab_id, muszer_id=muszer_id, megjegyzes=megjegyzes, selejt=selejt)
+            muszerki.save()
     return redirect('muszer_beki', pk=pk)
 
 

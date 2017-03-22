@@ -49,7 +49,7 @@ class Tartozekok(models.Model):
     beuzemeles_ev = models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2100)], blank=True,
                                         null=True)
     beszereles_datum = models.DateField(blank=False, null=False)
-    megjegyzes = models.CharField(max_length=100, blank=True, null=True)
+    megjegyzes = models.CharField(max_length=255, blank=True, null=True)
     szabalyozo = models.ForeignKey(SzabalyozoModel.Szabalyozok, blank=True, null=True)
     gyariszam = models.CharField(max_length=50, blank=True, null=True)
     szab_vezerles_mod = models.ForeignKey(SzabVezerlesMod, blank=True, null=True)
@@ -66,7 +66,7 @@ class Tartozekkiszerel(models.Model):
     szabalyozo = models.ForeignKey(SzabalyozoModel.Szabalyozok, related_name='tartki_szab', blank=False, null=False)
     beszereles_datum = models.DateField(blank=True, null=True)
     kiszereles_datum = models.DateField(blank=True, null=True)
-    megjegyzes = models.CharField(max_length=100, blank=True, null=True)
+    megjegyzes = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Tartozék kiszerelés"

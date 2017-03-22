@@ -94,7 +94,8 @@ urlpatterns = [
     # api
     # url(r'^api/(?P<pk>[0-9]+)/get_tartozekgyarto/$', szabalyozok.views.get_tartozekgyarto, name='get_tartozekgyarto'),
     url(r'^api/(?P<fpk>[0-9]+)/(?P<gpk>[0-9]+)/get_tartozektipus/$', szabalyozok.views.get_tartozektipus, name='get_tartozektipus'),
-
+    url(r'^api/api_szabalyozok/$', szabalyozok.views.api_szabalyozok, name='api_szabalyozok'),
+    url(r'^api/api_tartozekok/$', szabalyozok.views.api_tartozekok, name='api_tartozekok'),
 ]
 
 # admin.autodiscover()

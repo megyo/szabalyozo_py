@@ -27,7 +27,7 @@ class Szabalyozomunkak(models.Model):
     szabalyozomunkatipus = models.ForeignKey(SzabalyozoMunkatipus, related_name='szabmunka_tipus', blank=False,
                                              null=False)
     szabmunka_datum = models.DateField(blank=False, null=False)
-    megjegyzes = models.CharField(max_length=100, blank=True, null=True)
+    megjegyzes = models.CharField(max_length=255, blank=True, null=True)
     szabalyozo = models.ForeignKey(SzabalyozoModel.Szabalyozok, blank=True, null=True)
 
     class Meta:
@@ -40,7 +40,7 @@ class Szabalyozomunkak(models.Model):
 class Muszermunkak(models.Model):
     muszermunkatipus = models.ForeignKey(MuszerMunkatipus, related_name='muszermunka_tipus', blank=False, null=False)
     muszmunka_datum = models.DateField(blank=False, null=False)
-    megjegyzes = models.CharField(max_length=100, blank=True, null=True)
+    megjegyzes = models.CharField(max_length=255, blank=True, null=True)
     muszer = models.ForeignKey(MuszerModel.Muszerek, blank=True, null=True)
 
     class Meta:

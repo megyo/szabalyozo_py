@@ -1,10 +1,12 @@
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 # from django.views.decorators.cache import cache_page
 from szabalyozok.models import *
-# from django.http import HttpResponse
+from django.http import HttpResponse
 import itertools
+from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 
 # @cache_page(60 * 15)
@@ -134,3 +136,40 @@ def simple_doc_list(request, tip, eszid):
     return render(request, 'szabalyozok/simple_doc_list.html',
                   {'title': 'Dokumentumok', 'doclist': doc_list, 'tipus': tip, 'eszid': eszid,
                    'eszkoznev': eszkoz_nev})
+
+
+def api_szabalyozok(request):
+    group = request.user.groups.values_list('name', flat=True).first()
+    if group == None:
+        group = 'admin'
+    szabalyozok_list = SzabalyozokRiport.objects.filter(jog__contains=group).values()
+
+    szabalyozok = json.dumps(list(szabalyozok_list), ensure_ascii=False, cls=DjangoJSONEncoder)
+
+    # return HttpResponse(szabalyozok, content_type="text/plain")
+    return render(
+        request,
+        'szabalyozok/riport_szabalyozokapi.html',
+        {
+            'title': 'Szabalyozok',
+            'szabalyozok': szabalyozok,
+        }
+    )
+
+
+def api_tartozekok(request):
+    group = request.user.groups.values_list('name', flat=True).first()
+    if group == None:
+        group = 'admin'
+    szabalyozok_list = TartozekRiport.objects.filter(jog__contains=group).values()
+    szabalyozok = json.dumps(list(szabalyozok_list), ensure_ascii=False, cls=DjangoJSONEncoder)
+
+    # return HttpResponse(szabalyozok, content_type="text/plain")
+    return render(
+        request,
+        'szabalyozok/riport_tartozekapi.html',
+        {
+            'title': 'Szabalyozok',
+            'tartozekok': szabalyozok,
+        }
+    )

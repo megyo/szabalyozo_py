@@ -20,7 +20,7 @@ class Doc(models.Model):
     doctipus = models.CharField(max_length=10, blank=False, null=False)
     eszkoz_id = models.IntegerField(blank=False, null=False)
     felt_datum = models.DateField(blank=False, null=False)
-    doc_nev = models.CharField(max_length=100, blank=False, null=False)
+    doc_nev = models.CharField(max_length=200, blank=False, null=False)
     docfile = models.FileField(upload_to=content_file_name)
 
     class Meta:
@@ -39,7 +39,7 @@ def content_kep_name(instance, filename):
     return os.path.join('kepek/'+ev, filenamemd5)
 
 class Image(models.Model):
-    image_nev = models.CharField(max_length=100, blank=False, null=False)
+    image_nev = models.CharField(max_length=200, blank=False, null=False)
     szabalyozo = models.ForeignKey(SzabalyozoModel.Szabalyozok, blank=True, null=True)
     image = StdImageField(upload_to=content_kep_name,
                           variations={'normal': (1024, 768), 'thumbnail': (100, 75), })

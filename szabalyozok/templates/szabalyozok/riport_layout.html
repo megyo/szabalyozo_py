@@ -15,13 +15,12 @@
     <script src="{% static 'szabalyozok/scripts/jquery-1.12.1.min.js' %}"></script>
     <link rel="icon" type="image/x-icon" href="{% static 'szabalyozok/images/favicon.ico' %}"/>
     <script>
-    $(window).load(function() {
-		// Animate loader off screen
-		$(".se-pre-con").fadeOut("slow");;
-	});
-	</script>
+        function anim() {
+		$(".se-pre-con").fadeOut("slow");
+	};
+    </script>
 </head>
-<body>
+<body onload="anim();">
 <div class="se-pre-con"></div>
 
 <nav class="navbar navbar-default">
@@ -58,6 +57,9 @@
                         <li role="separator" class="divider"></li>
                         <li><a href="{% url 'riport_szabmunkak' %}">Szabályozó munkák</a></li>
                         <li><a href="{% url 'riport_muszermunkak' %}">Műszer munkák</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'api_szabalyozok' %}">Új szab. riport</a></li>
+                        <li><a href="{% url 'api_tartozekok' %}">Új tartozékok riport</a></li>
                     </ul>
                 </li>
                 {% endif %}
@@ -66,7 +68,7 @@
     </div>
 </nav>
 {% block content %}{% endblock %}
-<script src="{% static 'szabalyozok/scripts/jquery-ui.js' %}"></script>
+<!--<script src="{% static 'szabalyozok/scripts/jquery-ui.js' %}"></script>-->
 <script src="{% static 'szabalyozok/scripts/bootstrap.js' %}"></script>
 <script src="{% static 'szabalyozok/scripts/respond.js' %}"></script>
 <script src="{% static 'szabalyozok/scripts/lightbox.js' %}"></script>
@@ -131,7 +133,7 @@
 
             new $.fn.dataTable.Buttons(table, {
                 buttons: [
-                    'excel',
+                    'excel','csv',
                     {extend: 'print', text: 'Nyomtat',},
                 ]
             });

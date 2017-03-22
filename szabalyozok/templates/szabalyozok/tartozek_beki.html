@@ -25,7 +25,11 @@
         <td>{{ tartozek.tartozektipus.tartozekfajta }}</td>
         <td>{{ tartozek.tartozektipus.tartozekgyarto }}</td>
         <td>{{ tartozek.tartozektipus }}</td>
-        <td>{% if tartozek.elhelyezkedes %} {{ tartozek.elhelyezkedes }} {% endif %}</td>
+        <td>{% if tartozek.elhelyezkedes %}
+                {% if tartozek.elhelyezkedes == 'p1_ag' %}P1 ág {% endif %}
+                {% if tartozek.elhelyezkedes == 'p2_ag' %}P2 ág {% endif %}
+                {% if tartozek.elhelyezkedes == 'kozos' %}Közös{% endif %}
+            {% endif %}</td>
         <td>{% if tartozek.beuzemeles_ev %} {{ tartozek.beuzemeles_ev }} {% endif %}</td>
         <td>{% if tartozek.beszereles_datum %} {{ tartozek.beszereles_datum }} {% endif %}</td>
         <td>{% if tartozek.megjegyzes %} {{ tartozek.megjegyzes }} {% endif %}</td>

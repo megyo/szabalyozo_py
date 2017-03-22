@@ -25,6 +25,7 @@
             <th>Tartozék fajtája</th>
             <th>Gyártó</th>
             <th>Típusa</th>
+            <th>Elhelyezkedés</th>
             <th>Beszerelés dátuma</th>
             <th>Megjegyzés</th>
         </tr>
@@ -35,6 +36,11 @@
             <td>{{ tartozek.tartozektipus.tartozekfajta }}</td>
             <td>{{ tartozek.tartozektipus.tartozekgyarto }}</td>
             <td>{{ tartozek.tartozektipus }}</td>
+            <td>
+                {% if tartozek.elhelyezkedes == 'p1_ag' %}P1 ág {% endif %}
+                {% if tartozek.elhelyezkedes == 'p2_ag' %}P2 ág {% endif %}
+                {% if tartozek.elhelyezkedes == 'kozos' %}Közös{% endif %}
+            </td>
             <td>{{ tartozek.beszereles_datum }}</td>
             <td>{% if tartozek.megjegyzes %} {{ tartozek.megjegyzes }} {% endif %}</td>
         </tr>
@@ -60,6 +66,7 @@
             <th>Méréshatár 2</th>
             <th>Oszt.pont.</th>
             <th>Kalibrálás érvényessége</th>
+            <th>Jegyzőkönyv száma</th>
             <th>Megjegyzés</th>
             <th>Egyéb</th>
         </tr>
@@ -71,9 +78,10 @@
             <td>{{ muszer.muszertipus.muszergyarto }}</td>
             <td>{{ muszer.muszertipus }}</td>
             <td>{{ muszer.mereshatar1 }}</td>
-            <td>{{ muszer.mereshatar2 }}</td>
+            <td>{% if muszer.mereshatar2 %}{{ muszer.mereshatar2 }}{% endif %}</td>
             <td>{{ muszer.osztalypontossag }}</td>
             <td>{{ muszer.kov_kalib_datum }}</td>
+            <td>{% if muszer.jegyzokonyv_szam %}{{ muszer.jegyzokonyv_szam }}{% endif %}</td>
             <td>{% if muszer.megjegyzes %} {{ muszer.megjegyzes }} {% endif %}</td>
             <td>
                 {% if user.is_authenticated %}

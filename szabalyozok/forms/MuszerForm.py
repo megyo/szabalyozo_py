@@ -2,8 +2,9 @@ from django import forms
 from szabalyozok.models import Muszerek, Muszerkiszerel, Muszertipus
 
 
-class MuszerkiszerelForm(forms.ModelForm):
-    muszer = forms.ModelChoiceField(queryset=Muszerek.objects.all(), empty_label="Kérem válasszon", required=False, label="Műszer")
+class MuszerkiszerelForm(forms.Form):
+    # muszer = forms.ModelChoiceField(queryset=Muszerek.objects.all(), empty_label="Kérem válasszon", required=False, label="Műszer")
+    muszer = forms.CharField(required=False, label="Műszer")
     kiszereles_datum = forms.DateField(required=True, label="Kiszerelés dátuma", widget=forms.TextInput(attrs={'class':'datum'}))
     selejt = forms.BooleanField(required=False, label="Selejt")
     megjegyzes = forms.CharField(required=False, label="Megjegyzés", widget=forms.Textarea)
@@ -25,10 +26,12 @@ class MuszerbeszerelForm(forms.ModelForm):
     beszereles_datum = forms.DateField(required=True, label="Beszerelés dátuma", widget=forms.TextInput(attrs={'class':'datum'}))
     megjegyzes = forms.CharField(required=False, label="Megjegyzés", widget=forms.Textarea)
     #selejt = forms.BooleanField(required=False, label="Selejt")
+    jegyzokonyv_szam = forms.CharField(required=False, label="Jegyzőkönyv száma")
+
 
     class Meta(forms.ModelForm):
         model = Muszerek
-        fields = ('elhelyezkedes', 'kalib_datum', 'kov_kalib_datum', 'beszereles_datum', 'megjegyzes')
+        fields = ('elhelyezkedes', 'kalib_datum', 'kov_kalib_datum', 'beszereles_datum', 'jegyzokonyv_szam', 'megjegyzes')
 
 
 class ManometernewForm(forms.ModelForm):

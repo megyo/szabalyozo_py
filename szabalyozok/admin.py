@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import *
-
+from django.utils.html import format_html
 
 #Szabályozók admin
 class SzabalyozokAdmin(admin.ModelAdmin):
@@ -86,5 +86,16 @@ admin.site.register(Muszerek, MuszerekAdmin)
 admin.site.register(MuszerMunkatipus)
 admin.site.register(SzabalyozoMunkatipus)
 #admin.site.register(Image)
+
+
+# class ImageAdmin(admin.ModelAdmin):
+#     def bar(self, obj):  # receives the instance as an argument
+#         return '<img src="{thumb}"  height="150"/>'.format(thumb=obj.image.url,
+#         )
+#     bar.allow_tags = True
+#     bar.short_description = 'image'
+#     list_display = ('image_nev', 'bar',)
+#
+# admin.site.register(Image, ImageAdmin)
 
 

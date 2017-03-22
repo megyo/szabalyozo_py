@@ -68,7 +68,8 @@ class Muszerek(models.Model):
     kalib_datum = models.DateField(blank=True, null=True)
     kov_kalib_datum = models.DateField(blank=True, null=True)
     telefon = models.CharField(max_length=100, blank=True, null=True)
-    megjegyzes = models.CharField(max_length=100, blank=True, null=True)
+    megjegyzes = models.CharField(max_length=255, blank=True, null=True)
+    jegyzokonyv_szam = models.CharField(max_length=50, blank=True, null=True)
     selejt = models.BooleanField()
 
     class Meta:
