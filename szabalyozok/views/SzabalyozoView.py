@@ -499,7 +499,7 @@ def kep_del(request, pk, spk):
 
 def diagnosztika(request, pk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
-    diagnosztika = Diagnosztika.objects.filter(szabalyozo_id=pk).order_by('diag_datum').reverse()[0:1]
+    diagnosztika = Diagnosztika.objects.filter(szabalyozo_id=pk).order_by('diag_felvitel').reverse()[0:1]
     szabnev = szabalyozo.allomas_nev
 
     return render(request, 'szabalyozok/diagnosztika.html',
@@ -522,6 +522,7 @@ def diagnosztika_new(request, pk):
         if form.is_valid():
             diag = form.save(commit=False)
             diag.szabalyozo_id = pk
+            diag.diag_felvitel = timezone.now()
             diag.save()
 
             # utolsó diagnosztikai keresés

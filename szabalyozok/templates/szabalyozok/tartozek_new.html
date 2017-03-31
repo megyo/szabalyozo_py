@@ -29,8 +29,8 @@ $(document).ready(function(){
     })
 
     function api() {
-        gy_id = $(id_tartozekgyarto).val();
-        fa_id = $(id_tartozekfajta).val();
+        gy_id = $('#id_tartozekgyarto').val();
+        fa_id = $('#id_tartozekfajta').val();
         if (gy_id == '' | fa_id == '') {$("#id_tartozektipus").empty(); gy_id=0; fa_id=0;};
         request_url = '/api/' + fa_id + '/'+ gy_id +'/get_tartozektipus/',
         $.ajax({

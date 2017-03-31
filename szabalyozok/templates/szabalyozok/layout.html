@@ -28,12 +28,17 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'szabalyozok' %}">Szabályozó keresés</a></li>
                         <li><a href="{% url 'terkep' %}" target="_blank">Szabályozó térkép</a></li>
-                        <li><a href="{% static 'szabalyozok/kezelesi_utmutato/szab_kezelesi.pdf' %}" target="_blank">Kezelési útmutató</a></li>
                         <li role="separator" class="divider"></li>
                         {% if user.is_authenticated %}
                             <li><a href="{% url 'manometernew' %}">Manométer létrehozás</a></li>
+                            <li role="separator" class="divider"></li>
                         {% endif %}
-                        <li><a href="/admin">Admin</a></li>
+                            <li><a href="/admin">Admin</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'change_password' %}">Jelszó módosítás</a></li>
+                        {% endif %}
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% static 'szabalyozok/kezelesi_utmutato/szab_kezelesi.pdf' %}" target="_blank">Kezelési útmutató</a></li>
                     </ul>
                 </li>
                 {% if user.is_authenticated %}
