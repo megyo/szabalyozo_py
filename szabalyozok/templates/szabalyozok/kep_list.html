@@ -30,14 +30,10 @@
                       {{ kep.image_nev }}
                     </td>
                         <td>
-                            <a href="{% url 'kep_del' pk=kep.id spk=szabid %}">
-                                <button class="btn btn-danger delete">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                    <span>Törlés</span>
-                                </button></a>
-
+                            <button type="button" class="btn btn-danger delete" onclick="window.location.href='{% url 'kep_del' pk=kep.id spk=szabid %}'">
+                                <i class="glyphicon glyphicon-trash"></i><span> Törlés</span></button>
+                            </button></a>
                         </td>
-
                 </tr>
             {% endfor %}
         </table>

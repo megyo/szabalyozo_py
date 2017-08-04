@@ -80,10 +80,11 @@ class SzabalyozoForm(forms.ModelForm):
         widget=forms.Select,
         choices=Szabalyozok.VILLAMVEDELEM_CHOICES,
     )
-    villamvedelem_ev = forms.IntegerField(required=False, label='Villámvéd. felülvizsg. éve', min_value=1950,
-                                          max_value=2100)
-    villamvedelem_kov_ev = forms.IntegerField(required=False, label='Köv. villámvéd. felülvizsg. éve', min_value=1950,
-                                              max_value=2100)
+    villamvedelem_ev = forms.DateField(required=False, label="Villámvéd. felülvizsg. dátuma", widget=forms.TextInput(attrs={'class':'datum'}))
+       # forms.IntegerField(required=False, label='Villámvéd. felülvizsg. éve', min_value=1950, max_value=2100)
+
+    villamvedelem_kov_ev = forms.DateField(required=False, label="Köv. villámvéd. felülvizsg. dátuma", widget=forms.TextInput(attrs={'class':'datum'}))
+
     karbantartas_2ev = forms.IntegerField(required=False, label='2 éves karb. köv. időpontja', min_value=1950,
                                           max_value=2100)
     karbantartas_10ev = forms.IntegerField(required=False, label='10 éves karb. köv. időpontja', min_value=1950,
@@ -95,6 +96,7 @@ class SzabalyozoForm(forms.ModelForm):
     burkolt_terulet = forms.DecimalField(required=False, label="Burkolt terület (m2)")
     ellenorzesiciklus = forms.ModelChoiceField(queryset=EllenorzesiCiklus.objects.all(), empty_label="Kérem válasszon",
                                         required=False, label="Ellenőrzési ciklus")
+    villamvedelem_szint = forms.CharField(required=False, label="Villámvédelem szintje")
 
     class Meta(forms.ModelForm):
         model = Szabalyozok
@@ -103,7 +105,7 @@ class SzabalyozoForm(forms.ModelForm):
                   'nev_kapacitas', 'nyom_din_rendszer', 'futott', 'rb_zona', 'telepites_ev', 'villamvedelem',
                   'villamvedelem_ev', 'villamvedelem_kov_ev', 'karbantartas_2ev',
                   'karbantartas_10ev', 'osszedolg_szab', 'szabkarb', 'ossz_terulet', 'fuves_terulet',
-                  'burkolt_terulet', 'ellenorzesiciklus')
+                  'burkolt_terulet', 'ellenorzesiciklus', 'villamvedelem_szint')
 
 
 class SearchForm(forms.Form):

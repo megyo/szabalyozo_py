@@ -76,6 +76,7 @@ urlpatterns = [
     # doc URL
     url(r'^doc/(?P<tip>[a-z]+)/(?P<eszid>[0-9]+)/(?P<spk>[0-9]+)/doclist/$', szabalyozok.views.doc_list, name='doc_list'),
     url(r'^doc/(?P<tip>[a-z]+)/(?P<eszid>[0-9]+)/(?P<spk>[0-9]+)/docnew/$', szabalyozok.views.doc_new, name='doc_new'),
+    url(r'^doc/(?P<tip>[a-z]+)/(?P<pk>[0-9]+)/(?P<eszid>[0-9]+)/(?P<spk>[0-9]+)/docdel/$', szabalyozok.views.doc_del, name='doc_del'),
 
     # kép URL
     url(r'^kep/(?P<spk>[0-9]+)/keplist/$', szabalyozok.views.kep_list, name='kep_list'),
@@ -89,13 +90,22 @@ urlpatterns = [
     url(r'^riportok/muszerek/$', szabalyozok.views.riport_muszerek, name='riport_muszerek'),
     url(r'^riportok/szabalyozok/$', szabalyozok.views.riport_szabalyozok, name='riport_szabalyozok'),
     url(r'^riportok/diagnosztikak/$', szabalyozok.views.riport_diagnosztika, name='riport_diagnosztika'),
+    url(r'^riportok/riport_dokumentumfilter/$', szabalyozok.views.riport_dokumentumfilter, name='riport_dokumentumfilter'),
+
+    # Riportok dokumnetum listája
     url(r'^riport/(?P<tip>[a-z]+)/(?P<eszid>[0-9]+)/simple_doc_list/$', szabalyozok.views.simple_doc_list, name='simple_doc_list'),
 
-    # api
+    # Apik
     # url(r'^api/(?P<pk>[0-9]+)/get_tartozekgyarto/$', szabalyozok.views.get_tartozekgyarto, name='get_tartozekgyarto'),
     url(r'^api/(?P<fpk>[0-9]+)/(?P<gpk>[0-9]+)/get_tartozektipus/$', szabalyozok.views.get_tartozektipus, name='get_tartozektipus'),
-    url(r'^api/api_szabalyozok/$', szabalyozok.views.api_szabalyozok, name='api_szabalyozok'),
-    url(r'^api/api_tartozekok/$', szabalyozok.views.api_tartozekok, name='api_tartozekok'),
+
+    # Új riport apik
+    url(r'^riportok/riport_szabalyozok_api/$', szabalyozok.views.riport_szabalyozok_api, name='riport_szabalyozok_api'),
+    url(r'^riportok/riport_szabtartozekok_api/$', szabalyozok.views.riport_szabtartozekok_api, name='riport_szabtartozekok_api'),
+    url(r'^riportok/riport_muszerek_api/$', szabalyozok.views.riport_muszerek_api, name='riport_muszerek_api'),
+    url(r'^riportok/riport_diagnosztika_api/$', szabalyozok.views.riport_diagnosztika_api, name='riport_diagnosztika_api'),
+    url(r'^riportok/riport_szabmunkak_api/$', szabalyozok.views.riport_szabmunkak_api, name='riport_szabmunkak_api'),
+    url(r'^riportok/riport_muszermunkak_api/$', szabalyozok.views.riport_muszermunkak_api, name='riport_muszermunkak_api'),
 
     url(r'^password/$', szabalyozok.views.change_password, name='change_password'),
 ]

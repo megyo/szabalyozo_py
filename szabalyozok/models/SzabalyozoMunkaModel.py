@@ -29,6 +29,8 @@ class Szabalyozomunkak(models.Model):
     szabmunka_datum = models.DateField(blank=False, null=False)
     megjegyzes = models.CharField(max_length=255, blank=True, null=True)
     szabalyozo = models.ForeignKey(SzabalyozoModel.Szabalyozok, blank=True, null=True)
+    ellenorzes = models.BooleanField(default=False)
+    sap_rendelesszam = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Szabályozó munkák"

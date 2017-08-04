@@ -67,7 +67,7 @@ if DEBUG:
         'debug_toolbar.panels.redirects.RedirectsPanel',
     ]
     SHOW_TOOLBAR_CALLBACK = True
-    INTERNAL_IPS = ('127.0.0.2',)
+    INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -101,6 +101,30 @@ DATABASES = {
     }
 }
 
+'''
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'szabalyozok_teszt',
+        'USER': 'szab_admin',
+        'PASSWORD': '',
+        'HOST': '10.10.1.209',
+        'PORT': '3306',
+    }
+}
+
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'szabalyozok_teszt',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

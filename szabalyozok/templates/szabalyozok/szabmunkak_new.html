@@ -4,12 +4,59 @@
 {% block content %}
 
 <h3 style="margin-left:40px;">Szabályozó munka létrehozása</h3><br>
-
-<div style="margin-left:40px;" class="col-md-6">
-    {% load bootstrap3 %}
+<div style="margin-left:40px;" class="col-md-8">
+{% load widget_tweaks %}
     <form method="POST" class="form-horizontal" role="form">
         {% csrf_token %}
-        {% bootstrap_form form layout="horizontal" %}
+    <div class="row" style="margin-left: 20px; padding-top: 10px;">
+        <div class="col-md-2">
+        {{ form.szabalyozomunkatipus.label_tag }}
+        </div>
+        <div class="col-md-4">
+        {{ form.szabalyozomunkatipus.errors }}
+        {{ form.szabalyozomunkatipus|add_class:"form-control" }}
+        </div>
+    </div>
+    <div class="row" style="margin-left: 20px; padding-top: 10px;">
+        <div class="col-md-2">
+        {{ form.szabmunka_datum.label_tag }}
+        </div>
+        <div class="col-md-4">
+        {{ form.szabmunka_datum.errors }}
+        {{ form.szabmunka_datum|add_class:"form-control" }}
+        </div>
+    </div>
+    <div class="row" style="margin-left: 20px; padding-top: 10px;">
+        <div class="col-md-2">
+        {{ form.megjegyzes.label_tag }}
+        </div>
+        <div class="col-md-4">
+        {{ form.megjegyzes.errors }}
+        {{ form.megjegyzes|add_class:"form-control" }}
+        </div>
+    </div>
+        {% if request.user.is_staff %}
+            <div class="row" style="margin-left: 20px; padding-top: 10px;">
+                <div class="col-md-2">
+                    {{ form.ellenorzes.label_tag }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.ellenorzes.errors }}
+                    {{ form.ellenorzes|add_class:"form-control" }}
+                </div>
+            </div>
+            <div class="row" style="margin-left: 20px; padding-top: 10px;">
+                <div class="col-md-2">
+                    {{ form.sap_rendelesszam.label_tag }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.sap_rendelesszam.errors }}
+                    {{ form.sap_rendelesszam|add_class:"form-control" }}
+                </div>
+            </div>
+        {% endif %}
+        <br>
+        <br>
         <button type="submit" class="save btn btn-primary">Létrehozás</button>
     </form>
 </div>

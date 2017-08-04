@@ -41,8 +41,8 @@ def szabalyozok(request):
             if group==None:
                 group = 'admin'
             param = form.cleaned_data['search']
-            szab = Szabalyozok.objects.filter((Q(allomas_nev__contains=param) | Q(
-                telepules__telepules__contains=param) | Q(azonosito__contains=param)) & Q(telepules__uzem__jog__contains=group))
+            szab = Szabalyozok.objects.filter((Q(allomas_nev__icontains=param) | Q(
+                telepules__telepules__icontains=param) | Q(azonosito__icontains=param)) & Q(telepules__uzem__jog__contains=group))
             if len(szab) == 0:
                 hiba = 'Nincs találat!'
 
@@ -229,7 +229,7 @@ def muszer_beki(request, pk):
         form = MuszerSearchForm(request.POST)
         if form.is_valid():
             param = form.cleaned_data['search']
-            muszersearch = Muszerek.objects.filter(gyariszam__contains=param, selejt=False)
+            muszersearch = Muszerek.objects.filter(gyariszam__icontains=param, selejt=False)
             if len(muszersearch) == 0:
                 hiba = 'Nincs találat!'
                 return render(request, 'szabalyozok/muszer_beki.html',
@@ -322,9 +322,12 @@ def manometer_edit(request, pk):
     manometer = get_object_or_404(Muszerek, pk=pk)
     if request.method == "POST":
         form = ManometernewForm(request.POST, instance=manometer)
-        if form.is_valid():
-            form.save()
-            return redirect('riport_muszerek')
+        if manometer.muszertipus.muszerfajta.id == 1:
+            if form.is_valid():
+                form.save()
+                return redirect('riport_muszerek_api')
+        else:
+            return HttpResponse('Valami gubanc van!!!', content_type="text/plain")
     else:
         form = ManometernewForm(instance=manometer)
     return render(request, 'szabalyozok/manometer_edit.html', {'form': form})
@@ -456,6 +459,21 @@ def doc_new(request, tip, eszid, spk):
     return render(request, 'szabalyozok/doc_new.html', {'form': form})
 
 
+@login_required(login_url='/login/')
+def doc_del(request, tip, pk, eszid, spk):
+    doksi = Doc.objects.get(id=pk)
+    docnev = str(doksi.docfile)
+    doksi.delete()
+
+    try:
+        os.remove(os.path.join(settings.MEDIA_ROOT, docnev))
+
+    except ValueError:
+        print("Valami gáz van...")
+
+    return redirect('doc_list', tip=tip, eszid=eszid, spk=spk)
+
+
 def kep_list(request, spk):
     szab = Szabalyozok.objects.get(id=spk)
     szab_nev = szab.allomas_nev
@@ -499,7 +517,7 @@ def kep_del(request, pk, spk):
 
 def diagnosztika(request, pk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
-    diagnosztika = Diagnosztika.objects.filter(szabalyozo_id=pk).order_by('diag_felvitel').reverse()[0:1]
+    diagnosztika = Diagnosztika.objects.filter(szabalyozo_id=pk).order_by('diag_datum').reverse()[0:1]
     szabnev = szabalyozo.allomas_nev
 
     return render(request, 'szabalyozok/diagnosztika.html',

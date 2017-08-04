@@ -122,7 +122,7 @@ class Szabalyozok(models.Model):
     grass_az = models.CharField(max_length=11, blank=True, null=True)
     eszkozszam = models.CharField(max_length=30, blank=False, null=False)
     beruhazasi_szam = models.CharField(max_length=30, blank=False, null=False)
-    sap_pm_az = models.CharField(max_length=20, blank=True, null=True)
+    sap_pm_az = models.CharField(max_length=50, blank=True, null=True)
     telepules = models.ForeignKey(Telepulesek, related_name='szabalyozo_hely')
     hrsz = models.CharField(max_length=10, blank=True, null=True)
     gps_lat = models.CharField(max_length=20, blank=True, null=True)
@@ -151,10 +151,10 @@ class Szabalyozok(models.Model):
     telepites_ev = models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2100)], blank=True,
                                        null=True)
     villamvedelem = models.CharField(max_length=30, choices=VILLAMVEDELEM_CHOICES, blank=True, null=True)
-    villamvedelem_ev = models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2100)], blank=True,
-                                           null=True)
-    villamvedelem_kov_ev = models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2100)], blank=True,
-                                               null=True)
+    villamvedelem_ev = models.DateField(blank=True, null=True)
+    villamvedelem_kov_ev = models.DateField(blank=True, null=True)  # models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2100)], blank=True, null=True)
+    villamvedelem_szint = models.CharField(max_length=20, blank=True, null=True)
+
     karbantartas_2ev = models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2100)], blank=True,
                                            null=True)
     karbantartas_10ev = models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2100)], blank=True,
@@ -169,6 +169,7 @@ class Szabalyozok(models.Model):
 
     class Meta:
         verbose_name_plural = "Szabályozók"
+        ordering = ['allomas_nev']
 
     def __str__(self):
         return self.allomas_nev

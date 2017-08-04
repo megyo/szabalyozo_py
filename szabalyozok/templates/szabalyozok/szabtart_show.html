@@ -10,7 +10,7 @@
     {% endif %}
 </ul>
 
-<div class="col-md-10">
+<div class="col-md-12">
     <h3 class="text-left">{{ szabnev }} tartozékai</h3>    <br>
     <p>
         {% if user.is_authenticated %}
@@ -62,6 +62,7 @@
             <th>Műszer fajtája</th>
             <th>Gyártó</th>
             <th>Típusa</th>
+            <th>Gyáriszám</th>
             <th>Méréshatár 1</th>
             <th>Méréshatár 2</th>
             <th>Oszt.pont.</th>
@@ -77,6 +78,7 @@
             <td>{{ muszer.muszertipus.muszerfajta }}</td>
             <td>{{ muszer.muszertipus.muszergyarto }}</td>
             <td>{{ muszer.muszertipus }}</td>
+            <td>{{ muszer.gyariszam }}</td>
             <td>{{ muszer.mereshatar1 }}</td>
             <td>{% if muszer.mereshatar2 %}{{ muszer.mereshatar2 }}{% endif %}</td>
             <td>{{ muszer.osztalypontossag }}</td>

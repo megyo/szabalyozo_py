@@ -9,10 +9,12 @@ class SzabalyozoMunkaForm(forms.ModelForm):
                                                   label="Elvégzett munka")
     szabmunka_datum = forms.DateField(required=True, label="Munkavégzés dátuma", widget=forms.TextInput(attrs={'class':'datum'}))
     megjegyzes = forms.CharField(required=False, label="Megjegyzés", widget=forms.Textarea)
+    ellenorzes = forms.BooleanField(required=False, label="Ellenőrzött")
+    sap_rendelesszam = forms.CharField(required=False, label="SAP megrendelésszám")
 
     class Meta(forms.ModelForm):
         model = Szabalyozomunkak
-        fields = ('szabalyozomunkatipus', 'szabmunka_datum', 'megjegyzes')
+        fields = ('szabalyozomunkatipus', 'szabmunka_datum', 'megjegyzes', 'ellenorzes', 'sap_rendelesszam')
 
 
 class MuszerMunkaForm(forms.ModelForm):

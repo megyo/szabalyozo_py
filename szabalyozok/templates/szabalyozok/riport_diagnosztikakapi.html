@@ -1,7 +1,7 @@
 {% extends "szabalyozok/riport_api_layout.html" %}
 
 {% block content %}
-<span style="margin-left:20px;">Tartozék riport</span>
+<span style="margin-left:20px;">Aktuális szabályozó beszabályozások riport (bar)</span>
     <div class="apply-filter-option">
         <div id="useFilterApplyButton"></div>
     </div>
@@ -15,11 +15,11 @@
         </div>
     </div>
 <script>
-var tartozekok = {{tartozekok|safe}};
+var diagnosztikak = {{diagnosztikak|safe}};
 
 $(function(){
     var dataGrid = $("#gridContainer").dxDataGrid({
-        dataSource: tartozekok,
+        dataSource: diagnosztikak,
         key: 'id',
         allowColumnResizing: true,
         paging: {
@@ -35,7 +35,7 @@ $(function(){
         },
         "export": {
             enabled: true,
-            fileName: "Tartozék riport",
+            fileName: "Beszabályozások riport",
             allowExportSelectedData: true
         },
         filterRow: {
@@ -60,8 +60,8 @@ $(function(){
                     .text('mutat')
                     .on('dxclick', function () {
                         var currentRow=$(this).closest("tr");
-                        var customerId = currentRow.find("td:eq(15)").text();
-                        window.open('/szabalyozok/'+ customerId +'/szabtartshow/','_blank');
+                        var szabId = currentRow.find("td:eq(14)").text();
+                        window.open('/szabalyozok/'+ szabId +'/diagnosztika/','_blank');
                     })
                     .appendTo(container);
                 }
@@ -88,64 +88,69 @@ $(function(){
             caption: "Település",
         },
         {
-            dataField: "tartozekfajta",
-            width: 170,
-            caption: "Tartozékfajta",
-        },
-        {
-            dataField: "tartozekgyarto",
-            width: 170,
-            caption: "Tartozékgyártó",
-        },
-        {
-            dataField: "tartozektipus",
-            width: 150,
-            caption: "Tartozéktipus",
-        },
-        {
-            dataField: "gyariszam",
-            width: 140,
-            caption: "Gyáriszám",
-        },
-        {
-            dataField: "elhelyezkedes",
-            width: 80,
-            caption: "Elhelyezkedés",
-        },
-        {
-            dataField: "szabvezerles",
-            width: 100,
-            caption: "Szab.vezérlés",
-        },
-        {
-            dataField: "beuzemeles_ev",
-            width: 100,
-            caption: "Beüzemelés éve",
+            dataField: "p1_nyomas",
+            width: 90,
+            caption: "P1 nyomás",
             dataType: "number",
         },
         {
-            dataField: "beszereles_datum",
+            dataField: "p2_nyomas",
+            width: 90,
+            caption: "P2 nyomás",
+            dataType: "number",
+        },
+        {
+            dataField: "p1_also_nyomas",
+            width: 90,
+            caption: "P1 alsó",
+            dataType: "number",
+        },
+        {
+            dataField: "p1_felso_nyomas",
+            width: 90,
+            caption: "P1 felső",
+            dataType: "number",
+        },
+        {
+            dataField: "p2_also_nyomas",
+            width: 90,
+            caption: "P2 alsó",
+            dataType: "number",
+        },
+        {
+            dataField: "p2_felso_nyomas",
+            width: 90,
+            caption: "P2 felső",
+            dataType: "number",
+        },
+        {
+            dataField: "biztlef_nyomas",
+            width: 90,
+            caption: "Bizt. lefuvató nyomás",
+            dataType: "number",
+        },
+        {
+            dataField: "diag_datum",
             width: 100,
-            caption: "Beszerelés dátum",
+            caption: "Dátum",
             dataType: "date",
             format: "yyyy-MM-dd",
+        },
+        {
+            dataField: "diagnosztikaok",
+            width: 120,
+            caption: "Oka",
+        },
+        {
+            dataField: "szabalyozo_id",
+            width: 60,
+            caption: "Szab.Id",
+            dataType: "number",
         },
         {
             dataField: "megjegyzes",
             width: 300,
             caption: "Megjegyzés",
-        },
-        {
-            dataField: "tartozek_id",
-            width: 60,
-            caption: "T.Id",
-            dataType: "number",
-        },
-		{
-            dataField: "id",
-            width: 60,
-            caption: "Sz.Id",
-            dataType: "number",
         },
         ],
         onSelectionChanged: function (selectedItems) {

@@ -1,0 +1,16 @@
+{% extends "szabalyozok/layout.html" %}
+
+{% block content %}
+
+<h3 style="margin-left:40px;">Dokumentum riport előválasztó</h3><br>
+
+<div style="margin-left:40px;" class="col-md-6">
+    {% load bootstrap3 %}
+    <form method="POST" class="form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form layout="horizontal" %}
+        <button type="submit" class="save btn btn-primary">Riport</button>
+    </form>
+</div>
+
+{% endblock %}

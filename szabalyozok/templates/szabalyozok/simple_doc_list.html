@@ -10,6 +10,7 @@
         <thead>
         <tr>
             <th>Dokumentum neve</th>
+            <th>Kategória</th>
             <th>Feltöltés dátuma</th>
             <th>Művelet</th>
         </tr>
@@ -18,6 +19,7 @@
         {% for doc in doclist %}
         <tr>
             <td>{{ doc.doc_nev }}</td>
+            <td>{% if doc.dockategoria %}{{ doc.dockategoria}}{% endif %}</td>
             <td>{{ doc.felt_datum}}</td>
             <td>{% if doc.docfile %} <a href="/media/{{doc.docfile}}" target="_blank">Mutat</a> {% endif %}</td>
         </tr>

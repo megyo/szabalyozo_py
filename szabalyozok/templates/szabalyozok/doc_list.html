@@ -20,20 +20,39 @@
         <thead>
         <tr>
             <th>Dokumentum neve</th>
+            <th>Kategória</th>
             <th>Feltöltés dátuma</th>
-            <th>Művelet</th>
+            <th>Mutat</th>
+            <th>Törlés</th>
         </tr>
         </thead>
         <tbody>
         {% for doc in doclist %}
         <tr>
             <td>{{ doc.doc_nev }}</td>
+            <td>{% if doc.dockategoria %}{{ doc.dockategoria}}{% endif %}</td>
             <td>{{ doc.felt_datum}}</td>
-            <td>{% if doc.docfile %} <a href="/media/{{doc.docfile}}" target="_blank">Mutat</a> {% endif %}</td>
+            {% if doc.docfile %}
+            <td>
+                <button type="button" class="btn btn-primary" onclick="window.open('/media/{{doc.docfile}}')">
+                    <span> Mutat</span>
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger delete" onclick="
+                    var r = confirm('Biztos, hogy törli?');
+                    if (r == true) {
+                        window.location.href = '{% url 'doc_del' tip=tipus pk=doc.id eszid=eszid spk=szabid %}';
+                    }">
+                    <i class="glyphicon glyphicon-trash"></i><span> Törlés</span>
+                </button>
+            </td>
+            {% endif %}
         </tr>
         {% endfor %}
         </tbody>
     </table>
 
 </div>
+
 {% endblock %}

@@ -38,7 +38,7 @@ class ManometernewForm(forms.ModelForm):
     # muszergyarto = forms.ModelChoiceField(queryset=Muszergyarto.objects.all(), empty_label="Kérem válasszon", required=True,
     #                                label="Műszergyártó")
     muszertipus = forms.ModelChoiceField(queryset=Muszertipus.objects.filter(muszerfajta_id=1), empty_label="Kérem válasszon", required=True,
-                                   label="Műszer típus")
+                                   label="Manométer típus")
     gyariszam = forms.CharField(required=True, label="Gyáriszám")
     gyartas_ev = forms.IntegerField(required=False, label='Gyártás éve', min_value=1950, max_value=2100)
     elhelyezkedes = forms.ChoiceField(

@@ -48,6 +48,7 @@ class SzabalyozokRiport(models.Model):
     jog = models.CharField(max_length=255)
     ellenorzesiciklus = models.CharField(max_length=255)
     ellatott = models.CharField(max_length=255)
+    villamvedelem_szint = models.CharField(max_length=255)
 
     class Meta:
         managed = False
@@ -71,6 +72,7 @@ class DiagnosztikaRiport(models.Model):
     allomas_nev = models.CharField(max_length=255)
     diagnosztikaok = models.CharField(max_length=255)
     jog = models.CharField(max_length=255)
+    szabalyozo_id = models.CharField(max_length=20)
 
     class Meta:
         managed = False
@@ -92,6 +94,7 @@ class TartozekRiport(models.Model):
     terulet = models.CharField(max_length=255)
     uzem = models.CharField(max_length=255)
     telepules = models.CharField(max_length=255)
+    tartozek_id = models.CharField(max_length=10)
 
     class Meta:
         managed = False
@@ -107,6 +110,9 @@ class SzabmunkakRiport(models.Model):
     szabmunka_datum = models.CharField(max_length=255)
     megjegyzes = models.CharField(max_length=255)
     jog = models.CharField(max_length=255)
+    szabalyozo_id = models.CharField(max_length=20)
+    ellenorzes = models.BooleanField()
+    sap_rendelesszam = models.CharField(max_length=255)
 
     class Meta:
         managed = False
@@ -139,6 +145,7 @@ class MuszerRiport(models.Model):
     muszergyarto = models.CharField(max_length=255)
     jog = models.CharField(max_length=255)
     szab_id = models.IntegerField()
+    jegyzokonyv_szam = models.CharField(max_length=255)
 
     class Meta:
         managed = False
@@ -146,6 +153,7 @@ class MuszerRiport(models.Model):
 
 
 class MuszermunkaRiport(models.Model):
+    munka_id = models.IntegerField()
     muszer_id = models.IntegerField()
     gyariszam = models.CharField(max_length=255)
     megjegyzes = models.CharField(max_length=255)
@@ -158,3 +166,93 @@ class MuszermunkaRiport(models.Model):
     class Meta:
         managed = False
         db_table = 'szabalyozok_muszermunkak_riport'
+
+
+class Dok_Szabalyozo_Riport(models.Model):
+    doc_nev = models.CharField(max_length=255)
+    docfile = models.CharField(max_length=255)
+    felt_datum = models.DateField()
+    doctipus = models.CharField(max_length=255)
+    # id = models.IntegerField()
+    allomas_nev = models.CharField(max_length=255)
+    jog = models.CharField(max_length=255)
+    terulet = models.CharField(max_length=255)
+    uzem = models.CharField(max_length=255)
+    telepules = models.CharField(max_length=255)
+    dockategoria_id = models.IntegerField()
+    dockategoria = models.CharField(max_length=255)
+    szab_id = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'szabalyozok_szab_dok_riport'
+
+
+class Dok_Muszer_Riport(models.Model):
+    doc_nev = models.CharField(max_length=255)
+    docfile = models.CharField(max_length=255)
+    felt_datum = models.DateField()
+    doctipus = models.CharField(max_length=255)
+    # id = models.IntegerField()
+    allomas_nev = models.CharField(max_length=255)
+    jog = models.CharField(max_length=255)
+    terulet = models.CharField(max_length=255)
+    uzem = models.CharField(max_length=255)
+    telepules = models.CharField(max_length=255)
+    dockategoria_id = models.IntegerField()
+    dockategoria = models.CharField(max_length=255)
+    gyariszam = models.CharField(max_length=255)
+    muszerfajta = models.CharField(max_length=255)
+    muszergyarto = models.CharField(max_length=255)
+    muszertipus = models.CharField(max_length=255)
+    szab_id = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'szabalyozok_muszer_dok_riport'
+
+
+class Dok_Szabalyozo_Munka_Riport(models.Model):
+    doc_nev = models.CharField(max_length=255)
+    docfile = models.CharField(max_length=255)
+    felt_datum = models.DateField()
+    doctipus = models.CharField(max_length=255)
+    # id = models.IntegerField()
+    allomas_nev = models.CharField(max_length=255)
+    jog = models.CharField(max_length=255)
+    terulet = models.CharField(max_length=255)
+    uzem = models.CharField(max_length=255)
+    telepules = models.CharField(max_length=255)
+    dockategoria_id = models.IntegerField()
+    dockategoria = models.CharField(max_length=255)
+    munkatipus = models.CharField(max_length=255)
+    szab_id = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'szabalyozok_szabmunka_dok_riport'
+
+
+class Dok_Muszer_Munka_Riport(models.Model):
+    doc_nev = models.CharField(max_length=255)
+    docfile = models.CharField(max_length=255)
+    felt_datum = models.DateField()
+    doctipus = models.CharField(max_length=255)
+    # id = models.IntegerField()
+    allomas_nev = models.CharField(max_length=255)
+    jog = models.CharField(max_length=255)
+    terulet = models.CharField(max_length=255)
+    uzem = models.CharField(max_length=255)
+    telepules = models.CharField(max_length=255)
+    dockategoria_id = models.IntegerField()
+    dockategoria = models.CharField(max_length=255)
+    gyariszam = models.CharField(max_length=255)
+    muszerfajta = models.CharField(max_length=255)
+    muszergyarto = models.CharField(max_length=255)
+    muszertipus = models.CharField(max_length=255)
+    munkatipus = models.CharField(max_length=255)
+    szab_id = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'szabalyozok_muszermunka_dok_riport'

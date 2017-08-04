@@ -1,7 +1,7 @@
 {% extends "szabalyozok/riport_api_layout.html" %}
 
 {% block content %}
-<span style="margin-left:20px;">Tartozék riport</span>
+<span style="margin-left:20px;">Szabályozó munkák riport</span>
     <div class="apply-filter-option">
         <div id="useFilterApplyButton"></div>
     </div>
@@ -15,11 +15,11 @@
         </div>
     </div>
 <script>
-var tartozekok = {{tartozekok|safe}};
+var szabmunkak = {{szabmunkak|safe}};
 
 $(function(){
     var dataGrid = $("#gridContainer").dxDataGrid({
-        dataSource: tartozekok,
+        dataSource: szabmunkak,
         key: 'id',
         allowColumnResizing: true,
         paging: {
@@ -35,7 +35,7 @@ $(function(){
         },
         "export": {
             enabled: true,
-            fileName: "Tartozék riport",
+            fileName: "Szabályozó munkák riport",
             allowExportSelectedData: true
         },
         filterRow: {
@@ -60,15 +60,15 @@ $(function(){
                     .text('mutat')
                     .on('dxclick', function () {
                         var currentRow=$(this).closest("tr");
-                        var customerId = currentRow.find("td:eq(15)").text();
-                        window.open('/szabalyozok/'+ customerId +'/szabtartshow/','_blank');
+                        var szabId = currentRow.find("td:eq(10)").text();
+                        window.open('/szabmunkak/'+ szabId +'/show/','_blank');
                     })
                     .appendTo(container);
                 }
         },
         {
             caption: "Szab. állomás neve",
-			width: 300,
+			width: 400,
             dataField: "allomas_nev",
             dataType: "string",
         },
@@ -88,63 +88,38 @@ $(function(){
             caption: "Település",
         },
         {
-            dataField: "tartozekfajta",
-            width: 170,
-            caption: "Tartozékfajta",
-        },
-        {
-            dataField: "tartozekgyarto",
-            width: 170,
-            caption: "Tartozékgyártó",
-        },
-        {
-            dataField: "tartozektipus",
+            dataField: "szabalyozomunkatipus",
             width: 150,
-            caption: "Tartozéktipus",
+            caption: "Munkatípus",
         },
+
         {
-            dataField: "gyariszam",
-            width: 140,
-            caption: "Gyáriszám",
-        },
-        {
-            dataField: "elhelyezkedes",
-            width: 80,
-            caption: "Elhelyezkedés",
-        },
-        {
-            dataField: "szabvezerles",
-            width: 100,
-            caption: "Szab.vezérlés",
-        },
-        {
-            dataField: "beuzemeles_ev",
-            width: 100,
-            caption: "Beüzemelés éve",
-            dataType: "number",
-        },
-        {
-            dataField: "beszereles_datum",
-            width: 100,
-            caption: "Beszerelés dátum",
+            dataField: "szabmunka_datum",
+            width: 150,
+            caption: "Időpontja",
             dataType: "date",
             format: "yyyy-MM-dd",
         },
         {
             dataField: "megjegyzes",
-            width: 300,
+            width: 400,
             caption: "Megjegyzés",
         },
         {
-            dataField: "tartozek_id",
-            width: 60,
-            caption: "T.Id",
-            dataType: "number",
+            dataField: "ellenorzes",
+            width: 80,
+            caption: "Ellenőrizve",
+			dataType: "boolean",
         },
-		{
-            dataField: "id",
-            width: 60,
-            caption: "Sz.Id",
+        {
+            dataField: "sap_rendelesszam",
+            width: 150,
+            caption: "SAP megrendelésszám",
+        },
+        {
+            dataField: "szabalyozo_id",
+            width: 80,
+            caption: "Szab.Id",
             dataType: "number",
         },
         ],

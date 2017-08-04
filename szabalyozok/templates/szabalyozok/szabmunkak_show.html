@@ -22,7 +22,9 @@
                 <tr>
                     <th>Munkatípus</th>
                     <th>Időpontja</th>
-                    <th>Megjegyzes</th>
+                    <th>Megjegyzés</th>
+                    <th>Ellenőrizve</th>
+                    <th>SAP megrendelésszám</th>
                     <th>Művelet</th>
                     <th>Egyéb</th>
                 </tr>
@@ -33,6 +35,14 @@
                         <td>{{ munkak.szabalyozomunkatipus }}</td>
                         <td>{{ munkak.szabmunka_datum }} </td>
                         <td>{% if munkak.megjegyzes %} {{ munkak.megjegyzes }} {% endif %}</td>
+                        <td style="text-align: center">
+                            {% if munkak.ellenorzes == 1 %}
+                                <span style="color: green" class="glyphicon glyphicon-ok"></span>
+                            {% else %}
+                                <span style="color: red" class="glyphicon glyphicon-remove"></span>
+                            {% endif %}
+                        </td>
+                        <td>{% if munkak.sap_rendelesszam %} {{ munkak.sap_rendelesszam }} {% endif %}</td>
                         <td>
                             <a href="{% url 'szabmunka_edit' pk=munkak.id spk=szabid %}">Szerkeszt</a>
                         </td>

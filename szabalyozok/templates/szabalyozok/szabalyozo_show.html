@@ -285,7 +285,7 @@
                 <label for="nev_prim_nyom">
                     Névl. prim. nyomás (bar)
                 </label>
-                <input class="form-control" id="nevlegesprim" value="{{ szabalyozo.nev_prim_nyom }}" readonly
+                <input class="form-control" id="nev_prim_nyom" value="{{ szabalyozo.nev_prim_nyom }}" readonly
                        type="text">
             </div>
 
@@ -293,29 +293,29 @@
                 <label for="nev_sek_nyom">
                     Névl. szek. nyomás (bar)
                 </label>
-                <input class="form-control" id="nevlegesszek" value="{{ szabalyozo.nev_sek_nyom }}" readonly
+                <input class="form-control" id="nev_sek_nyom" value="{{ szabalyozo.nev_sek_nyom }}" readonly
                        type="text">
             </div>
 
             <div class="form-group">
-                <label for="p1_nyomas">
+                <label for="uz_prim_nyom">
                     Üzemi prim. nyomás (bar)
                 </label>
-                <input class="form-control" id="uzemiprim" value="{{ szabalyozo.uz_prim_nyom }}" readonly type="text">
+                <input class="form-control" id="uz_prim_nyom" value="{{ szabalyozo.uz_prim_nyom }}" readonly type="text">
             </div>
 
             <div class="form-group">
-                <label for="p2_nyomas">
+                <label for="uz_sek_nyom">
                     Üzemi szek. nyomás (bar)
                 </label>
-                <input class="form-control" id="uzemiszek" value="{{ szabalyozo.uz_sek_nyom }}" readonly type="text">
+                <input class="form-control" id="uz_sek_nyom" value="{{ szabalyozo.uz_sek_nyom }}" readonly type="text">
             </div>
 
             <div class="form-group">
                 <label for="nev_kapacitas">
                     Névleges kapacitás (m3/h)
                 </label>
-                <input class="form-control" id="nevlegeskapacitas" value="{{ szabalyozo.nev_kapacitas }}" readonly
+                <input class="form-control" id="nev_kapacitas" value="{{ szabalyozo.nev_kapacitas }}" readonly
                        type="text">
             </div>
 
@@ -333,6 +333,12 @@
                 <label for="villamvedelemkovev">Villámvédelmi felülvizsgálat</label><br>
                 <input class="form-control" id="villamvedelemkovev"
                        value="{{ szabalyozo.villamvedelem_ev }} - {{ szabalyozo.villamvedelem_kov_ev }}" readonly
+                       type="text">
+            </div>
+            <div class="form-group">
+                <label for="villamvedelem_szint">Villámvédelem szintje</label><br>
+                <input class="form-control" id="villamvedelem_szint"
+                       value="{{ szabalyozo.villamvedelem_szint }}" readonly
                        type="text">
             </div>
             <div class="form-group">

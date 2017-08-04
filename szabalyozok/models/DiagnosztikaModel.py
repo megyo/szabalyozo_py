@@ -26,7 +26,7 @@ class Diagnosztika(models.Model):
     megjegyzes = models.CharField(max_length=100, blank=True, null=True)
     szabalyozo = models.ForeignKey(SzabalyozoModel.Szabalyozok, blank=True, null=True)
     diagnosztikaok = models.ForeignKey(DiagnosztikaOk, blank=False, null=False)
-    diag_felvitel = models.DateTimeField(blank=True, null=True)
+    # diag_felvitel = models.DateTimeField(blank=True, null=True)
 
 
     class Meta:
