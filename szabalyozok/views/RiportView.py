@@ -218,22 +218,34 @@ def riport_diagnosztika_api(request):
     )
 
 
+# Oldal betöltés
 @login_required(login_url='/login/')
 def riport_szabmunkak_api(request):
-    group = request.user.groups.values_list('name', flat=True).first()
-    if group == None:
-        group = 'admin'
-    szabmunkak_list = SzabmunkakRiport.objects.filter(jog__contains=group).values()
-    szabmunkak = json.dumps(list(szabmunkak_list), ensure_ascii=False, cls=DjangoJSONEncoder)
+    # group = request.user.groups.values_list('name', flat=True).first()
+    # if group == None:
+    #     group = 'admin'
+    # szabmunkak_list = SzabmunkakRiport.objects.filter(jog__contains=group).values()
+    # szabmunkak = json.dumps(list(szabmunkak_list), ensure_ascii=False, cls=DjangoJSONEncoder)
 
     return render(
         request,
         'szabalyozok/riport_szabmunkakapi.html',
         {
             'title': 'Szabályozó munkák',
-            'szabmunkak': szabmunkak,
+            #'szabmunkak': szabmunkak,
         }
     )
+
+# Csak adatszolgáltatás
+@login_required(login_url='/login/')
+def riport_szabmunkak_api_json(request):
+    group = request.user.groups.values_list('name', flat=True).first()
+    if group == None:
+        group = 'admin'
+    szabmunkak_list = SzabmunkakRiport.objects.filter(jog__contains=group).values()
+    szabmunkak = json.dumps(list(szabmunkak_list), ensure_ascii=False, cls=DjangoJSONEncoder)
+
+    return HttpResponse(szabmunkak, 'application/json')
 
 
 @login_required(login_url='/login/')

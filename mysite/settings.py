@@ -101,20 +101,19 @@ DATABASES = {
     }
 }
 
-'''
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'szabalyozok_teszt',
+        'NAME': 'szabalyozok_eles',
         'USER': 'szab_admin',
         'PASSWORD': '',
-        'HOST': '10.10.1.209',
+        'HOST': '10.10.1.209', #243
         'PORT': '3306',
     }
 }
-
 '''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

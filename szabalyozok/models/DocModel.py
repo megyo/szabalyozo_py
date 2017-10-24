@@ -28,7 +28,7 @@ def content_file_name(instance, filename):
 
 
 class Doc(models.Model):
-    doctipus = models.CharField(max_length=10, blank=False, null=False)
+    doctipus = models.CharField(max_length=20, blank=False, null=False)
     eszkoz_id = models.IntegerField(blank=False, null=False)
     felt_datum = models.DateField(blank=False, null=False)
     doc_nev = models.CharField(max_length=200, blank=False, null=False)

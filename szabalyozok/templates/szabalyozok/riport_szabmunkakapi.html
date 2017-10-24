@@ -1,7 +1,8 @@
 {% extends "szabalyozok/riport_api_layout.html" %}
 
 {% block content %}
-<span style="margin-left:20px;">Szabályozó munkák riport</span>
+<!--<span style="margin-left:20px;">Szabályozó munkák riport</span>-->
+<div id="btn" style="margin-left:20px;"></div>
     <div class="apply-filter-option">
         <div id="useFilterApplyButton"></div>
     </div>
@@ -15,11 +16,11 @@
         </div>
     </div>
 <script>
-var szabmunkak = {{szabmunkak|safe}};
+// var szabmunkak = {{szabmunkak|safe}};
 
 $(function(){
     var dataGrid = $("#gridContainer").dxDataGrid({
-        dataSource: szabmunkak,
+        dataSource: "{% url 'riport_szabmunkak_api_json' %}",
         key: 'id',
         allowColumnResizing: true,
         paging: {
@@ -130,5 +131,12 @@ $(function(){
 
 });
 
+$("#btn").dxButton({
+    text: "Szabályozó munkák riport",
+    onClick: function () {
+
+        $("#gridContainer").dxDataGrid("instance").refresh();
+    }
+});
 </script>
 {% endblock %}

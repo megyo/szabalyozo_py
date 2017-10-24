@@ -107,6 +107,9 @@ urlpatterns = [
     url(r'^riportok/riport_szabmunkak_api/$', szabalyozok.views.riport_szabmunkak_api, name='riport_szabmunkak_api'),
     url(r'^riportok/riport_muszermunkak_api/$', szabalyozok.views.riport_muszermunkak_api, name='riport_muszermunkak_api'),
 
+    # Json adat
+    url(r'^riportok/riport_szabmunkak_api_json/$', szabalyozok.views.riport_szabmunkak_api_json, name='riport_szabmunkak_api_json'),
+
     url(r'^password/$', szabalyozok.views.change_password, name='change_password'),
 ]
 
