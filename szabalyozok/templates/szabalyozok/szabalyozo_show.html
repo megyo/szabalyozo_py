@@ -8,6 +8,7 @@
     {% if user.is_authenticated %}
         <li role="presentation"><a href="{% url 'szabmunka_show' pk=szabalyozo.id %}">Szab. munkavégzés</a></li>
     {% endif %}
+    <li role="presentation"><a href="{% url 'szabingatlan_show' pk=szabalyozo.id %}">Ingatlan</a></li>
 </ul><p></p>
     <div align="center">
         <button type="button" class="btn btn-info" onclick="window.location.href='{% url 'szabalyozok' %}'">Vissza a

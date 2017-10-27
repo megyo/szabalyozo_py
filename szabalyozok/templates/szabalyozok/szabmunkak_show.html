@@ -6,6 +6,7 @@
         <li role="presentation"><a href="{% url 'szabtart_show' pk=szabid %}">Tartozékok</a></li>
         <li role="presentation"><a href="{% url 'diagnosztika' pk=szabid %}">Beszabályozás</a></li>
         <li role="presentation" class="active"><a href="#">Szab. munkavégzés</a></li>
+        <li role="presentation"><a href="{% url 'szabingatlan_show' pk=szabid %}">Ingatlan</a></li>
     </ul>
     <div class="col-md-6">
         <h3>{{ szabnev }} munkavégzései</h3>

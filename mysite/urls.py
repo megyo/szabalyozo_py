@@ -91,6 +91,13 @@ urlpatterns = [
     url(r'^riportok/szabalyozok/$', szabalyozok.views.riport_szabalyozok, name='riport_szabalyozok'),
     url(r'^riportok/diagnosztikak/$', szabalyozok.views.riport_diagnosztika, name='riport_diagnosztika'),
     url(r'^riportok/riport_dokumentumfilter/$', szabalyozok.views.riport_dokumentumfilter, name='riport_dokumentumfilter'),
+    url(r'^riportok/riport_szabingatlan/$', szabalyozok.views.riport_szabingatlan, name='riport_szabingatlan'),
+
+    # szabalyozó ingatlan URL
+    url(r'^szabingatlan/(?P<pk>[0-9]+)/show/$', szabalyozok.views.szabingatlan_show, name='szabingatlan_show'),
+    url(r'^szabingatlan/(?P<pk>[0-9]+)/edit/$', szabalyozok.views.szabingatlan_edit, name='szabingatlan_edit'),
+    url(r'^szabingatlan/new/$', szabalyozok.views.szabingatlan_new, name='szabingatlan_new'),
+    url(r'^szabingatlan/(?P<pk>[0-9]+)/(?P<spk>[0-9]+)/edit_szab/$', szabalyozok.views.szabingatlan_edit_szab, name='szabingatlan_edit_szab'),
 
     # Riportok dokumnetum listája
     url(r'^riport/(?P<tip>[a-z]+)/(?P<eszid>[0-9]+)/simple_doc_list/$', szabalyozok.views.simple_doc_list, name='simple_doc_list'),
@@ -109,6 +116,7 @@ urlpatterns = [
 
     # Json adat
     url(r'^riportok/riport_szabmunkak_api_json/$', szabalyozok.views.riport_szabmunkak_api_json, name='riport_szabmunkak_api_json'),
+    url(r'^riportok/riport_szabingatlan_api/$', szabalyozok.views.riport_szabingatlan_api, name='riport_szabingatlan_api'),
 
     url(r'^password/$', szabalyozok.views.change_password, name='change_password'),
 ]

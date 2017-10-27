@@ -4,3 +4,4 @@ from .MuszerForm import *
 from .MunkaForm import *
 from .DocForm import *
 from .DiagnosztikaForm import *
+from .SzabingatlanForm import *

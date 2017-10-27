@@ -256,3 +256,35 @@ class Dok_Muszer_Munka_Riport(models.Model):
     class Meta:
         managed = False
         db_table = 'szabalyozok_muszermunka_dok_riport'
+
+
+class SzabalyozokIngatlan_Riport(models.Model):
+    telepules = models.CharField(max_length=255)
+    foldhivatali_hrsz = models.CharField(max_length=255)
+    sajat_hrsz = models.CharField(max_length=255)
+    fekves = models.CharField(max_length=255)
+    muvelesi_ag = models.CharField(max_length=255)
+    terulet_ingatlan = models.CharField(max_length=255)
+    tulajdonos = models.CharField(max_length=255)
+    tulajdonhanyad = models.CharField(max_length=255)
+    tulajdonosok_szama = models.CharField(max_length=255)
+
+    gps_lat = models.CharField(max_length=255)
+    gps_long = models.CharField(max_length=255)
+    terulet_allomas = models.CharField(max_length=255)
+    fuves_terulet = models.CharField(max_length=255)
+    burkolt_terulet = models.CharField(max_length=255)
+
+    aktiv = models.BooleanField()
+    allomas_nev = models.CharField(max_length=255)
+    szab_terulet = models.CharField(max_length=255)
+    uzem = models.CharField(max_length=255)
+    szab_telepules = models.CharField(max_length=255)
+    megjegyzes = models.CharField(max_length=255)
+    ingid = models.CharField(max_length=255)
+    szabid = models.CharField(max_length=255)
+
+
+    class Meta:
+        managed = False
+        db_table = 'szabalyozok_szabingatlan_riport'

@@ -6,14 +6,15 @@ from django.shortcuts import get_object_or_404
 # from datetime import datetime
 from django.utils import timezone
 from django.core.serializers.json import DjangoJSONEncoder
-import json
 from szabalyozok.forms.DiagnosztikaForm import DiagnosztikaForm
 from szabalyozok.forms.SzabalyozoForm import *
 from szabalyozok.forms.MuszerForm import *
 from szabalyozok.forms.TartozekokForm import *
 from szabalyozok.forms.MunkaForm import *
 from szabalyozok.forms.DocForm import *
+from szabalyozok.forms.SzabingatlanForm import *
 from szabalyozok.models import *
+import json
 import os
 from django.conf import settings
 from django.http import HttpResponse
@@ -600,3 +601,51 @@ def get_tartozektipus(request, fpk, gpk):
     tipusok = json.dumps(list(tipus), ensure_ascii=False, cls=DjangoJSONEncoder)
     return HttpResponse(tipusok, content_type="application/json")
     # return HttpResponse(tipusok, content_type="text/plain")
+
+
+@login_required(login_url='/login/')
+def szabingatlan_show(request, pk):
+    szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
+    szab_nev = szabalyozo.allomas_nev
+    szab_id = szabalyozo.id
+    szabingatlan = SzabalyozokIngatlan.objects.filter(szabalyozo=szabalyozo)
+    return render(request, 'szabalyozok/szabingatlan_show.html',
+                  {'title': 'Szabályozó ingatlan', 'szabnev': szab_nev, 'szabid': szab_id, 'szabingatlan': szabingatlan})
+
+
+@login_required(login_url='/login/')
+def szabingatlan_edit(request, pk):
+    szabingatlan = get_object_or_404(SzabalyozokIngatlan, pk=pk)
+    if request.method == "POST":
+        form = SzabIngatlanForm(request.POST, instance=szabingatlan)
+        if form.is_valid():
+            form.save()
+            return redirect('riport_szabingatlan')
+    else:
+        form = SzabIngatlanForm(instance=szabingatlan)
+    return render(request, 'szabalyozok/szabingatlan_edit.html', {'form': form})
+
+
+@login_required(login_url='/login/')
+def szabingatlan_new(request):
+    if request.method == "POST":
+        form = SzabIngatlanForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('riport_szabingatlan')
+    else:
+        form = SzabIngatlanForm()
+    return render(request, 'szabalyozok/szabingatlan_new.html', {'form': form})
+
+
+@login_required(login_url='/login/')
+def szabingatlan_edit_szab(request, pk, spk):
+    szabingatlan = get_object_or_404(SzabalyozokIngatlan, pk=pk)
+    if request.method == "POST":
+        form = SzabIngatlanForm(request.POST, instance=szabingatlan)
+        if form.is_valid():
+            form.save()
+            return redirect('szabingatlan_show', pk=spk)
+    else:
+        form = SzabIngatlanForm(instance=szabingatlan)
+    return render(request, 'szabalyozok/szabingatlan_edit.html', {'form': form})

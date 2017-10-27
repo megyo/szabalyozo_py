@@ -56,6 +56,11 @@ class DiagnosztikaAdmin(admin.ModelAdmin):
     search_fields = ('szabalyozo__allomas_nev',)
 
 
+class SzabIngatlanAdmin(admin.ModelAdmin):
+    list_display = ('telepules', 'foldhivatali_hrsz')
+    list_filter = ('telepules',)
+    search_fields = ('foldhivatali_hrsz', 'sajat_hrsz',)
+
 admin.site.register(Szabalyozok, SzabalyozokAdmin)
 admin.site.register(SzabVezerlesMod)
 admin.site.register(SzabKarb)
@@ -87,6 +92,7 @@ admin.site.register(Muszerek, MuszerekAdmin)
 admin.site.register(MuszerMunkatipus)
 admin.site.register(SzabalyozoMunkatipus)
 #admin.site.register(Image)
+admin.site.register(SzabalyozokIngatlan, SzabIngatlanAdmin)
 
 
 # class ImageAdmin(admin.ModelAdmin):

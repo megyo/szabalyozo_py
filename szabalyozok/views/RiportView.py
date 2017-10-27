@@ -331,3 +331,27 @@ def riport_dokumentumfilter(request):
             'form': form,
         }
     )
+
+
+# Oldal betöltés
+@login_required(login_url='/login/')
+def riport_szabingatlan(request):
+
+    return render(
+        request,
+        'szabalyozok/riport_szabingatlan.html',
+        {
+            'title': 'Szabályozó ingatlanok',
+            #'szabmunkak': szabmunkak,
+        }
+    )
+
+
+# Csak adatszolgáltatás
+@login_required(login_url='/login/')
+def riport_szabingatlan_api(request):
+
+    szabingatlan_list = SzabalyozokIngatlan_Riport.objects.all().values()
+    szabingatlan = json.dumps(list(szabingatlan_list), ensure_ascii=False, cls=DjangoJSONEncoder)
+
+    return HttpResponse(szabingatlan, 'application/json')

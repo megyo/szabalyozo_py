@@ -1,0 +1,148 @@
+{% extends "szabalyozok/layout.html" %}
+
+{% block content %}
+<ul class="nav nav-tabs" xmlns="http://www.w3.org/1999/html">
+    <li role="presentation"><a href="{% url 'szabalyozo_show' pk=szabid %}">Alapadatok</a></li>
+    <li role="presentation"><a href="{% url 'szabtart_show' pk=szabid %}">Tartozékok</a></li>
+    <li role="presentation"><a href="{% url 'diagnosztika' pk=szabid %}">Beszabályozás</a></li>
+    {% if user.is_authenticated %}
+    <li role="presentation"><a href="{% url 'szabmunka_show' pk=szabid %}">Szab. munkavégzés</a></li>
+    {% endif %}
+    <li role="presentation" class="active"><a href="{% url 'szabingatlan_show' pk=szabid %}">Ingatlan</a></li>
+</ul>
+<h3 style="margin-left:20px">{{ szabnev }} ingatlanjai</h3>
+<br>
+<p></p>
+{% for i in szabingatlan %}
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ i.telepules }}, {{ i.foldhivatali_hrsz }} HRSZ
+        <button style="margin-left:20px;" type="button" class="btn btn-success" onclick="window.location.href='{% url 'szabingatlan_edit_szab' pk=i.id spk=szabid %}'">Ingatlan módosítása</button>
+
+        </div>
+        <div class="panel-body">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="telepules">
+                        Település
+                    </label>
+                    <input class="form-control" id="telepules" value="{% if i.telepules %}{{ i.telepules }}{% endif %}"
+                           readonly type="text">
+                </div>
+                <div class="form-group">
+                    <label for="foldhivatali_hrsz">
+                        Földhivatali HRSZ
+                    </label>
+                    <input class="form-control" id="foldhivatali_hrsz" value="{% if i.foldhivatali_hrsz %}{{ i.foldhivatali_hrsz }}{% endif %}" readonly type="text">
+                </div>
+
+                                <div class="form-group">
+                    <label for="sajat_hrsz">
+                        Saját térképi HRSZ
+                    </label>
+                    <input class="form-control" id="sajat_hrsz" value="{% if i.sajat_hrsz %}{{ i.sajat_hrsz }}{% endif %}" readonly type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Fekvés
+                    </label>
+                    <input class="form-control" id="fekves" value="{% if i.fekves %}{{ i.fekves }}{% endif %}" readonly
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Művelési ág
+                    </label>
+                    <input class="form-control" id="muvelesi_ag"
+                           value="{% if i.muvelesi_ag %}{{ i.muvelesi_ag }}{% endif %}" readonly
+                           type="text">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="tulajdonos">
+                        Tulajdon
+                    </label>
+                    <input class="form-control" id="tulajdonos" value="{% if i.tulajdonos %}{{ i.tulajdonos }}{% endif %}"
+                           readonly type="text">
+                </div>
+                <div class="form-group">
+                    <label for="tulajdonhanyad">
+                        Tulajdonhányad
+                    </label>
+                    <input class="form-control" id="tulajdonhanyad" value="{% if i.tulajdonhanyad %}{{ i.tulajdonhanyad }}{% endif %}" readonly type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Tulajdonosok száma
+                    </label>
+                    <input class="form-control" id="tulajdonosok_szama" value="{% if i.tulajdonosok_szama %}{{ i.tulajdonosok_szama }}{% endif %}" readonly
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label for="gps_lat">
+                        GPS szélesség
+                    </label>
+                    <input class="form-control" id="gps_lat" value="{% if i.gps_lat %}{{ i.gps_lat }}{% endif %}"
+                           readonly type="text">
+                </div>
+                <div class="form-group">
+                    <label for="gps_long">
+                        GPS hosszúság
+                    </label>
+                    <input class="form-control" id="gps_long" value="{% if i.gps_long %}{{ i.gps_long }}{% endif %}" readonly type="text">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>
+                        Ingatlan össz. területe
+                    </label>
+                    <input class="form-control" id="terulet_ingatlan" value="{% if i.terulet_ingatlan %}{{ i.terulet_ingatlan }}{% endif %}" readonly
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Állomás össz. területe
+                    </label>
+                    <input class="form-control" id="terulet_allomas" value="{% if i.terulet_allomas %}{{ i.terulet_allomas }}{% endif %}" readonly
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Füves terület
+                    </label>
+                    <input class="form-control" id="fuves_terulet" value="{% if i.fuves_terulet %}{{ i.fuves_terulet }}{% endif %}" readonly
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Burkolt terület
+                    </label>
+                    <input class="form-control" id="burkolt_terulet" value="{% if i.burkolt_terulet %}{{ i.burkolt_terulet }}{% endif %}" readonly
+                           type="text">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>
+                        Megjegyzés
+                    </label>
+                    <textarea class="form-control" id="megjegyzes" readonly rows="5">{% if i.megjegyzes %}{{ i.megjegyzes }} {% endif %}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Aktív
+                    </label>
+                    <input class="form-control" id="aktiv" value="{% if i.aktiv %} Igen{% endif %} {% if i.aktiv == False %} Nem{% endif %}" readonly
+                           type="text">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

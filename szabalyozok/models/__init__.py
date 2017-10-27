@@ -5,3 +5,4 @@ from .SzabalyozoMunkaModel import *
 from .DocModel import *
 from .DiagnosztikaModel import *
 from .RiportModel import *
+from .SzabIngatlanModel import *
