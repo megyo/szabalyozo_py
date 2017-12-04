@@ -1,21 +1,22 @@
 {% extends "szabalyozok/layout.html" %}
 
 {% block content %}
-<ul class="nav nav-tabs">
-    <li role="presentation"><a href="{% url 'szabalyozo_show' pk=szabid %}">Alapadatok</a></li>
-    <li role="presentation"><a href="{% url 'szabtart_show' pk=szabid %}">Tartozékok</a></li>
-    <li role="presentation"><a href="{% url 'diagnosztika' pk=szabid %}">Beszabályozás</a></li>
-    <li role="presentation"><a href="{% url 'szabmunka_show' pk=szabid %}">Szab. munkavégzés</a></li>
-</ul>
-<div class="col-md-6">
+{% if szabid != "0" %}
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="{% url 'szabalyozo_show' pk=szabid %}">Alapadatok</a></li>
+        <li role="presentation"><a href="{% url 'szabtart_show' pk=szabid %}">Tartozékok</a></li>
+        <li role="presentation"><a href="{% url 'diagnosztika' pk=szabid %}">Beszabályozás</a></li>
+        <li role="presentation"><a href="{% url 'szabmunka_show' pk=szabid %}">Szab. munkavégzés</a></li>
+        <li role="presentation"><a href="{% url 'szabingatlan_show' pk=szabid %}">Ingatlan</a></li>
+    </ul>
+{% endif %}
+<div class="col-md-10">
     <h3> {{ eszkoznev }} dokumentumai</h3>
     <br>
     <p>
-            <button type="button" class="btn btn-success" onclick="window.location.href='{% url 'doc_new' tip=tipus eszid=eszid spk=szabid %}'">Új dokumentum feltöltése</button>
+        <button type="button" class="btn btn-success" onclick="window.location.href='{% url 'doc_new' tip=tipus eszid=eszid spk=szabid %}'">Új dokumentum feltöltése</button>
     <br>
     </p>
-
-
     <table class="table table-striped ">
         <thead>
         <tr>

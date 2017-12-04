@@ -1,11 +1,11 @@
-{% extends "szabalyozok/riport_api_layout.html" %}
+{% extends "szabalyozok/riport_layout.html" %}
 
 {% block content %}
 <span style="margin-left:20px;">Dokumentumok riport</span>
     <div class="apply-filter-option">
         <div id="useFilterApplyButton"></div>
     </div>
-    <div id="gridContainer"></div>
+    <div style="height: 85%;" id="gridContainer"></div>
     <div class="options">
         <div>
             <div id="filterRow"></div>
@@ -23,16 +23,17 @@ $(function(){
         dataSource: doklist,
         key: 'id',
         allowColumnResizing: true,
-        paging: {
-            pageSize: 20
+       loadPanel: {
+            enabled: true
         },
-        pager: {
-            showPageSizeSelector: true,
-            allowedPageSizes: [20, 50, 100],
-            showInfo: true
+        scrolling: {
+            mode: 'virtual'
+        },
+        columnFixing: {
+            enabled: true
         },
         selection: {
-            mode: "single"
+            mode: "multiple"
         },
         "export": {
             enabled: true,
@@ -46,7 +47,7 @@ $(function(){
         searchPanel: {
             visible: true,
             width: 240,
-            placeholder: "Keresés..."
+            placeholder: "Dokumentum keresés..."
         },
         headerFilter: {
             visible: true
@@ -61,7 +62,7 @@ $(function(){
                     .text('Dokumentum')
                     .on('dxclick', function () {
                         var currentRow=$(this).closest("tr");
-                        var doc_root = currentRow.find("td:eq(16)").text();
+                        var doc_root = currentRow.find("td:eq(19)").text();
                         window.open('/media/' + doc_root, '_blank');
                     })
                     .appendTo(container);
@@ -76,10 +77,10 @@ $(function(){
                     .text('Állomás')
                     .on('dxclick', function () {
                         var currentRow=$(this).closest("tr");
-                        var szab_id = currentRow.find("td:eq(15)").text();
+                        var szab_id = currentRow.find("td:eq(18)").text();
                         var ertek = szab_id * 1;
                         if (ertek == "" ) {
-                            alert(" Ez a műszer nincs szabályozóhoz rendelve!")
+                            alert(" Nincs szabályozóhoz rendelve!")
                         } else {
                             window.open('/szabalyozok/'+ szab_id +'/szabtartshow/','_blank');
                         }
@@ -129,6 +130,16 @@ $(function(){
             dataField: "telepules",
             width: 150,
             caption: "Település",
+        },
+        {
+            dataField: "ingatlan_telepules",
+            width: 150,
+            caption: "Ingatlan település",
+        },
+        {
+            dataField: "foldhivatali_hrsz",
+            width: 150,
+            caption: "Földhivatali HRSZ",
         },
         {
             dataField: "muszerfajta",

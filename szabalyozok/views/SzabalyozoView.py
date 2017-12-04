@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.db.models import Q
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404
 # from datetime import datetime
 from django.utils import timezone
@@ -20,8 +20,13 @@ from django.conf import settings
 from django.http import HttpResponse
 
 
+def not_in_ingatlan_group(user):
+    if user:
+        return user.groups.filter(name='ingatlan').count() == 0
+    return False
+
+
 def home(request):
-    """Renders the about page."""
     form = SearchForm()
     return render(
         request,
@@ -33,13 +38,13 @@ def home(request):
 
 
 def szabalyozok(request):
-    assert isinstance(request, HttpRequest)
+    # assert isinstance(request, HttpRequest)
     if request.method == "POST":
         form = SearchForm(request.POST)
         hiba = ''
         if form.is_valid():
             group = request.user.groups.values_list('name', flat=True).first()
-            if group==None:
+            if group is None:
                 group = 'admin'
             param = form.cleaned_data['search']
             szab = Szabalyozok.objects.filter((Q(allomas_nev__icontains=param) | Q(
@@ -90,6 +95,7 @@ def szabalyozo_show(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def szabalyozo_edit(request, pk):
     szab = get_object_or_404(Szabalyozok, pk=pk)
     if request.method == "POST":
@@ -116,6 +122,7 @@ def szabtart_show(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def tartozek_beki(request, pk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
     szab_nev = szabalyozo.allomas_nev
@@ -130,6 +137,7 @@ def tartozek_beki(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def tartozek_ki(request, pk):
     szabid = pk
     if request.method == "POST":
@@ -153,6 +161,7 @@ def tartozek_ki(request, pk):
     return redirect('tartozek_beki', pk=pk)
 
 # @login_required(login_url='/login/')
+# @user_passes_test(not_in_ingatlan_group, login_url='/login/')
 # def tartozek_ki(request, pk):
 #     szabid = pk
 #     if request.method == "POST":
@@ -172,8 +181,8 @@ def tartozek_ki(request, pk):
 #     return redirect('tartozek_beki', pk=pk)
 
 
-
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def tartozek_new(request, pk):
     if request.method == "POST":
         form = TartozekForm(request.POST)
@@ -188,6 +197,7 @@ def tartozek_new(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def tartozek_edit(request, pk, spk):
     tartozek = get_object_or_404(Tartozekok, pk=pk)
     fajta = tartozek.tartozektipus.tartozekfajta
@@ -217,6 +227,7 @@ def tartozek_tortenet(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def muszer_beki(request, pk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
     szab_nev = szabalyozo.allomas_nev
@@ -244,6 +255,7 @@ def muszer_beki(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def muszer_ki(request, pk):
     szabid = pk
     if request.method == "POST":
@@ -275,6 +287,7 @@ def muszer_ki(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def muszer_be(request, pk, spk):
     muszerid = pk
     szabid = spk
@@ -305,6 +318,7 @@ def muszer_tortenet(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def manometernew(request):
     if request.method == "POST":
         form = ManometernewForm(request.POST)
@@ -319,6 +333,7 @@ def manometernew(request):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def manometer_edit(request, pk):
     manometer = get_object_or_404(Muszerek, pk=pk)
     if request.method == "POST":
@@ -326,7 +341,7 @@ def manometer_edit(request, pk):
         if manometer.muszertipus.muszerfajta.id == 1:
             if form.is_valid():
                 form.save()
-                return redirect('riport_muszerek_api')
+                return redirect('riport_muszerek')
         else:
             return HttpResponse('Valami gubanc van!!!', content_type="text/plain")
     else:
@@ -335,6 +350,7 @@ def manometer_edit(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def szabmunka_show(request, pk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
     szab_nev = szabalyozo.allomas_nev
@@ -345,6 +361,7 @@ def szabmunka_show(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def szabmunka_new(request, pk):
     if request.method == "POST":
         form = SzabalyozoMunkaForm(request.POST)
@@ -359,6 +376,7 @@ def szabmunka_new(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def szabmunka_edit(request, pk, spk):
     munkaid = pk
     szabid = spk
@@ -376,6 +394,7 @@ def szabmunka_edit(request, pk, spk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def muszermunka_show(request, pk, spk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=spk)
     muszer = get_object_or_404(Muszerek, pk=pk)
@@ -389,6 +408,7 @@ def muszermunka_show(request, pk, spk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def muszermunka_new(request, pk, spk):
     if request.method == "POST":
         form = MuszerMunkaForm(request.POST)
@@ -403,6 +423,7 @@ def muszermunka_new(request, pk, spk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def muszermunka_edit(request, pk, mpk, spk):
     munkaid = pk
     muszerid = mpk
@@ -437,6 +458,9 @@ def doc_list(request, tip, eszid, spk):
     elif tip == 'muszermunkak':
         eszkoz = Muszermunkak.objects.get(id=eszid)
         eszkoz_nev = eszkoz.muszermunkatipus
+    elif tip == 'ingatlan':
+        eszkoz = SzabalyozokIngatlan.objects.get(id=eszid)
+        eszkoz_nev = str(eszkoz.telepules) + ", " + str(eszkoz.foldhivatali_hrsz) + " HRSZ"
 
     return render(request, 'szabalyozok/doc_list.html',
                   {'title': 'Dokumentumok', 'doclist': doc_list, 'szabid': spk, 'tipus': tip, 'eszid': eszid,
@@ -461,6 +485,7 @@ def doc_new(request, tip, eszid, spk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def doc_del(request, tip, pk, eszid, spk):
     doksi = Doc.objects.get(id=pk)
     docnev = str(doksi.docfile)
@@ -485,6 +510,7 @@ def kep_list(request, spk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def kep_new(request, spk):
     if request.method == "POST":
         form = ImageForm(request.POST, request.FILES)
@@ -499,6 +525,7 @@ def kep_new(request, spk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def kep_del(request, pk, spk):
     kep = Image.objects.get(id=pk)
     kepnev = str(kep.image)
@@ -535,6 +562,7 @@ def diagnosztika_tortenet(request, pk):
 
 
 @login_required(login_url='/login/')
+@user_passes_test(not_in_ingatlan_group, login_url='/login/')
 def diagnosztika_new(request, pk):
     if request.method == "POST":
         form = DiagnosztikaForm(request.POST)
@@ -563,7 +591,7 @@ def diagnosztika_new(request, pk):
 
 def terkep(request):
     group = request.user.groups.values_list('name', flat=True).first()
-    if group == None:
+    if group is None:
         group = 'admin'
     fogadok = Szabalyozok.objects.filter(funkcio='fogado', telepules__uzem__jog__contains=group).values('id', 'allomas_nev', 'gps_lat', 'gps_long', 'uz_prim_nyom', 'uz_sek_nyom')
     korzeti = Szabalyozok.objects.filter(funkcio='korzeti', telepules__uzem__jog__contains=group).values('id', 'allomas_nev', 'gps_lat', 'gps_long', 'uz_prim_nyom', 'uz_sek_nyom')
@@ -593,7 +621,7 @@ def terkep(request):
 #     return HttpResponse(gyartok, content_type="application/json")
 
 
-def get_tartozektipus(request, fpk, gpk):
+def get_tartozektipus(fpk, gpk):
     fajta = get_object_or_404(Tartozekfajta, pk=fpk)
     gyarto = get_object_or_404(Tartozekgyartok, pk=gpk)
 
@@ -603,7 +631,6 @@ def get_tartozektipus(request, fpk, gpk):
     # return HttpResponse(tipusok, content_type="text/plain")
 
 
-@login_required(login_url='/login/')
 def szabingatlan_show(request, pk):
     szabalyozo = get_object_or_404(Szabalyozok, pk=pk)
     szab_nev = szabalyozo.allomas_nev

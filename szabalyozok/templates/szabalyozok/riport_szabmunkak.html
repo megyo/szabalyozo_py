@@ -1,46 +1,166 @@
 {% extends "szabalyozok/riport_layout.html" %}
 
 {% block content %}
-<h1>Szabályozó munkák</h1>
-{{ het }}
-<table id="riport" class="table table-bordered" cellspacing="0" width="100%">
-    <thead>
-    <tr>
-        <th>Szab. állomás neve</th>
-        <th>Terület</th>
-        <th>Üzem</th>
-        <th>Település</th>
-        <th>Munkatípus</th>
-        <th>Időpont</th>
-        <th>Megjegyzes</th>
-        <th>Szab. azon</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-        <th>Szabályozó</th>
-        <th>Terület</th>
-        <th>Üzem</th>
-        <th>Település</th>
-        <th>Munkatípus</th>
-        <th>Időpont</th>
-        <th>Megjegyzes</th>
-        <th>Szab. azon</th>
-    </tr>
-    </tfoot>
-    <tbody>
-    {% for munkak in szabmunkak %}
-    <tr>
-        <td>{% if munkak.allomas_nev %} <a href="{% url 'szabmunka_show' pk=munkak.id %}">{{ munkak.allomas_nev }}</a> {% endif %}</td>
-        <td>{% if munkak.allomas_nev %}{{ munkak.terulet }}{% endif %}</td>
-        <td>{% if munkak.allomas_nev %}{{ munkak.uzem }}{% endif %}</td>
-        <td>{% if munkak.allomas_nev %}{{ munkak.telepules }}{% endif %}</td>
-        <td>{{ munkak.szabalyozomunkatipus }}</td>
-        <td>{{ munkak.szabmunka_datum }}</td>
-        <td>{{ munkak.megjegyzes }}</td>
-        <td>{{ munkak.id }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<span style="margin-left:20px;">Szabályozó munkák riport</span>
+<!--<div id="btn" style="margin-left:20px;"></div>-->
+<div class="apply-filter-option">
+    <div id="useFilterApplyButton"></div>
+</div>
+<div style="height: 85%;" id="gridContainer"></div>
+<div class="options">
+    <div>
+        <div id="filterRow"></div>
+    </div>
+    <div>
+        <div id="headerFilter"></div>
+    </div>
+</div>
+<script>
+// var szabmunkak = {{szabmunkak|safe}};
+
+$(function(){
+    var dataGrid = $("#gridContainer").dxDataGrid({
+        dataSource: "{% url 'riport_szabmunkak_api_json' %}",
+        key: 'id',
+        allowColumnResizing: true,
+       loadPanel: {
+            enabled: true
+        },
+        scrolling: {
+            mode: 'virtual'
+        },
+        columnFixing: {
+            enabled: true
+        },
+        selection: {
+            mode: "multiple"
+        },
+        "export": {
+            enabled: true,
+            fileName: "Szabályozó munkák riport",
+            allowExportSelectedData: true
+        },
+        filterRow: {
+            visible: true,
+            applyFilter: "auto"
+        },
+        searchPanel: {
+            visible: true,
+            width: 240,
+            placeholder: "Szab. munka keresés..."
+        },
+        headerFilter: {
+            visible: true
+        },
+        columns: [
+    	 {
+		    caption: "Művelet",
+			width: 80,
+            alignment: 'center',
+            cellTemplate: function (container, options) {
+                $('<a/>').addClass('dx-link')
+                    .text('mutat')
+                        .on('dxclick', function () {
+                        var currentRow=$(this).closest("tr");
+                        var szabId = currentRow.find("td:eq(11)").text();
+                        window.open('/szabmunkak/'+ szabId +'/show/','_blank');
+                    })
+                    .appendTo(container);
+                }
+        },
+        {
+            caption: "Szab. állomás neve",
+			// fixed: true,
+			fixedPosition: "left",
+			width: 400,
+            dataField: "allomas_nev",
+            dataType: "string",
+        },
+        {
+            dataField: "terulet",
+            width: 100,
+            caption: "Terület",
+        },
+        {
+            dataField: "uzem",
+            width: 130,
+            caption: "Üzem",
+        },
+        {
+            dataField: "telepules",
+            width: 150,
+            caption: "Település",
+        },
+        {
+            dataField: "szabalyozomunkatipus",
+            width: 150,
+            caption: "Munkatípus",
+        },
+
+        {
+            dataField: "szabmunka_datum",
+            width: 150,
+            caption: "Időpontja",
+            dataType: "date",
+            format: "yyyy-MM-dd",
+        },
+        {
+            dataField: "megjegyzes",
+            width: 400,
+            caption: "Megjegyzés",
+        },
+        {
+            dataField: "ellenorzes",
+            width: 80,
+            caption: "Ellenőrizve",
+			dataType: "boolean",
+        },
+        {
+            dataField: "sap_rendelesszam",
+            width: 150,
+            caption: "SAP megrendelésszám",
+        },
+        {
+            dataField: "szabalyozo_id",
+            width: 80,
+            caption: "Szab.Id",
+            dataType: "number",
+        },
+        ],
+        onSelectionChanged: function (selectedItems) {
+            var data = selectedItems.selectedRowsData[0];
+        },
+
+    // Tartalom frissítés gomb hozzáadás
+          onContentReady: function(e) {
+            var $customButton = $('<div id="customButton">').dxButton({
+              icon: 'refresh', //or your custom icon
+              type: "success",
+              onClick: function() {
+                $("#gridContainer").dxDataGrid("instance").refresh();
+              }
+            });
+
+            if (e.element.find('#customButton').length == 0)
+              e.element
+              .find('.dx-toolbar-after')
+              .prepend($customButton);
+          }
+    // End frissít gomb
+
+    }).dxDataGrid('instance');
+
+});
+
+/*
+    $("#btn").dxButton({
+        text: "Szabályozó munkák riport",
+        onClick: function () {
+            $("#gridContainer").dxDataGrid("instance").refresh();
+        }
+    });
+*/
+
+
+</script>
 {% endblock %}

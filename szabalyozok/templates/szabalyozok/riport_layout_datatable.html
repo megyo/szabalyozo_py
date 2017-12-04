@@ -8,16 +8,21 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/bootstrap.min.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'szabalyozok/content/jquery.dataTables.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'szabalyozok/content/dataTables.bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'szabalyozok/content/buttons.dataTables.min.css' %}" />
+    <script src="{% static 'szabalyozok/scripts/modernizr-2.6.2.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/jquery-1.12.1.min.js' %}"></script>
     <link rel="icon" type="image/x-icon" href="{% static 'szabalyozok/images/favicon.ico' %}"/>
-    <script src="{% static 'szabalyozok/scripts/jquery-3.1.1.min.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/dx.spa.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/dx.common.css' %}"/>
-    <link rel="dx-theme" data-theme="generic.light" href="{% static 'szabalyozok/content/dx.light.css' %}"/>
-    <script src="{% static 'szabalyozok/scripts/jszip.min.js' %}"></script>
-    <script src="{% static 'szabalyozok/scripts/dx.all.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'szabalyozok/content/styles_api.css' %}"/>
+    <script>
+        function anim() {
+		$(".se-pre-con").fadeOut("slow");
+	};
+    </script>
 </head>
-<body>
+<body onload="anim();">
+<div class="se-pre-con"></div>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -77,7 +82,93 @@
     </div>
 </nav>
 {% block content %}{% endblock %}
+<!--<script src="{% static 'szabalyozok/scripts/jquery-ui.js' %}"></script>-->
 <script src="{% static 'szabalyozok/scripts/bootstrap.js' %}"></script>
+<script src="{% static 'szabalyozok/scripts/respond.js' %}"></script>
+<script src="{% static 'szabalyozok/scripts/lightbox.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/jszip.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/pdfmake.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/vfs_fonts.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'szabalyozok/scripts/buttons.print.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".se-pre-con").css({'position': 'static'});
+
+            var selected = [];
+
+            // Setup - add a text input to each footer cell
+            $('#riport tfoot  th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Szűrés ' + title + '" />');
+            });
+
+            // DataTable
+            var table = $('#riport').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                "pageLength": 25,
+                "language": {
+                    "lengthMenu": "Egyszerre _MENU_ bejegyzés egy oldalon.   ",
+                    "zeroRecords": "Nincs bejegyzés",
+                    "info": "Megjelenítve: _PAGE_ oldal a  _PAGES_ -ből",
+                    "infoEmpty": "Nincs bejegyzés",
+                    "infoFiltered": "(Szűrés eredménye: _MAX_ bejegyzés)",
+                    "Search:": "Keresés",
+                    "paginate": {
+                                first:      "Első",
+                                previous:   "Előző",
+                                next:       "Következő",
+                                last:       "Utolsó"
+                            },
+                    "buttons": {
+                                Print: "Nyomtat",
+                            },
+                },
+            });
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                                .search(this.value)
+                                .draw();
+                    }
+                });
+            });
+        /* Gombok kikapcsolva
+            new $.fn.dataTable.Buttons(table, {
+                buttons: [
+                    'excel','csv',
+                    {extend: 'print', text: 'Nyomtat',},
+                ]
+            });
+            table.buttons().container()
+                    .appendTo($('.dataTables_filter:eq(0)', table.table().container()));
+        */
+
+            $('#riport tbody').on('click', 'tr', function () {
+                var id = this.id;
+                var index = $.inArray(id, selected);
+
+                if (index === -1) {
+                    selected.push(id);
+                } else {
+                    selected.splice(index, 1);
+                }
+                $(this).toggleClass('selected');
+            });
+        });
+
+    </script>
 {% block scripts %}{% endblock %}
 </body>
 </html>

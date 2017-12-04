@@ -17,11 +17,13 @@
 <div class="col-md-12">
     <div class="panel panel-default">
         <div class="panel-heading">{{ i.telepules }}, {{ i.foldhivatali_hrsz }} HRSZ
-        <button style="margin-left:20px;" type="button" class="btn btn-success" onclick="window.location.href='{% url 'szabingatlan_edit_szab' pk=i.id spk=szabid %}'">Ingatlan módosítása</button>
-
+    {% if user.is_authenticated %}
+        <button type="button" style="padding: 0px 12px;" class="btn btn-warning pull-right" onclick="window.location.href='{% url 'doc_list' tip='ingatlan' eszid=i.id spk=szabid %}'">Dok</button>
+        <button type="button" style="padding: 0px 12px; margin-right: 5px;" class="btn btn-primary pull-right" onclick="window.location.href='{% url 'szabingatlan_edit_szab' pk=i.id  spk=szabid %}'">Módosít</button>
+    {% endif %}
         </div>
         <div class="panel-body">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="telepules">
                         Település
@@ -59,7 +61,7 @@
                            type="text">
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="tulajdonos">
                         Tulajdon
@@ -82,21 +84,6 @@
                            type="text">
                 </div>
                 <div class="form-group">
-                    <label for="gps_lat">
-                        GPS szélesség
-                    </label>
-                    <input class="form-control" id="gps_lat" value="{% if i.gps_lat %}{{ i.gps_lat }}{% endif %}"
-                           readonly type="text">
-                </div>
-                <div class="form-group">
-                    <label for="gps_long">
-                        GPS hosszúság
-                    </label>
-                    <input class="form-control" id="gps_long" value="{% if i.gps_long %}{{ i.gps_long }}{% endif %}" readonly type="text">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
                     <label>
                         Ingatlan össz. területe
                     </label>
@@ -105,27 +92,117 @@
                 </div>
                 <div class="form-group">
                     <label>
-                        Állomás össz. területe
+                        Jogosultság állapot
                     </label>
-                    <input class="form-control" id="terulet_allomas" value="{% if i.terulet_allomas %}{{ i.terulet_allomas }}{% endif %}" readonly
-                           type="text">
-                </div>
-                <div class="form-group">
-                    <label>
-                        Füves terület
-                    </label>
-                    <input class="form-control" id="fuves_terulet" value="{% if i.fuves_terulet %}{{ i.fuves_terulet }}{% endif %}" readonly
-                           type="text">
-                </div>
-                <div class="form-group">
-                    <label>
-                        Burkolt terület
-                    </label>
-                    <input class="form-control" id="burkolt_terulet" value="{% if i.burkolt_terulet %}{{ i.burkolt_terulet }}{% endif %}" readonly
+                    <input class="form-control" id="jogosultsag_allapot" value="{% if i.jogosultsag_allapot %} {{ i.jogosultsag_allapot }} {% endif %}" readonly
                            type="text">
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="jogosultsag_tipus_1">
+                        Jogosultság tipus 1
+                    </label>
+                    <input class="form-control" id="jogosultsag_tipus_1" value="{% if i.jogosultsag_tipus_1 %}{{ i.jogosultsag_tipus_1 }}{% endif %}"
+                           readonly type="text">
+                </div>
+                <div class="form-group">
+                    <label for="jogosultsag_m2_1">
+                        Jogosultság m2 1
+                    </label>
+                    <input class="form-control" id="jogosultsag_m2_1" value="{% if i.jogosultsag_m2_1 %}{{ i.jogosultsag_m2_1 }}{% endif %}" readonly type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Jogosultság név 1
+                    </label>
+                    <input class="form-control" id="jogosultsag_nev_1" value="{% if i.jogosultsag_nev_1 %}{{ i.jogosultsag_nev_1 }}{% endif %}" readonly
+                           type="text">
+                </div>
+            <div class="form-group">
+                <label for="gpslat">
+                    GPS szélesség 1
+                </label>
+                <input class="form-control" id="gpslat" value="{% if i.gps_lat %}{{ i.gps_lat }}{% endif %}" readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="gpslong">
+                    GPS hosszúság 1
+                </label>
+                <input class="form-control" id="gpslong" value="{% if i.gps_long %}{{ i.gps_long }}{% endif %}" readonly type="text">
+            </div>
+            </div>
+            <div class="col-md-2">
+            <div class="form-group">
+                    <label for="jogosultsag_tipus_2">
+                        Jogosultság tipus 2
+                    </label>
+                    <input class="form-control" id="jogosultsag_tipus_2" value="{% if i.jogosultsag_tipus_2 %}{{ i.jogosultsag_tipus_2 }}{% endif %}"
+                           readonly type="text">
+                </div>
+                <div class="form-group">
+                    <label for="jogosultsag_m2_2">
+                        Jogosultság m2 2
+                    </label>
+                    <input class="form-control" id="jogosultsag_m2_2" value="{% if i.jogosultsag_m2_2 %}{{ i.jogosultsag_m2_2 }}{% endif %}" readonly type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Jogosultság név 2
+                    </label>
+                    <input class="form-control" id="jogosultsag_nev_2" value="{% if i.jogosultsag_nev_2 %}{{ i.jogosultsag_nev_2 }}{% endif %}" readonly
+                           type="text">
+                </div>
+            <div class="form-group">
+                <label for="gpslat2">
+                    GPS szélesség 2
+                </label>
+                <input class="form-control" id="gpslat2" value="{% if i.gps_lat_2 %}{{ i.gps_lat_2 }}{% endif %}" readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="gpslong2">
+                    GPS hosszúság 2
+                </label>
+                <input class="form-control" id="gpslong2" value="{% if i.gps_long_2 %}{{ i.gps_long_2 }}{% endif %}" readonly type="text">
+            </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="jogosultsag_tipus_3">
+                        Jogosultság tipus 3
+                    </label>
+                    <input class="form-control" id="jogosultsag_tipus_3" value="{% if i.jogosultsag_tipus_3 %}{{ i.jogosultsag_tipus_3 }}{% endif %}"
+                           readonly type="text">
+                </div>
+                <div class="form-group">
+                    <label for="jogosultsag_m2_3">
+                        Jogosultság m2 3
+                    </label>
+                    <input class="form-control" id="jogosultsag_m2_3" value="{% if i.jogosultsag_m2_3 %}{{ i.jogosultsag_m2_3 }}{% endif %}" readonly type="text">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Jogosultság név 3
+                    </label>
+                    <input class="form-control" id="jogosultsag_nev_3" value="{% if i.jogosultsag_nev_3 %}{{ i.jogosultsag_nev_3 }}{% endif %}" readonly
+                           type="text">
+                </div>
+            <div class="form-group">
+                <label for="gpslat3">
+                    GPS szélesség 3
+                </label>
+                <input class="form-control" id="gpslat3" value="{% if i.gps_lat_3 %}{{ i.gps_lat_3 }}{% endif %}" readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="gpslong3">
+                    GPS hosszúság 3
+                </label>
+                <input class="form-control" id="gpslong3" value="{% if i.gps_long_3 %}{{ i.gps_long_3 }}{% endif %}" readonly type="text">
+            </div>
+            </div>
+            <div class="col-md-2">
                 <div class="form-group">
                     <label>
                         Megjegyzés
@@ -139,6 +216,18 @@
                     <input class="form-control" id="aktiv" value="{% if i.aktiv %} Igen{% endif %} {% if i.aktiv == False %} Nem{% endif %}" readonly
                            type="text">
                 </div>
+            <div class="form-group">
+                <label for="gpslat4">
+                    GPS szélesség 4
+                </label>
+                <input class="form-control" id="gpslat4" value="{% if i.gps_lat_4 %}{{ i.gps_lat_4 }}{% endif %}" readonly type="text">
+            </div>
+            <div class="form-group">
+                <label for="gpslong4">
+                    GPS hosszúság 4
+                </label>
+                <input class="form-control" id="gpslong4" value="{% if i.gps_long_4 %}{{ i.gps_long_4 }}{% endif %}" readonly type="text">
+            </div>
             </div>
         </div>
     </div>

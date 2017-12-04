@@ -1,160 +1,338 @@
 {% extends "szabalyozok/riport_layout.html" %}
 
 {% block content %}
-<h1>Szabályozók riport</h1>
-<br>
-<table id="riport" class="table table-bordered" cellspacing="0" width="100%">
-    <thead>
-    <tr>
-        <th>Mutat</th>
-        <th>Aktív</th>
-        <th>Azonosító kód</th>
-        <th>GRASS azonosító</th>
-        <th>SAP PM azonosító</th>
-        <th>Eszközszám</th>
-        <th>Beruházási jelzőszám</th>
-        <th>Állomás teljes neve</th>
-        <th>Területi egység</th>
-        <th>Üzem</th>
-        <th>Átadó</th>
-        <th>Település</th>
-        <th>HRSZ</th>
-        <th>Település kód</th>
-        <th>Telepítés éve</th>
-        <th>Állomás gyártó</th>
-        <th>Szabályozó karbantartó</th>
-        <th>Kivitel</th>
-        <th>Elhelyezés</th>
-        <th>Funkció</th>
-        <th>Berendezés tulajdonjoga</th>
-        <th>Berendezés tulajdonosa</th>
-        <th>Névleges primer nyomás (bar)</th>
-        <th>Névleges szekunder nyomás (bar)</th>
-        <th>Üzemi primer nyomás (bar)</th>
-        <th>Üzemi szekunder nyomás (bar)</th>
-        <th>Névleges kapacitás (m3/h)</th>
-        <th>Nyomásdinamizálásba bevont rendszer</th>
-        <th>Fűtött</th>
-        <th>RB zóna</th>
-        <th>Felügyeleti rendszer</th>
-        <th>Villámvédelmi besorolás</th>
-        <th>Villámvédelem től</th>
-        <th>Villámvédelem ig</th>
-        <th>2 éves karb</th>
-        <th>10 éves karb</th>
-        <th>Ellátott települések</th>
-        <th>Összedolgozó szabályzók</th>
-        <th>Összes terület (m2)</th>
-        <th>Füves terület (m2)</th>
-        <th>Burkolt terület (m2)</th>
-        <th>GPS lat</th>
-        <th>GPS long</th>
-        <th>Ellenőrzési ciklus</th>
-        <th>Megjegyzés</th>
-        <th>Dokumentumok</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-        <th>Mutat</th>
-        <th>Aktív</th>
-        <th>Azonosító kód</th>
-        <th>GRASS azonosító</th>
-        <th>SAP PM azonosító</th>
-        <th>Eszközszám</th>
-        <th>Beruházási jelzőszám</th>
-        <th>Állomás teljes neve</th>
-        <th>Területi egység</th>
-        <th>Üzem</th>
-        <th>Átadó</th>
-        <th>Település</th>
-        <th>HRSZ</th>
-        <th>Település kód</th>
-        <th>Telepítés éve</th>
-        <th>Állomás gyártó</th>
-        <th>Szabályozó karbantartó</th>
-        <th>Kivitel</th>
-        <th>Elhelyezés</th>
-        <th>Funkció</th>
-        <th>Tulajdonjog</th>
-        <th>Tulajdonos</th>
-        <th>Névleges primer nyomás</th>
-        <th>Névleges szekunder nyomás</th>
-        <th>Üzemi primer nyomás</th>
-        <th>Üzemi szekunder nyomás</th>
-        <th>Névleges kapacitás</th>
-        <th>Nyomásdinamizálásba bevont rendszer</th>
-        <th>Fűtött</th>
-        <th>RB zóna</th>
-        <th>Felügyeleti rendszer</th>
-        <th>Villámvédelmi besorolás</th>
-        <th>Villámvédelem től</th>
-        <th>Villámvédelem ig</th>
-        <th>2 éves karb</th>
-        <th>10 éves karb</th>
-        <th>Ellátott</th>
-        <th>Összedolgozó szabályzók</th>
-        <th>Összes terület</th>
-        <th>Füves terület</th>
-        <th>Burkolt terület</th>
-        <th>GPS lat</th>
-        <th>GPS long</th>
-        <th>Ellenőrzési ciklus</th>
-        <th>Megjegyzés</th>
-        <th>Dokumentumok</th>
-    </tr>
-    </tfoot>
-    <tbody>
-    {% for szab in szabalyozok %}
-    <tr>
-        <td><a href="{% url 'szabalyozo_show' pk=szab.id %}">Mutat</a></td>
-        <td>{% if szab.aktiv %}igen{% else %}nem{% endif %}</td>
-        <td>{{ szab.azonosito }}</td>
-        <td>{{ szab.grass_az }}</td>
-        <td>{{ szab.sap_pm_az }}</td>
-        <td>{{ szab.eszkozszam }}</td>
-        <td>{{ szab.beruhazasi_szam }}</td>
-        <td>{{ szab.allomas_nev }}</td>
-        <td>{{ szab.terulet }}</td>
-        <td>{{ szab.uzem }}</td>
-        <td>{{ szab.atado }}</td>
-        <td>{{ szab.telepules }}</td>
-        <td>{{ szab.hrsz }}</td>
-        <td>{{ szab.telepules_kod }}</td>
-        <td>{{ szab.telepites_ev }}</td>
-        <td>{{ szab.tartozekgyarto }}</td>
-        <td>{{ szab.szabkarb }}</td>
-        <td>{{ szab.kivitel }}</td>
-        <td>{{ szab.elhelyezes }}</td>
-        <td>{{ szab.funkcio }}</td>
-        <td>{{ szab.tulajdonjog }}</td>
-        <td>{{ szab.tulajdonos }}</td>
-        <td>{{ szab.nev_prim_nyom }}</td>
-        <td>{{ szab.nev_sek_nyom }}</td>
-        <td>{{ szab.uz_prim_nyom }}</td>
-        <td>{{ szab.uz_sek_nyom }}</td>
-        <td>{{ szab.nev_kapacitas }}</td>
-        <td>{% if szab.nyom_din_rendszer %}igen{% else %}nem{% endif %}</td>
-        <td>{% if szab.futott %}igen{% else %}nem{% endif %}</td>
-        <td>{{ szab.rb_zona }}</td>
-        <td>{% if szab.felugyeleti_rendszer %}igen{% else %}nem{% endif %}</td>
-        <td>{{ szab.villamvedelem }}</td>
-        <td>{{ szab.villamvedelem_ev }}</td>
-        <td>{{ szab.villamvedelem_kov_ev }}</td>
-        <td>{{ szab.karbantartas_2ev }}</td>
-        <td>{{ szab.karbantartas_10ev }}</td>
-        <td>{{ szab.ellatott }}</td>
-        <td>{{ szab.osszedolg_szab }}</td>
-        <td>{{ szab.ossz_terulet }}</td>
-        <td>{{ szab.fuves_terulet }}</td>
-        <td>{{ szab.burkolt_terulet }}</td>
-        <td>{{ szab.gps_lat }}</td>
-        <td>{{ szab.gps_long }}</td>
-        <td>{{ szab.ellenorzesiciklus }}</td>
-        <td>{{ szab.megjegyzes }}</td>
-        <td><a href="{% url 'simple_doc_list' tip='szab' eszid=szab.id %}">Dokumentumok</a></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<span style="margin-left:20px;">Szabályozó riport</span>
+<div class="apply-filter-option">
+        <div id="useFilterApplyButton"></div>
+    </div>
+    <div style="height: 85%;" id="gridContainer"></div>
+    <div class="options">
+        <div>
+            <div id="filterRow"></div>
+        </div>
+        <div>
+            <div id="headerFilter"></div>
+        </div>
+    </div>
+<script>
+var szabalyozok = {{szabalyozok|safe}};
+
+$(function(){
+    var dataGrid = $("#gridContainer").dxDataGrid({
+        dataSource: szabalyozok,
+        key: 'id',
+        allowColumnResizing: true,
+       loadPanel: {
+            enabled: true
+        },
+        scrolling: {
+            mode: 'virtual'
+        },
+        columnFixing: {
+            enabled: true
+        },
+        selection: {
+            mode: "multiple"
+        },
+        "export": {
+            enabled: true,
+            fileName: "Szabályozók riport",
+            allowExportSelectedData: true
+        },
+        filterRow: {
+            visible: true,
+            applyFilter: "auto"
+        },
+        searchPanel: {
+            visible: true,
+            width: 240,
+            placeholder: "Szabályozó keresés..."
+        },
+        headerFilter: {
+            visible: true
+        },
+        columns: [
+		 {
+		    caption: "Művelet",
+			width: 80,
+			//fixed: true,
+            alignment: 'center',
+            cellTemplate: function (container, options) {
+                $('<a/>').addClass('dx-link')
+                    .text('Mutat')
+                    .on('dxclick', function () {
+                        var currentRow=$(this).closest("tr");
+                        var customerId = currentRow.find("td:eq(46)").text();
+                        window.open('/szabalyozok/'+ customerId +'/show/','_blank');
+                    })
+                    .appendTo(container);
+                }
+        },
+        {
+            dataField: "allomas_nev",
+            width: 300,
+            caption: "Állomás neve",
+            //fixed: true,
+		},
+		 {
+            caption: "Aktiv",
+			width: 70,
+            dataField: "aktiv",
+			dataType: "boolean",
+        },
+        {
+            dataField: "azonosito",
+            width: 100,
+            caption: "Azonosító kód",
+        },
+        {
+            dataField: "grass_az",
+            width: 100,
+            caption: "Grass azonosító",
+        },
+        {
+            dataField: "sap_pm_az",
+            width: 250,
+            caption: "SAP PM azonosító",
+        },
+        {
+            dataField: "eszkozszam",
+            width: 100,
+            caption: "Eszközszám",
+        },
+        {
+            dataField: "beruhazasi_szam",
+            width: 100,
+            caption: "Beruházási jelzőszám",
+        },
+        {
+            dataField: "terulet",
+            width: 100,
+            caption: "Terület",
+        },
+        {
+            dataField: "uzem",
+            width: 130,
+            caption: "Üzem",
+        },
+        {
+            dataField: "atado",
+            width: 100,
+            caption: "Átadó",
+        },
+        {
+            dataField: "telepules",
+            width: 150,
+            caption: "Település",
+        },
+    /*  Az ingatalról veszi a HRSZ-t
+        {
+            dataField: "hrsz",
+            width: 100,
+            caption: "HRSZ",
+        },
+    */
+        {
+            dataField: "telepules_kod",
+            width: 80,
+            caption: "Telepüés kód",
+        },
+        {
+            dataField: "telepites_ev",
+            width: 80,
+            caption: "Telepítés éve",
+            dataType: "number",
+        },
+        {
+            dataField: "tartozekgyarto",
+            width: 180,
+            caption: "Állomás gyártó",
+        },
+        {
+            dataField: "szabkarb",
+            width: 100,
+            caption: "Szabályozó kabantartó",
+        },
+        {
+            dataField: "kivitel",
+            width: 80,
+            caption: "Kivitel",
+        },
+        {
+            dataField: "elhelyezes",
+            width: 80,
+            caption: "Elhelyezés",
+        },
+        {
+            dataField: "funkcio",
+            width: 80,
+            caption: "Funkció",
+        },
+        {
+            dataField: "tulajdonjog",
+            width: 80,
+            caption: "Berendezés tulajdonjoga",
+        },
+        {
+            dataField: "tulajdonos",
+            width: 150,
+            caption: "Berendezés tulajdonosa",
+        },
+        {
+            dataField: "nev_prim_nyom",
+            width: 80,
+            caption: "Névleges primer nyomás (bar)",
+            dataType: "number",
+        },
+        {
+            dataField: "nev_sek_nyom",
+            width: 80,
+            caption: "Névleges szekunder nyomás (bar)",
+            dataType: "number",
+        },
+        {
+            dataField: "uz_prim_nyom",
+            width: 80,
+            caption: "Üzemi primer nyomás (bar)",
+            dataType: "number",
+        },
+        {
+            dataField: "uz_sek_nyom",
+            width: 80,
+            caption: "Üzemi szekunder nyomás (bar)",
+            dataType: "number",
+        },
+        {
+            dataField: "nev_kapacitas",
+            width: 80,
+            caption: "Névleges kapacitás (m3/h)",
+            dataType: "number",
+        },
+        {
+            dataField: "nyom_din_rendszer",
+            width: 80,
+            caption: "Nyomásdinamizálásba bevont rendszer",
+			format: "boolean",
+        },
+        {
+            dataField: "futott",
+            width: 80,
+            caption: "Fűtött",
+        },
+        {
+            dataField: "rb_zona",
+            width: 80,
+            caption: "RB zóna",
+        },
+        {
+            dataField: "felugyeleti_rendszer",
+            width: 80,
+            caption: "Felügyeleti rendszer",
+        },
+        {
+            dataField: "villamvedelem",
+            width: 100,
+            caption: "Villámvéfelmi besolorlás",
+        },
+        {
+            dataField: "villamvedelem_ev",
+            width: 100,
+            caption: "Villámvédelem-től",
+            dataType: "date",
+            format: "yyyy-MM-dd",
+        },
+        {
+            dataField: "villamvedelem_kov_ev",
+            width: 100,
+            caption: "Villámvédelem-ig",
+            dataType: "date",
+            format: "yyyy-MM-dd",
+        },
+        {
+            dataField: "villamvedelem_szint",
+            width: 150,
+            caption: "Villámvédelem szintje",
+        },
+        {
+            dataField: "karbantartas_2ev",
+            width: 80,
+            caption: "2 éves karbantartás",
+        },
+        {
+            dataField: "karbantartas_10ev",
+            width: 80,
+            caption: "10 éves karbantartás",
+        },
+        {
+            dataField: "ellatott",
+            width: 200,
+            caption: "Ellátott települések",
+        },
+        {
+            dataField: "osszedolg-szab",
+            width: 150,
+            caption: "Összedolgozó szabályozók",
+        },
+        {
+            dataField: "ossz_terulet",
+            width: 80,
+            caption: "Összes terület (m2)",
+        },
+        {
+            dataField: "fuves_terulet",
+            width: 80,
+            caption: "Füves terület (m2)",
+        },
+        {
+            dataField: "burkolt_terulet",
+            width: 80,
+            caption: "Burkolt terület (m2)",
+        },
+        {
+            dataField: "gps_lat",
+            width: 100,
+            caption: "GPS Szélesség",
+        },
+        {
+            dataField: "gps_long",
+            width: 100,
+            caption: "GPS hosszúság",
+        },
+        {
+            dataField: "ellenorzesiciklus",
+            width: 100,
+            caption: "Ellenőrzési ciklus",
+        },
+        {
+            dataField: "megjegyzes",
+            width: 300,
+            caption: "Megjegyzés",
+        },
+		 {
+            caption: "ID",
+			width: 60,
+            dataField: "id",
+        },
+		 {
+		    caption: "Dokumentumok",
+			width: 120,
+            alignment: 'center',
+            cellTemplate: function (container, options) {
+                $('<a/>').addClass('dx-link')
+                    .text('Dokumentumok')
+                    .on('dxclick', function () {
+                        var currentRow=$(this).closest("tr");
+                        var szabId = currentRow.find("td:eq(46)").text();
+                        window.open('/doc/szab/' + szabId + '/0/doclist/', '_blank');
+                    })
+                    .appendTo(container);
+                }
+        },
+		],
+        onSelectionChanged: function (selectedItems) {
+            var data = selectedItems.selectedRowsData[0];
+        }
+    }).dxDataGrid('instance');
+});
+</script>
 {% endblock %}

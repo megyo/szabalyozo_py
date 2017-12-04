@@ -258,6 +258,30 @@ class Dok_Muszer_Munka_Riport(models.Model):
         db_table = 'szabalyozok_muszermunka_dok_riport'
 
 
+class Dok_Ingatlan_Riport(models.Model):
+    ingatlan_id = models.CharField(max_length=255)
+    doc_nev = models.CharField(max_length=255)
+    docfile = models.CharField(max_length=255)
+    felt_datum = models.DateField()
+    doctipus = models.CharField(max_length=255)
+
+    szab_id = models.CharField(max_length=255)
+    allomas_nev = models.CharField(max_length=255)
+    jog = models.CharField(max_length=255)
+    terulet = models.CharField(max_length=255)
+    uzem = models.CharField(max_length=255)
+    telepules = models.CharField(max_length=255)
+
+    dockategoria_id = models.IntegerField()
+    dockategoria = models.CharField(max_length=255)
+    ingatlan_telepules = models.CharField(max_length=255)
+    foldhivatali_hrsz = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'szabalyozok_ingatlan_dok_riport'
+
+
 class SzabalyozokIngatlan_Riport(models.Model):
     telepules = models.CharField(max_length=255)
     foldhivatali_hrsz = models.CharField(max_length=255)
@@ -269,11 +293,6 @@ class SzabalyozokIngatlan_Riport(models.Model):
     tulajdonhanyad = models.CharField(max_length=255)
     tulajdonosok_szama = models.CharField(max_length=255)
 
-    gps_lat = models.CharField(max_length=255)
-    gps_long = models.CharField(max_length=255)
-    terulet_allomas = models.CharField(max_length=255)
-    fuves_terulet = models.CharField(max_length=255)
-    burkolt_terulet = models.CharField(max_length=255)
 
     aktiv = models.BooleanField()
     allomas_nev = models.CharField(max_length=255)
@@ -284,6 +303,30 @@ class SzabalyozokIngatlan_Riport(models.Model):
     ingid = models.CharField(max_length=255)
     szabid = models.CharField(max_length=255)
 
+    jogosultsag_allapot = models.CharField(max_length=255)
+    jogosultsag_tipus_1 = models.CharField(max_length=255)
+    jogosultsag_m2_1 = models.CharField(max_length=255)
+    jogosultsag_nev_1 = models.CharField(max_length=255)
+
+    jogosultsag_tipus_2 = models.CharField(max_length=255)
+    jogosultsag_m2_2 = models.CharField(max_length=255)
+    jogosultsag_nev_2 =models.CharField(max_length=255)
+
+    jogosultsag_tipus_3 = models.CharField(max_length=255)
+    jogosultsag_m2_3 = models.CharField(max_length=255)
+    jogosultsag_nev_3 = models.CharField(max_length=255)
+
+    gps_lat = models.CharField(max_length=255)
+    gps_long = models.CharField(max_length=255)
+
+    gps_lat_2 = models.CharField(max_length=255)
+    gps_long_2 = models.CharField(max_length=255)
+
+    gps_lat_3 = models.CharField(max_length=255)
+    gps_long_3 = models.CharField(max_length=255)
+
+    gps_lat_4 = models.CharField(max_length=255)
+    gps_long_4 = models.CharField(max_length=255)
 
     class Meta:
         managed = False

@@ -1,4 +1,4 @@
-{% extends "szabalyozok/riport_api_layout.html" %}
+{% extends "szabalyozok/riport_layout.html" %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
     <div class="apply-filter-option">
         <div id="useFilterApplyButton"></div>
     </div>
-    <div id="gridContainer"></div>
+    <div style="height: 85%;" id="gridContainer"></div>
     <div class="options">
         <div>
             <div id="filterRow"></div>
@@ -23,17 +23,17 @@ $(function(){
     var dataGrid = $("#gridContainer").dxDataGrid({
         dataSource: "{% url 'riport_szabingatlan_api' %}",
         key: 'id',
-        allowColumnResizing: true,
-        paging: {
-            pageSize: 20
+       loadPanel: {
+            enabled: true
         },
-        pager: {
-            showPageSizeSelector: true,
-            allowedPageSizes: [20, 50, 100],
-            showInfo: true
+        scrolling: {
+            mode: 'virtual'
+        },
+        columnFixing: {
+            enabled: true
         },
         selection: {
-            mode: "single"
+            mode: "multiple"
         },
         "export": {
             enabled: true,
@@ -47,10 +47,13 @@ $(function(){
         searchPanel: {
             visible: true,
             width: 240,
-            placeholder: "Keresés..."
+            placeholder: "Ingatlan keresés..."
         },
         headerFilter: {
             visible: true
+        },
+        scrolling: {
+            mode: "virtual"
         },
         columns: [
 		 {
@@ -62,7 +65,7 @@ $(function(){
                     .text('Módosít')
                     .on('dxclick', function () {
                         var currentRow=$(this).closest("tr");
-                        var ingid = currentRow.find("td:eq(21)").text();
+                        var ingid = currentRow.find("td:eq(35)").text();
                         location.href = '/szabingatlan/'+ ingid +'/edit/';
                     })
                     .appendTo(container);
@@ -77,8 +80,13 @@ $(function(){
                     .text('Mutat')
                     .on('dxclick', function () {
                         var currentRow=$(this).closest("tr");
-                        var szabid = currentRow.find("td:eq(22)").text();
-                        window.open('/szabingatlan/'+ szabid +'/show/','_blank');
+                        var szabid = currentRow.find("td:eq(36)").text();
+                        Number(szabid);
+                        if (szabid == 0) {
+                            alert("Ehhez az ingatlanhoz nem tartozik szabályozó!")
+                        } else {
+                            window.open('/szabingatlan/'+ szabid +'/show/','_blank');
+                        }
                     })
                     .appendTo(container);
                 }
@@ -136,32 +144,57 @@ $(function(){
             caption: "Tulajdonosok száma",
         },
         {
-            dataField: "gps_lat",
+            dataField: "jogosultsag_allapot",
             width: 100,
-            caption: "GPS Szélesség",
+            caption: "jogosultsag_allapot",
         },
         {
-            dataField: "gps_long",
-            width: 100,
-            caption: "GPS hosszúság",
+            dataField: "jogosultsag_tipus_1",
+            width: 150,
+            caption: "1 Jogosutság típus",
         },
         {
-            dataField: "terulet_allomas",
+            dataField: "jogosultsag_m2_1",
             width: 80,
-            caption: "Állomás területe (m2)",
+            caption: "1 Jogosult m2",
             dataType: "number",
         },
         {
-            dataField: "fuves_terulet",
+            dataField: "jogosultsag_nev_1",
+            width: 200,
+            caption: "1 Jogosult név",
+        },
+        {
+            dataField: "jogosultsag_tipus_2",
+            width: 150,
+            caption: "2 Jogosutság típus",
+        },
+        {
+            dataField: "jogosultsag_m2_2",
             width: 80,
-            caption: "Füves terület (m2)",
+            caption: "2 Jogosult m2",
             dataType: "number",
         },
         {
-            dataField: "burkolt_terulet",
+            dataField: "jogosultsag_nev_2",
+            width: 200,
+            caption: "2 Jogosult név",
+        },
+        {
+            dataField: "jogosultsag_tipus_3",
+            width: 150,
+            caption: "3 Jogosutság típus",
+        },
+        {
+            dataField: "jogosultsag_m2_3",
             width: 80,
-            caption: "Burkolt terület (m2)",
+            caption: "3 Jogosult m2",
             dataType: "number",
+        },
+        {
+            dataField: "jogosultsag_nev_3",
+            width: 200,
+            caption: "3 Jogosult név",
         },
         {
             dataField: "allomas_nev",
@@ -182,6 +215,46 @@ $(function(){
             dataField: "szab_telepules",
             width: 150,
             caption: "Település",
+        },
+        {
+            dataField: "gps_lat",
+            width: 100,
+            caption: "GPS szélesség 1",
+        },
+        {
+            dataField: "gps_long",
+            width: 100,
+            caption: "GPS hosszúság 1",
+        },
+        {
+            dataField: "gps_lat_2",
+            width: 100,
+            caption: "GPS szélesség 2",
+        },
+        {
+            dataField: "gps_long_2",
+            width: 100,
+            caption: "GPS hosszúság 2",
+        },
+        {
+            dataField: "gps_lat_3",
+            width: 100,
+            caption: "GPS szélesség 3",
+        },
+        {
+            dataField: "gps_long_3",
+            width: 100,
+            caption: "GPS hosszúság 3",
+        },
+        {
+            dataField: "gps_lat_4",
+            width: 100,
+            caption: "GPS szélesség 4",
+        },
+        {
+            dataField: "gps_long_4",
+            width: 100,
+            caption: "GPS hosszúság 4",
         },
 		 {
             caption: "ingid",
@@ -207,8 +280,8 @@ $(function(){
                     .text('Dokumentumok')
                     .on('dxclick', function () {
                         var currentRow=$(this).closest("tr");
-                        var customerId = currentRow.find("td:eq(46)").text();
-                        window.open('/riport/szab/' + customerId + '/simple_doc_list/', '_blank');
+                        var ingatlanId = currentRow.find("td:eq(35)").text();
+                        window.open('/doc/ingatlan/' + ingatlanId + '/0/doclist/', '_blank');
                     })
                     .appendTo(container);
                 }

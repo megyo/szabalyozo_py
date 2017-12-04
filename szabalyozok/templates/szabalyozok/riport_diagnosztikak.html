@@ -1,64 +1,165 @@
 {% extends "szabalyozok/riport_layout.html" %}
 
 {% block content %}
-<h1>Szabályozó beszabályozások (bar)</h1>
+<span style="margin-left:20px;">Aktuális szabályozó beszabályozások riport (bar)</span>
+    <div class="apply-filter-option">
+        <div id="useFilterApplyButton"></div>
+    </div>
+    <div style="height: 85%;" id="gridContainer"></div>
+    <div class="options">
+        <div>
+            <div id="filterRow"></div>
+        </div>
+        <div>
+            <div id="headerFilter"></div>
+        </div>
+    </div>
+<script>
+var diagnosztikak = {{diagnosztikak|safe}};
 
-<table id="riport" class="table table-bordered" cellspacing="0" width="100%">
-    <thead>
-    <tr>
-        <th>Szab. állomás neve</th>
-        <th>Terület</th>
-        <th>Üzem</th>
-        <th>Település</th>
-        <th>P1 nyomás</th>
-        <th>P2 nyomás</th>
-        <th>P1 ág alsó</th>
-        <th>P1 ág felső</th>
-        <th>P2 ág alsó</th>
-        <th>P2 ág felső</th>
-        <th>Bizt.lef.nyom.</th>
-        <th>Dátum</th>
-        <th>Oka</th>
-        <th>Megjegyzés</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-        <th>Szabályozó</th>
-        <th>Terület</th>
-        <th>Üzem</th>
-        <th>Település</th>
-        <th>P1 nyomás</th>
-        <th>P2 nyomás</th>
-        <th>P1 ág alsó</th>
-        <th>P1 ág felső</th>
-        <th>P2 ág alsó</th>
-        <th>P2 ág felső</th>
-        <th>Bizt.lef.nyom.</th>
-        <th>dátuma</th>
-        <th>Oka</th>
-        <th>Megjegyzés</th>
-    </tr>
-    </tfoot>
-    <tbody>
-    {% for diag in diagnosztikak %}
-    <tr>
-        <td>{% if diag.allomas_nev %} <a href="{% url 'diagnosztika' pk=diag.id %}">{{diag.allomas_nev}}</a> {% endif %}</td>
-            <td>{{ diag.terulet }}</td>
-            <td>{{ diag.uzem }}</td>
-            <td>{{ diag.telepules }}</td>
-            <td>{% if diag.p1_nyomas %} {{ diag.p1_nyomas }} {% endif %}</td>
-            <td>{% if diag.p2_nyomas %} {{ diag.p2_nyomas }} {% endif %}</td>
-            <td>{% if diag.p1_also_nyomas %} {{ diag.p1_also_nyomas }} {% endif %}</td>
-            <td>{% if diag.p1_felso_nyomas %} {{ diag.p1_felso_nyomas }} {% endif %}</td>
-            <td>{% if diag.p2_also_nyomas %} {{ diag.p2_also_nyomas }} {% endif %}</td>
-            <td>{% if diag.p2_felso_nyomas %} {{ diag.p2_felso_nyomas }} {% endif %}</td>
-            <td>{% if diag.biztlef_nyomas %} {{ diag.biztlef_nyomas }} {% endif %}</td>
-            <td>{% if diag.diag_datum %} {{ diag.diag_datum }} {% endif %}</td>
-            <td>{% if diag.diagnosztikaok %} {{ diag.diagnosztikaok }} {% endif %}</td>
-            <td>{% if diag.megjegyzes %} {{ diag.megjegyzes }} {% endif %}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+$(function(){
+    var dataGrid = $("#gridContainer").dxDataGrid({
+        dataSource: diagnosztikak,
+        key: 'id',
+        allowColumnResizing: true,
+       loadPanel: {
+            enabled: true
+        },
+        scrolling: {
+            mode: 'virtual'
+        },
+        columnFixing: {
+            enabled: true
+        },
+        selection: {
+            mode: "multiple"
+        },
+        "export": {
+            enabled: true,
+            fileName: "Beszabályozások riport",
+            allowExportSelectedData: true
+        },
+        filterRow: {
+            visible: true,
+            applyFilter: "auto"
+        },
+        searchPanel: {
+            visible: true,
+            width: 240,
+            placeholder: "Keresés..."
+        },
+        headerFilter: {
+            visible: true
+        },
+        columns: [
+    	 {
+		    caption: "Művelet",
+			width: 80,
+            alignment: 'center',
+            cellTemplate: function (container, options) {
+                $('<a/>').addClass('dx-link')
+                    .text('mutat')
+                    .on('dxclick', function () {
+                        var currentRow=$(this).closest("tr");
+                        var szabId = currentRow.find("td:eq(15)").text();
+                        window.open('/szabalyozok/'+ szabId +'/diagnosztika/','_blank');
+                    })
+                    .appendTo(container);
+                }
+        },
+        {
+            caption: "Szab. állomás neve",
+			width: 300,
+            dataField: "allomas_nev",
+            dataType: "string",
+        },
+        {
+            dataField: "terulet",
+            width: 100,
+            caption: "Terület",
+        },
+        {
+            dataField: "uzem",
+            width: 130,
+            caption: "Üzem",
+        },
+        {
+            dataField: "telepules",
+            width: 150,
+            caption: "Település",
+        },
+        {
+            dataField: "p1_nyomas",
+            width: 90,
+            caption: "P1 nyomás",
+            dataType: "number",
+        },
+        {
+            dataField: "p2_nyomas",
+            width: 90,
+            caption: "P2 nyomás",
+            dataType: "number",
+        },
+        {
+            dataField: "p1_also_nyomas",
+            width: 90,
+            caption: "P1 alsó",
+            dataType: "number",
+        },
+        {
+            dataField: "p1_felso_nyomas",
+            width: 90,
+            caption: "P1 felső",
+            dataType: "number",
+        },
+        {
+            dataField: "p2_also_nyomas",
+            width: 90,
+            caption: "P2 alsó",
+            dataType: "number",
+        },
+        {
+            dataField: "p2_felso_nyomas",
+            width: 90,
+            caption: "P2 felső",
+            dataType: "number",
+        },
+        {
+            dataField: "biztlef_nyomas",
+            width: 90,
+            caption: "Bizt. lefuvató nyomás",
+            dataType: "number",
+        },
+        {
+            dataField: "diag_datum",
+            width: 100,
+            caption: "Dátum",
+            dataType: "date",
+            format: "yyyy-MM-dd",
+        },
+        {
+            dataField: "diagnosztikaok",
+            width: 120,
+            caption: "Oka",
+        },
+        {
+            dataField: "szabalyozo_id",
+            width: 60,
+            caption: "Szab.Id",
+            dataType: "number",
+        },
+        {
+            dataField: "megjegyzes",
+            width: 300,
+            caption: "Megjegyzés",
+        },
+        ],
+        onSelectionChanged: function (selectedItems) {
+            var data = selectedItems.selectedRowsData[0];
+        }
+    }).dxDataGrid('instance');
+
+});
+
+</script>
 {% endblock %}

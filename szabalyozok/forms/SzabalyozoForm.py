@@ -25,7 +25,7 @@ class SzabalyozoForm(forms.ModelForm):
                                         required=True, label="Állomás gyártó besorolás")
     szabkarb = forms.ModelChoiceField(queryset=SzabKarb.objects.all(), empty_label="Kérem válasszon",
                                         required=False, label="Szabályozó karbantartó")
-    hrsz = forms.CharField(required=False, label="HRSZ")
+    # hrsz = forms.CharField(required=False, label="HRSZ")
     gps_lat = forms.CharField(required=False, label='GPS szélesség')
     gps_long = forms.CharField(required=False, label='GPS hosszúság')
     #allomas_nev = forms.CharField(required=True, label='Állomás neve')
@@ -100,7 +100,7 @@ class SzabalyozoForm(forms.ModelForm):
 
     class Meta(forms.ModelForm):
         model = Szabalyozok
-        fields = ('atado', 'telepules', 'szabgyarto', 'hrsz', 'gps_lat', 'gps_long', 'aktiv', 'kivitel',
+        fields = ('atado', 'telepules', 'szabgyarto', 'gps_lat', 'gps_long', 'aktiv', 'kivitel',
                   'elhelyezes', 'tulajdonjog', 'funkcio', 'tulajdonos', 'megjegyzes', 'nev_prim_nyom', 'nev_sek_nyom',
                   'nev_kapacitas', 'nyom_din_rendszer', 'futott', 'rb_zona', 'telepites_ev', 'villamvedelem',
                   'villamvedelem_ev', 'villamvedelem_kov_ev', 'karbantartas_2ev',

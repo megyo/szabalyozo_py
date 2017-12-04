@@ -36,6 +36,7 @@ urlpatterns = [
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^password/$', szabalyozok.views.change_password, name='change_password'),
 
     # szabalyozó URL
     url(r'^szabalyozok/$', szabalyozok.views.szabalyozok, name='szabalyozok'),
@@ -83,16 +84,6 @@ urlpatterns = [
     url(r'^kep/(?P<spk>[0-9]+)/kepnew/$', szabalyozok.views.kep_new, name='kep_new'),
     url(r'^kep/(?P<pk>[0-9]+)/(?P<spk>[0-9]+)/kepdel/$', szabalyozok.views.kep_del, name='kep_del'),
 
-    # riportok URL
-    url(r'^riportok/szabmunkak/$', szabalyozok.views.riport_szabmunkak, name='riport_szabmunkak'),
-    url(r'^riportok/muszermunkak/$', szabalyozok.views.riport_muszermunkak, name='riport_muszermunkak'),
-    url(r'^riportok/szabtartozekok/$', szabalyozok.views.riport_szabtartozekok, name='riport_szabtartozekok'),
-    url(r'^riportok/muszerek/$', szabalyozok.views.riport_muszerek, name='riport_muszerek'),
-    url(r'^riportok/szabalyozok/$', szabalyozok.views.riport_szabalyozok, name='riport_szabalyozok'),
-    url(r'^riportok/diagnosztikak/$', szabalyozok.views.riport_diagnosztika, name='riport_diagnosztika'),
-    url(r'^riportok/riport_dokumentumfilter/$', szabalyozok.views.riport_dokumentumfilter, name='riport_dokumentumfilter'),
-    url(r'^riportok/riport_szabingatlan/$', szabalyozok.views.riport_szabingatlan, name='riport_szabingatlan'),
-
     # szabalyozó ingatlan URL
     url(r'^szabingatlan/(?P<pk>[0-9]+)/show/$', szabalyozok.views.szabingatlan_show, name='szabingatlan_show'),
     url(r'^szabingatlan/(?P<pk>[0-9]+)/edit/$', szabalyozok.views.szabingatlan_edit, name='szabingatlan_edit'),
@@ -100,28 +91,24 @@ urlpatterns = [
     url(r'^szabingatlan/(?P<pk>[0-9]+)/(?P<spk>[0-9]+)/edit_szab/$', szabalyozok.views.szabingatlan_edit_szab, name='szabingatlan_edit_szab'),
 
     # Riportok dokumnetum listája
-    url(r'^riport/(?P<tip>[a-z]+)/(?P<eszid>[0-9]+)/simple_doc_list/$', szabalyozok.views.simple_doc_list, name='simple_doc_list'),
+    # url(r'^riport/(?P<tip>[a-z]+)/(?P<eszid>[0-9]+)/simple_doc_list/$', szabalyozok.views.simple_doc_list, name='simple_doc_list'),
 
-    # Apik
-    # url(r'^api/(?P<pk>[0-9]+)/get_tartozekgyarto/$', szabalyozok.views.get_tartozekgyarto, name='get_tartozekgyarto'),
-    url(r'^api/(?P<fpk>[0-9]+)/(?P<gpk>[0-9]+)/get_tartozektipus/$', szabalyozok.views.get_tartozektipus, name='get_tartozektipus'),
-
-    # Új riport apik
-    url(r'^riportok/riport_szabalyozok_api/$', szabalyozok.views.riport_szabalyozok_api, name='riport_szabalyozok_api'),
-    url(r'^riportok/riport_szabtartozekok_api/$', szabalyozok.views.riport_szabtartozekok_api, name='riport_szabtartozekok_api'),
-    url(r'^riportok/riport_muszerek_api/$', szabalyozok.views.riport_muszerek_api, name='riport_muszerek_api'),
-    url(r'^riportok/riport_diagnosztika_api/$', szabalyozok.views.riport_diagnosztika_api, name='riport_diagnosztika_api'),
-    url(r'^riportok/riport_szabmunkak_api/$', szabalyozok.views.riport_szabmunkak_api, name='riport_szabmunkak_api'),
-    url(r'^riportok/riport_muszermunkak_api/$', szabalyozok.views.riport_muszermunkak_api, name='riport_muszermunkak_api'),
+    # Riportok
+    url(r'^riportok/riport_dokumentumfilter/$', szabalyozok.views.riport_dokumentumfilter, name='riport_dokumentumfilter'),
+    url(r'^riportok/riport_szabingatlan/$', szabalyozok.views.riport_szabingatlan, name='riport_szabingatlan'),
+    url(r'^riportok/riport_szabalyozok/$', szabalyozok.views.riport_szabalyozok, name='riport_szabalyozok'),
+    url(r'^riportok/riport_szabtartozekok/$', szabalyozok.views.riport_szabtartozekok, name='riport_szabtartozekok'),
+    url(r'^riportok/riport_muszerek/$', szabalyozok.views.riport_muszerek, name='riport_muszerek'),
+    url(r'^riportok/riport_diagnosztika/$', szabalyozok.views.riport_diagnosztika, name='riport_diagnosztika'),
+    url(r'^riportok/riport_szabmunkak/$', szabalyozok.views.riport_szabmunkak, name='riport_szabmunkak'),
+    url(r'^riportok/riport_muszermunkak/$', szabalyozok.views.riport_muszermunkak, name='riport_muszermunkak'),
 
     # Json adat
     url(r'^riportok/riport_szabmunkak_api_json/$', szabalyozok.views.riport_szabmunkak_api_json, name='riport_szabmunkak_api_json'),
     url(r'^riportok/riport_szabingatlan_api/$', szabalyozok.views.riport_szabingatlan_api, name='riport_szabingatlan_api'),
-
-    url(r'^password/$', szabalyozok.views.change_password, name='change_password'),
+    url(r'^api/(?P<fpk>[0-9]+)/(?P<gpk>[0-9]+)/get_tartozektipus/$', szabalyozok.views.get_tartozektipus, name='get_tartozektipus'),
+    # url(r'^api/(?P<pk>[0-9]+)/get_tartozekgyarto/$', szabalyozok.views.get_tartozekgyarto, name='get_tartozekgyarto'),
 ]
-
-# admin.autodiscover()
 
 
 if settings.DEBUG:

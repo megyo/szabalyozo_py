@@ -124,7 +124,7 @@ class Szabalyozok(models.Model):
     beruhazasi_szam = models.CharField(max_length=30, blank=False, null=False)
     sap_pm_az = models.CharField(max_length=50, blank=True, null=True)
     telepules = models.ForeignKey(Telepulesek, related_name='szabalyozo_hely')
-    hrsz = models.CharField(max_length=50, blank=True, null=True)
+    hrsz = models.CharField(max_length=255, blank=True, null=True)
     gps_lat = models.CharField(max_length=20, blank=True, null=True)
     gps_long = models.CharField(max_length=20, blank=True, null=True)
     atado = models.ForeignKey(Atadok)

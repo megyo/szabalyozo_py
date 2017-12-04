@@ -28,6 +28,7 @@ ESZKOZ_CHOICES = (
     ('muszer', 'Műszerek dokumentumai'),
     ('szabmunkak', 'Szabályozó munkák dokumentumai'),
     ('muszermunkak', 'Műszer munkák dokumentumai'),
+    ('ingatlan', 'Ingatlanok dokumentumai'),
 )
 
 class DocFilterForm(forms.Form):
